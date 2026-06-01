@@ -202,12 +202,91 @@
             margin-top: 30px;
             gap: 10px;
         }
+
+        /* استایل اختصاصی پاپ‌آپ‌های شیشه‌ای مچ با تم */
+        .custom-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            animation: fadeIn 0.2s forwards;
+        }
+
+        .custom-modal {
+            background: rgba(30, 27, 75, 0.85);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 25px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            transform: scale(0.9);
+            animation: scaleUp 0.2s forwards;
+        }
+
+        .custom-modal h3 {
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            color: var(--text-primary);
+        }
+
+        .custom-modal p {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .custom-modal input {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            text-align: center;
+            margin-bottom: 20px;
+            outline: none;
+        }
+
+        .custom-modal input:focus {
+            border-color: var(--accent-primary);
+        }
+
+        .modal-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .modal-buttons .btn {
+            padding: 10px 20px;
+            font-size: 0.9rem;
+        }
+
+        @keyframes fadeIn { to { opacity: 1; } }
+        @keyframes scaleUp { to { transform: scale(1); } }
     </style>
 </head>
 <body>
 
+    <!-- کانتینر پاپ آپ سفارشی -->
+    <div id="modal-container"></div>
+
     <div class="container">
         <div id="dashboard-screen" class="screen active">
+            <h2 id="greeting" style="text-align: center; color: var(--accent-primary); margin-bottom: 5px; font-weight: bold;"></h2>
             <h1>بانک سوالات بیوشیمی دیسیپلین</h1>
             <p class="subtitle">سیستم هوشمند ارزیابی و مرور فعال مباحث</p>
             
@@ -228,6 +307,13 @@
                     <span>🎯 ایستگاه چالش (سوالات مشکل‌دار)</span>
                     <span class="badge" id="challenge-count">۰ سوال</span>
                 </button>
+                <button class="btn full-width" style="background: rgba(234, 179, 8, 0.1); border-color: rgba(234, 179, 8, 0.3); color: #fef08a;" onclick="startBookmarkQuiz()">
+                    <span>⭐ سوالات نشان‌دار شده</span>
+                    <span class="badge" id="bookmark-count">۰ سوال</span>
+                </button>
+                <button class="btn full-width" style="margin-top: 20px; background: rgba(239, 68, 68, 0.1); border-color: var(--error); color: #fca5a5;" onclick="logout()">
+                    خروج و پاک کردن تمام اطلاعات من
+                </button>
             </div>
         </div>
 
@@ -235,7 +321,10 @@
             <div class="quiz-header">
                 <span class="quiz-title" id="quiz-type-title">بخش اول</span>
                 <span class="badge" id="progress-text">سوال ۱ از ۲۵</span>
-                <button class="btn btn-nav" onclick="goHome()">خانه</button>
+                <div style="display: flex; gap: 8px;">
+                    <button class="btn btn-nav" id="btn-bookmark" onclick="toggleBookmark()">☆ نشان کردن</button>
+                    <button class="btn btn-nav" onclick="goHome()">خانه</button>
+                </div>
             </div>
 
             <div class="question-box">
@@ -303,7 +392,7 @@
             { id: 48, q: "کدام بافت نقش اساسی در متابولیسم مواد سوختی ندارد?\nWhich tissue does not play a dominant role in fuel metabolism?", o: ["عضله\nMuscle", "مغز\nBrain", "روده\nIntestine", "بافت چربی\nAdipose tissue"], c: 2 },
             { id: 49, q: "کدام جمله صحیح نیست?\nWhich of the following sentences is not correct?", o: ["سلولهای کوپفر فاگوسیت هستند.\nKupffer cells are phagocytes", "سلولهای بافت چربی از نظر متابولیسمی فعال نیستند.\nAdipocytes are not metabolically active", "بافت چربی می تواند گلوکز را تبدیل به اسیدهای چرب کند.\nAdipose tissue can convert glucose to fatty acids", "اپی نفرین سبب تسریع آزاد سازی اسیدهای چرب از سلولهای بافت چربی می شود.\nEpinephrine accelerate the release of fatty acids from adipocytes"], c: 1 },
             { id: 50, q: "عضله با فعالیت متوسط از.... استفاده می کند:\nModerately active muscle uses…", o: ["فقط گلوکز خون\nOnly blood glucose", "فقط اسیدهای چرب\nOnly fatty acids", "فقط اجسام کتونی\nOnly ketone bodies", "گلوکز خون، اسیدهای چرب و اجسام کتونی\nBlood glucose, fatty acids, and ketone bodies"], c: 3 },
-            { id: 51, q: "مغز:\nBrain…", o: ["متابولیسم تنفسی بسیار فعالی دارد.\nHas a very active respiratory metabolism", "متابولیسم غیر هوازی بسیار فعالی دارد.\nHas a very active anaerobic metabolism", "40 درصد اکسیژن تام بدن را مصرف می کند.\nConsume 40% of the total O2 consumed by the body", "دارای مقدار زیادی گلیکוژن است.\nContains high amount glycogen"], c: 0 },
+            { id: 51, q: "مغز:\nBrain…", o: ["متابولیسم تنفسی بسیار فعالی دارد.\nHas a very active respiratory metabolism", "متابولیسم غیر هوازی بسیار فعالی دارد.\nHas a very active anaerobic metabolism", "40 درصد اکسیژن تام بدن را مصرف می کند.\nConsume 40% of the total O2 consumed by the body", "دارای مقدار زیادی گلیکوژن است.\nContains high amount glycogen"], c: 0 },
             { id: 52, q: "داروهای سولفونیل اوره....\nThe sulfonylurea drugs…", o: ["کانالهای پتاسیم در سلولهای بتا را می بندند.\nClose K channels in beta cells", "کانالهای پتاسیم در سلولهای بتا را باز می کنند.\nOpen K channels in beta cells", "آزادسازی انسولین را مهار می کنند.\nInhibits insulin release", "آزادسازی گلوکاگن را تحریک می کنند.\nStimulates glucagon release"], c: 0 },
             { id: 53, q: "کدام هورمون آزادسازی تری آسیل گلیسرول از بافت چربی را فعال نمی کند.\nWhich hormone does not activate triacylglycerol (TAG) release from adipose tissue?", o: ["گلوکاگن\nGlucagon", "انسولین\nInsulin", "اپی نفرین\nEpinephrine", "کورتیزول\nCortisol"], c: 1 },
             { id: 54, q: "پروتئینهای آهن-سولفور ریسکه در کدام کملکس زنجیر تنفسی وجود دارد?\nRieske Iron-sulfur proteins exist in which complex of respiratory chain?", o: ["کمپلکس 1\nComplex I", "کمپلکس 2\nComplex II", "کمپلکس 3\nComplex III", "کمپلکس 4\nComplex IV"], c: 2 },
@@ -336,10 +425,100 @@
         let userAnswers = {}; 
 
         let stats = JSON.parse(localStorage.getItem('biochem_stats')) || {};
+        let bookmarks = JSON.parse(localStorage.getItem('biochem_bookmarks')) || {};
+
+        // موتور پاپ آپ اختصاصی و هماهنگ با تم سایت
+        const CustomUI = {
+            alert: function(text, callback) {
+                const container = document.getElementById('modal-container');
+                container.innerHTML = `
+                    <div class="custom-modal-overlay">
+                        <div class="custom-modal">
+                            <p>${text}</p>
+                            <div class="modal-buttons">
+                                <button class="btn btn-accent" id="modal-ok">تایید</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                document.getElementById('modal-ok').onclick = function() {
+                    container.innerHTML = '';
+                    if(callback) callback();
+                };
+            },
+            confirm: function(text, onConfirm) {
+                const container = document.getElementById('modal-container');
+                container.innerHTML = `
+                    <div class="custom-modal-overlay">
+                        <div class="custom-modal">
+                            <p>${text}</p>
+                            <div class="modal-buttons">
+                                <button class="btn btn-accent" id="modal-yes">بله</button>
+                                <button class="btn" id="modal-no">لغو</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                document.getElementById('modal-yes').onclick = function() {
+                    container.innerHTML = '';
+                    onConfirm();
+                };
+                document.getElementById('modal-no').onclick = function() {
+                    container.innerHTML = '';
+                };
+            },
+            prompt: function(text, onSubmit) {
+                const container = document.getElementById('modal-container');
+                container.innerHTML = `
+                    <div class="custom-modal-overlay">
+                        <div class="custom-modal">
+                            <h3>${text}</h3>
+                            <input type="text" id="modal-input" placeholder="نام شما..." autofocus />
+                            <div class="modal-buttons">
+                                <button class="btn btn-accent" id="modal-submit">ثبت نام</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                const submitAction = function() {
+                    const val = document.getElementById('modal-input').value;
+                    container.innerHTML = '';
+                    onSubmit(val);
+                };
+
+                document.getElementById('modal-submit').onclick = submitAction;
+                document.getElementById('modal-input').onkeydown = function(e) {
+                    if (e.key === 'Enter') submitAction();
+                };
+            }
+        };
+
+        function checkUser() {
+            let username = localStorage.getItem('biochem_username');
+            if (!username) {
+                CustomUI.prompt('خوش آمدید! لطفا نام خود را وارد کنید:', function(inputName) {
+                    if (inputName && inputName.trim() !== "") {
+                        username = inputName.trim();
+                        localStorage.setItem('biochem_username', username);
+                    } else {
+                        username = 'کاربر مهمان';
+                    }
+                    document.getElementById('greeting').innerText = `سلام ${username}!`;
+                });
+            } else {
+                document.getElementById('greeting').innerText = `سلام ${username}!`;
+            }
+        }
 
         function saveStats() {
             localStorage.setItem('biochem_stats', JSON.stringify(stats));
             updateChallengeBadge();
+        }
+
+        function saveBookmarks() {
+            localStorage.setItem('biochem_bookmarks', JSON.stringify(bookmarks));
+            updateBookmarkBadge();
         }
 
         function updateChallengeBadge() {
@@ -348,6 +527,39 @@
                 if (stats[qId].wrongCount >= 2) count++;
             }
             document.getElementById('challenge-count').innerText = `${count} سوال`;
+        }
+
+        function updateBookmarkBadge() {
+            let count = Object.keys(bookmarks).filter(k => bookmarks[k]).length;
+            document.getElementById('bookmark-count').innerText = `${count} سوال`;
+        }
+
+        function toggleBookmark() {
+            if (currentQuizQuestions.length === 0) return;
+            const qId = currentQuizQuestions[currentIndex].id;
+            bookmarks[qId] = !bookmarks[qId];
+            saveBookmarks();
+            updateBookmarkBtnUI();
+        }
+
+        function updateBookmarkBtnUI() {
+            if (currentQuizQuestions.length === 0) return;
+            const qId = currentQuizQuestions[currentIndex].id;
+            const btn = document.getElementById('btn-bookmark');
+            if (bookmarks[qId]) {
+                btn.innerText = '⭐ نشان شده';
+                btn.style.background = 'rgba(234, 179, 8, 0.2)';
+            } else {
+                btn.innerText = '☆ نشان کردن';
+                btn.style.background = 'rgba(255, 255, 255, 0.05)';
+            }
+        }
+
+        function logout() {
+            CustomUI.confirm('آیا مطمئن هستید که می‌خواهید خارج شوید؟ تمام اطلاعات شما (آمار و سوالات نشان‌دار) از مرورگر پاک خواهد شد.', function() {
+                localStorage.clear();
+                location.reload();
+            });
         }
 
         function shuffle(array) {
@@ -365,7 +577,6 @@
             }
         }
 
-        // آماده‌سازی سوالات و رندوم کردن گزینه‌ها فقط برای یک‌بار در طول دوره آزمون
         function prepareQuestions(questionsList) {
             return questionsList.map(item => {
                 let mappedOptions = item.o.map((txt, index) => {
@@ -375,7 +586,7 @@
                     id: item.id,
                     q: item.q,
                     c: item.c,
-                    shuffledOptions: shuffle(mappedOptions) // رندوم‌سازی قطعی و یک‌باره گزینه‌ها
+                    shuffledOptions: shuffle(mappedOptions) 
                 };
             });
         }
@@ -406,7 +617,27 @@
             let filtered = allQuestions.filter(q => stats[q.id] && stats[q.id].wrongCount >= 2);
             
             if (filtered.length === 0) {
-                alert('در حال حاضر سوال چالشی ندارید! این بخش زمانی فعال می‌شود که یک سوال را حداقل ۲ بار غلط بزنید.');
+                CustomUI.alert('اینجا هوشمنده! یکم تمرین کن تا ایرادتو پیدا کنم 🥸');
+                return;
+            }
+
+            let prepared = prepareQuestions(filtered);
+            currentQuizQuestions = shuffle(prepared);
+            currentIndex = 0;
+
+            showScreen('quiz-screen');
+            renderQuestion();
+        }
+
+        function startBookmarkQuiz() {
+            isChallengeMode = false;
+            userAnswers = {};
+            document.getElementById('quiz-type-title').innerText = `⭐ سوالات نشان‌دار`;
+
+            let filtered = allQuestions.filter(q => bookmarks[q.id]);
+            
+            if (filtered.length === 0) {
+                CustomUI.alert('شما هنوز هیچ سوالی را نشان‌دار نکرده‌اید!');
                 return;
             }
 
@@ -434,12 +665,11 @@
                 const div = document.createElement('div');
                 div.className = 'option-item';
                 div.innerText = opt.text;
-                // ذخیره ایندکس اصلی در خصیصه دیتا برای شناسایی مستقیم در جاوااسکریپت بدون تغییر DOM
+                
                 div.setAttribute('data-original-index', opt.originalIndex);
                 
                 div.onclick = () => selectOption(div, opt.originalIndex, currentQuestion.c, currentQuestion.id);
                 
-                // بازیابی حالت پاسخ‌های قبلی در صورت ناوبری برگشتی
                 if (userAnswers[currentQuestion.id] !== undefined) {
                     div.classList.add('disabled');
                     if (opt.originalIndex === currentQuestion.c) {
@@ -455,6 +685,8 @@
 
             document.getElementById('btn-prev').style.visibility = (currentIndex === 0) ? 'hidden' : 'visible';
             document.getElementById('btn-next').innerText = (currentIndex === currentQuizQuestions.length - 1) ? 'پایان' : 'سوال بعدی';
+            
+            updateBookmarkBtnUI();
         }
 
         function selectOption(element, selectedIdx, correctIdx, qId) {
@@ -474,7 +706,6 @@
                 stats[qId].wrongCount++;
                 stats[qId].consecutiveCorrect = 0; 
 
-                // پیدا کردن و سبز کردن گزینه صحیح به صورت مستقیم در ساختار ثابت فعلی بدون رندر مجدد
                 items.forEach(item => {
                     if (parseInt(item.getAttribute('data-original-index')) === correctIdx) {
                         item.classList.add('correct');
@@ -488,8 +719,9 @@
         function navigateQuestion(step) {
             currentIndex += step;
             if (currentIndex >= currentQuizQuestions.length) {
-                alert('این بخش به پایان رسید. به دشبورد هدایت می‌شوید.');
-                goHome();
+                CustomUI.alert('این بخش به پایان رسید. به دشبورد هدایت می‌شوید.', function() {
+                    goHome();
+                });
             } else if (currentIndex < 0) {
                 currentIndex = 0;
             } else {
@@ -505,9 +737,15 @@
         function goHome() {
             showScreen('dashboard-screen');
             updateChallengeBadge();
+            updateBookmarkBadge();
         }
 
-        updateChallengeBadge();
+        window.onload = () => {
+            checkUser();
+            updateChallengeBadge();
+            updateBookmarkBadge();
+        };
+
     </script>
 </body>
 </html>
