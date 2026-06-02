@@ -37,6 +37,7 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
+            transition: background 0.5s ease, color 0.5s ease;
         }
 
         .container {
@@ -49,6 +50,7 @@
             border-radius: 24px;
             padding: 30px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            transition: all 0.5s ease;
         }
 
         .screen {
@@ -104,6 +106,7 @@
             overflow: hidden;
             border: 2px solid rgba(255, 255, 255, 0.18);
             box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.05);
+            transition: all 0.5s ease;
         }
 
         /* خطوط مدرج شیشه */
@@ -118,6 +121,7 @@
             border-bottom: 2px solid rgba(255, 255, 255, 0.25);
             box-shadow: 0 10px 0 rgba(255,255,255,0.25), 0 -10px 0 rgba(255,255,255,0.25);
             z-index: 5;
+            transition: all 0.5s ease;
         }
 
         /* رفلکس شیشه */
@@ -132,6 +136,7 @@
             transform: skewX(-5deg);
             z-index: 4;
             pointer-events: none;
+            transition: all 0.5s ease;
         }
 
         .flask-neck-line {
@@ -142,6 +147,7 @@
             height: 1px;
             background: rgba(255, 255, 255, 0.15);
             z-index: 10;
+            transition: all 0.5s ease;
         }
 
         /* مایع داینامیک درون ارلن */
@@ -205,6 +211,7 @@
             border-radius: 20px;
             border: 1px solid var(--glass-border);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transition: all 0.5s ease;
         }
 
         .grid-menu {
@@ -247,6 +254,7 @@
         .btn-accent {
             background: var(--accent-primary);
             border: none;
+            color: #ffffff;
         }
 
         .btn-accent:hover {
@@ -266,6 +274,7 @@
             padding: 2px 8px;
             border-radius: 20px;
             color: var(--text-secondary);
+            transition: all 0.5s ease;
         }
 
         .quiz-header {
@@ -356,6 +365,7 @@
             z-index: 1000;
             opacity: 0;
             animation: fadeIn 0.2s forwards;
+            transition: all 0.5s ease;
         }
 
         .custom-modal {
@@ -369,6 +379,7 @@
             box-shadow: 0 20px 50px rgba(0,0,0,0.5);
             transform: scale(0.9);
             animation: scaleUp 0.2s forwards;
+            transition: all 0.5s ease;
         }
 
         .custom-modal h3 {
@@ -395,6 +406,7 @@
             text-align: center;
             margin-bottom: 20px;
             outline: none;
+            transition: all 0.5s ease;
         }
 
         .custom-modal input:focus {
@@ -414,9 +426,112 @@
 
         @keyframes fadeIn { to { opacity: 1; } }
         @keyframes scaleUp { to { transform: scale(1); } }
+
+        /* --- استایل‌های لایت مود --- */
+        body.light-mode {
+            --bg-gradient: linear-gradient(135deg, #f1f5f9 0%, #cbd5e1 100%);
+            --glass-bg: rgba(255, 255, 255, 0.65);
+            --glass-border: rgba(0, 0, 0, 0.1);
+            --glass-hover: rgba(255, 255, 255, 0.9);
+            --text-primary: #0f172a;
+            --text-secondary: #334155;
+            --accent-primary: #4f46e5;
+            --accent-hover: #4338ca;
+        }
+
+        body.light-mode .flask-shape {
+            background: rgba(0, 0, 0, 0.03);
+            border: 2px solid rgba(0, 0, 0, 0.15);
+            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.05);
+        }
+
+        body.light-mode .flask-shape::before {
+            border-top: 2px solid rgba(0, 0, 0, 0.2);
+            border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 0 rgba(0,0,0,0.15), 0 -10px 0 rgba(0,0,0,0.15);
+        }
+
+        body.light-mode .flask-shape::after {
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.6), transparent);
+        }
+
+        body.light-mode .flask-neck-line {
+            background: rgba(0, 0, 0, 0.15);
+        }
+
+        body.light-mode .mastery-label {
+            background: rgba(255, 255, 255, 0.9);
+            border-color: rgba(0, 0, 0, 0.1);
+        }
+
+        body.light-mode .btn {
+            background: rgba(255, 255, 255, 0.7);
+        }
+
+        body.light-mode .btn:hover {
+            background: rgba(255, 255, 255, 1);
+        }
+
+        body.light-mode .badge {
+            background: rgba(0, 0, 0, 0.06);
+            color: var(--text-secondary);
+        }
+
+        body.light-mode .option-item {
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        body.light-mode .option-item:hover {
+            background: rgba(255, 255, 255, 1);
+            border-color: rgba(0, 0, 0, 0.2);
+        }
+
+        body.light-mode .option-item.correct {
+            background: rgba(16, 185, 129, 0.2) !important;
+            color: #065f46 !important;
+        }
+
+        body.light-mode .option-item.wrong {
+            background: rgba(239, 68, 68, 0.2) !important;
+            color: #991b1b !important;
+        }
+
+        body.light-mode .custom-modal-overlay {
+            background: rgba(255, 255, 255, 0.6);
+        }
+
+        body.light-mode .custom-modal {
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+        }
+
+        body.light-mode .custom-modal input {
+            background: rgba(0, 0, 0, 0.05);
+            color: var(--text-primary);
+        }
+        
+        /* دکمه تم که همیشه بالا گوشه فیکس است */
+        #theme-toggle {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 100;
+            padding: 0;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
     </style>
 </head>
 <body>
+
+    <button id="theme-toggle" class="btn" title="تغییر تم">☀️</button>
 
     <div id="modal-container"></div>
 
@@ -459,11 +574,11 @@
                     <span>🎯 ایستگاه چالش (سوالات مشکل‌دار)</span>
                     <span class="badge" id="challenge-count">۰ سوال</span>
                 </button>
-                <button class="btn full-width" style="background: rgba(234, 179, 8, 0.1); border-color: rgba(234, 179, 8, 0.3); color: #fef08a;" onclick="startBookmarkQuiz()">
+                <button class="btn full-width" style="background: rgba(234, 179, 8, 0.1); border-color: rgba(234, 179, 8, 0.3); color: #eab308;" onclick="startBookmarkQuiz()">
                     <span>⭐ سوالات نشان‌دار شده</span>
                     <span class="badge" id="bookmark-count">۰ سوال</span>
                 </button>
-                <button class="btn full-width" style="margin-top: 20px; background: rgba(239, 68, 68, 0.1); border-color: var(--error); color: #fca5a5;" onclick="logout()">
+                <button class="btn full-width" style="margin-top: 20px; background: rgba(239, 68, 68, 0.1); border-color: var(--error); color: #ef4444;" onclick="logout()">
                     خروج و پاک کردن تمام اطلاعات من
                 </button>
             </div>
@@ -768,7 +883,7 @@
                 btn.style.background = 'rgba(234, 179, 8, 0.2)';
             } else {
                 btn.innerText = '☆ نشان کردن';
-                btn.style.background = 'rgba(255, 255, 255, 0.05)';
+                btn.style.background = '';
             }
         }
 
@@ -957,6 +1072,27 @@
             updateBookmarkBadge();
             updateMasteryBar();
         }
+
+        // --- منطق دکمه تغییر تم لایت/دارک مود ---
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        
+        if (localStorage.getItem('biochem_theme') === 'light') {
+            document.body.classList.add('light-mode');
+            themeToggleBtn.innerText = '🌙';
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            document.body.classList.toggle('light-mode');
+            if (document.body.classList.contains('light-mode')) {
+                localStorage.setItem('biochem_theme', 'light');
+                themeToggleBtn.innerText = '🌙';
+                themeToggleBtn.title = "بازگشت به دارک مود";
+            } else {
+                localStorage.setItem('biochem_theme', 'dark');
+                themeToggleBtn.innerText = '☀️';
+                themeToggleBtn.title = "تغییر به لایت مود";
+            }
+        });
 
         window.onload = () => {
             checkUser();
