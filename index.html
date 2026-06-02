@@ -16,6 +16,10 @@
             --accent-hover: #4f46e5;
             --success: #10b981;
             --error: #ef4444;
+            
+            /* متغیرهای رنگی برای موج‌های متحرک بالا */
+            --wave-color-1: rgba(255, 75, 114, 0.8);
+            --wave-color-2: rgba(255, 75, 114, 0.5);
         }
 
         * {
@@ -69,78 +73,122 @@
             margin-bottom: 30px;
         }
 
-        /* استایل اختصاصی نوار تسلط (ارلن آزمایشگاهی) */
+        /* نوار تسلط ارلن آزمایشگاهی */
         .mastery-container {
             display: flex;
             flex-direction: column;
             align-items: center;
             margin: 15px auto 25px auto;
             cursor: pointer;
-            transition: transform 0.2s ease, filter 0.2s ease;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         .mastery-container:hover {
-            transform: scale(1.05) translateY(-5px);
+            transform: scale(1.08) translateY(-5px);
         }
 
         .flask-wrapper {
             position: relative;
-            width: 70px;
-            height: 90px;
-            margin-bottom: 10px;
-            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.15));
+            width: 85px;
+            height: 110px;
+            margin-bottom: 15px;
         }
 
+        /* بدنه ارلن */
         .flask-shape {
             width: 100%;
             height: 100%;
-            background: rgba(255, 255, 255, 0.02);
-            clip-path: polygon(35% 0%, 65% 0%, 65% 35%, 100% 100%, 0% 100%, 35% 35%);
+            background: rgba(255, 255, 255, 0.01);
+            clip-path: polygon(32% 0%, 68% 0%, 68% 8%, 64% 8%, 64% 35%, 100% 90%, 100% 100%, 0% 100%, 0% 90%, 36% 35%, 36% 8%, 32% 8%);
             position: relative;
             overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.18);
+            box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.05);
+        }
+
+        /* خطوط مدرج شیشه */
+        .flask-shape::before {
+            content: '';
+            position: absolute;
+            left: 38%;
+            bottom: 20%;
+            width: 8px;
+            height: 40%;
+            border-top: 2px solid rgba(255, 255, 255, 0.25);
+            border-bottom: 2px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 0 10px 0 rgba(255,255,255,0.25), 0 -10px 0 rgba(255,255,255,0.25);
+            z-index: 5;
+        }
+
+        /* رفلکس شیشه */
+        .flask-shape::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 12%;
+            width: 6px;
+            height: 90%;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.15), transparent);
+            transform: skewX(-5deg);
+            z-index: 4;
+            pointer-events: none;
         }
 
         .flask-neck-line {
             position: absolute;
-            top: 20%;
-            left: 35%;
-            width: 30%;
-            height: 2px;
-            background: rgba(255, 255, 255, 0.3);
+            top: 25%;
+            left: 36%;
+            width: 28%;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.15);
             z-index: 10;
         }
 
+        /* مایع داینامیک درون ارلن */
         .liquid {
             position: absolute;
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 0%;
-            transition: height 1.2s cubic-bezier(0.4, 0, 0.2, 1), background 1s ease;
+            height: 0%; /* این مقدار توسط جاوااسکریپت دقیقا بر اساس درصد کاربر آپدیت می‌شود */
+            transition: height 1.2s cubic-bezier(0.4, 0, 0.2, 1), background 0.8s ease;
         }
 
-        .liquid.color-low { background: linear-gradient(180deg, #f43f5e, #be123c); }
-        .liquid.color-mid { background: linear-gradient(180deg, #f59e0b, #d97706); }
-        .liquid.color-high { background: linear-gradient(180deg, #3b82f6, #1d4ed8); }
-        .liquid.color-max { background: linear-gradient(180deg, #10b981, #047857); }
-
+        /* لایه متحرک موج‌های آب با رنگ کاملاً هماهنگ و غلیظ */
         .wave {
             position: absolute;
             top: -15px;
             left: 50%;
-            width: 200px;
-            height: 200px;
-            background: rgba(255, 255, 255, 0.2);
+            width: 190px;
+            height: 190px;
+            background: var(--wave-color-1);
             border-radius: 40%;
             transform: translateX(-50%);
-            animation: rotateWave 4s linear infinite;
+            animation: rotateWave 3.5s linear infinite;
+            pointer-events: none;
+            z-index: 2;
         }
 
         .wave:nth-child(2) {
-            top: -20px;
-            background: rgba(255, 255, 255, 0.1);
-            animation: rotateWave 6s linear infinite;
+            top: -19px;
+            background: var(--wave-color-2);
+            border-radius: 38%;
+            animation: rotateWave 5.5s linear infinite;
+            z-index: 1;
+        }
+
+        /* کلاس‌های وضعیت رنگی مایع و موج‌ها به‌صورت همزمان */
+        .liquid.color-low { 
+            background: #be123c; 
+        }
+        .liquid.color-mid { 
+            background: #d97706; 
+        }
+        .liquid.color-high { 
+            background: #1d4ed8; 
+        }
+        .liquid.color-max { 
+            background: #047857; 
         }
 
         @keyframes rotateWave {
@@ -150,12 +198,13 @@
 
         .mastery-label {
             font-size: 0.9rem;
-            color: var(--text-secondary);
-            font-weight: 500;
-            background: rgba(255,255,255,0.05);
-            padding: 4px 12px;
+            color: var(--text-primary);
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.06);
+            padding: 5px 14px;
             border-radius: 20px;
             border: 1px solid var(--glass-border);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
 
         .grid-menu {
@@ -292,7 +341,6 @@
             gap: 10px;
         }
 
-        /* استایل اختصاصی پاپ‌آپ‌های شیشه‌ای مچ با تم */
         .custom-modal-overlay {
             position: fixed;
             top: 0;
@@ -465,7 +513,7 @@
             { id: 17, q: "کدام گزینه در مورد اپی نفرین صحیح نیست?\nWhich is incorrect about epinephrine?", o: ["گلیکوژن سنتاز را فعال می کند.\nActivate glycogen synthase", "گلیکوژن فسفریلاز را فعال می کند.\nActivate glycogen phosphorylase", "لیپاز حساس به هورمون را فعال می کند.\nActivate hormone sensitive lipase", "ترشح گلوکاگن را تحریک می کند.\nStimulate glucagon secretion"], c: 0 },
             { id: 18, q: "سیکل اوره عمدتا در کدام بافت وجود دارد.\nUrea cycle mainly occurs in which organ?", o: ["عضله اسکلتی\nSkeletal muscle", "کبد.\nliver", "کلیه\nKidney", "روده\nIntestine"], c: 1 },
             { id: 19, q: "بافتهای ......... نقش اصلی در یکپارچگی متابولیسم دارند.\nTissues of Maryland have dominant role in the integration of metabolism.", o: ["کبد- کلیه- خون- مغز\nLiver-Kidney-Blood-Brain", "کبد- عضله- مغز- بافت چربی\nLiver-Muscle-Brain-Adipose tissue", "کلیه- خون- روده- استخوان\nKidney-Blood-Intestine-Bone", "عضله- بافت چربی-روده- خون\nMuscle-Adipose tissue-Intestine-Blood"], c: 1 },
-            { id: 20, q: "... در کبد دارای عملکرد ایمنی و ..... دارای عملکرد متابولیسمی هستند.\nIn liver ….. have the immune function and….have the metabolic function.", o: ["هپاتوسیت ها- هپاتوسیت ها\nHepatocytes- Hepatocytes", "سلولهای کوپفر-سلولهای کوپفر\nKupffer cells - Kupffer cells", "سلولهای کوپفر- هپاتوسیت ها\nKupffer cells - Hepatocytes", "هپاتوسیت ها-سلولهای کوپفر\nHepatocytes - Kupffer cells"], c: 2 },
+            { id: 20, q: "... در کبد دارای عملکرد ایمنی و ..... دارای عملکرد متابولیسمی هستند.\nIn liver ….. have the immune function and….have the metabolic function.", o: ["هپاتوسیت ها- هپاتوسیت ها\nHepatocytes- Hepatocytes", "سلولهای کوپفر-سلولهای کوپفر\nKupffer cells - Kupfer cells", "سلولهای کوپفر- هپاتوسیت ها\nKupffer cells - Hepatocytes", "هپاتوسیت ها-سلولهای کوپفر\nHepatocytes - Kupfer cells"], c: 2 },
             { id: 21, q: "آزاد سازی اسیدهای چرب از بافت چربی به میزان زیاد توسط .....\nThe release of fatty acids from adipose tissue …....", o: ["اپی نفرین افزایش می یابد.\nIncreases by epinephrine", "اپی نفرین کاهش می یابد.\nDecreases by epinephrine", "انسولین افزایش می یابد.\nIncreases by insulin", "نوراپی نفرین کاهش می یابد.\nDecreases by norepinephrine"], c: 0 },
             { id: 22, q: "در فعالیت کم منبع انرژی برای انقباض عضلانی .... و در فعالیت شدید..... می باشد.\nIn light activity the energy sources for muscle contraction is….. and in heavy activity is…...", o: ["اسیدهای چرب-گلیکوژن\nFatty acids-Glycogen", "گلیکوژن-اسیدهای چرب\nGlycogen - Fatty acids", "اسیدهای چرب-اسیدهای چرب\nFatty acids - Fatty acids", "گلوکز-اسیدهای چرب\nGlucose- Fatty acids"], c: 0 },
             { id: 23, q: "انرژی مورد نیاز نورونهای مغز از کدام ترکیب تامین می شود?\nThe energy requirement of the brain neurons is supplied by:", o: ["گلوکز\nGlucose", "اسیدهای چرب\nFatty acids", "کتون بادیها\nKetone bodies", "اسیدهای آمینه\nAmino acids"], c: 0 },
@@ -514,7 +562,7 @@
             { id: 66, q: "هرگاه در زنجیر تنفسی پتانسیل احیا ترکیب شماره 1 مساوی 22/.+ ولت و ترکیب شماره 2 مساوی 1/.+ ولت باشد کدام گزینه صحیح است؟", o: ["ترکیب شماره 1 دهنده الکترون به ترکیب شماره 2 است.", "ترکیب شماره 1 گیرنده الکترون از ترکیب شماره 2 است.", "ترکیب شماره 1 احیاتر از ترکیب شماره 2 است.", "ترکیب شماره 2 اکسیدتراز ترکیب شماره 1 است."], c: 1 },
             { id: 67, q: "به ترتیب از راست به چپ کدامیک از کمپلکسهای زنجیر تنفسی بعنوان پمپ پروتون عمل نمی کنند و کدامیک توسط سیانید مهار می شود؟", o: ["کمپلکس II - کمپلکس IV", "کمپلکس III - کمپلکس II", "کمپلکس II - کمپلکس III", "کمپلکس I - کمپلکس IV"], c: 0 },
             { id: 68, q: "اگر در فردی عبور الکترونها از طریق زنجیر تنفسی منجر به پمپ شدن 10 پروتون به فضای بین دوغشا میتوکندری شود، چه میزان ATP سنتز می شود؟", o: ["2", "3", "1.5", "2.5"], c: 3 },
-            { id: 69, q: "درفردی که دچار مسمومیت با سیانور شده است چگونه متابولیسم وی تغییر می کند؟", o: ["کاهش فسفریلاسیون- اکسیداتیو بعلت مهار کمپلکس شماره 1 زنجیر تنفسی", "تمام کمپلکسهای زنجیر تنفسی به حالت اکسید شده در می آیند.", "افزایش فسفریلاسیون- اکسیداتیو با افزایش اکسیداسیون کمپلکس 4", "کاهش و مهار فسفریلاسیون- اکسیداتیو بعلت مهار کمپلکس 4"], c: 3 },
+            { id: 69, q: "درفردی که دچار مسمومیت با سیانور شده است چگونه متابولیسم وی تغییر می کند？", o: ["کاهش فسفریلاسیون- اکسیداتیو بعلت مهار کمپلکس شماره 1 زنجیر تنفسی", "تمام کمپلکسهای زنجیر تنفسی به حالت اکسید شده در می آیند.", "افزایش فسفریلاسیون- اکسیداتیو با افزایش اکسیداسیون کمپلکس 4", "کاهش و مهار فسفریلاسیون- اکسیداتیو بعلت مهار کمپلکس 4"], c: 3 },
             { id: 70, q: "موثرترین فاکتور در تعیین سرعت فسفریلاسیون اکسیداتیو در حالت استراحت کدام است؟", o: ["فراهم بودن ADP", "فراهم بودن اکسیژن", "غلظت فسفات", "میزان ATP"], c: 0 },
             { id: 71, q: "در طول گرسنگی:", o: ["اسکلت کربنی تمام اسیدهای آمینه تبدیل به پیروات می شود.", "اپی نفرین تجزیه تری آسیل گلیسرولها در بافت چربی را فعال می کند.", "میزان استواستات کاهش می یابد", "تبدیل پیروات به اگزالواستات کاهش می یابد."], c: 1 },
             { id: 72, q: "هرگاه در زنجیر تنفسی پتانسیل احیا ترکیب شماره 1 مساوی 32/.- ولت و ترکیب شماره 2 مساوی 1/.+ ولت باشد کدام گزینه صحیح است؟", o: ["ترکیب شماره 1 دهنده الکترون به ترکیب شماره 2 است.", "ترکیب شماره 1 گیرنده الکترون از ترکیب شماره 2 است.", "ترکیب شماره 1 اکسیدتر از ترکیب شماره 2 است.", "ترکیب شماره 2 احیاتر از ترکیب شماره 1 است."], c: 0 },
@@ -531,7 +579,6 @@
         let stats = JSON.parse(localStorage.getItem('biochem_stats')) || {};
         let bookmarks = JSON.parse(localStorage.getItem('biochem_bookmarks')) || {};
 
-        // موتور پاپ آپ اختصاصی و هماهنگ با تم سایت
         const CustomUI = {
             alert: function(text, callback) {
                 const container = document.getElementById('modal-container');
@@ -618,17 +665,29 @@
             document.getElementById('mastery-percentage').innerText = `${percentage}%`;
             
             const liquid = document.getElementById('flask-liquid');
+            
+            // اعمال دقیق درصد تسلط روی ارتفاع مایع ارلن دشبورد
             liquid.style.height = `${percentage}%`;
             
             liquid.className = 'liquid';
+            
+            // به‌روزرسانی رنگ متغیرهای CSS مربوط به موج‌ها به‌صورت داینامیک همرنگ با مایع
             if (percentage < 30) {
                 liquid.classList.add('color-low');
+                document.documentElement.style.setProperty('--wave-color-1', 'rgba(190, 18, 60, 1)');
+                document.documentElement.style.setProperty('--wave-color-2', 'rgba(225, 29, 72, 0.7)');
             } else if (percentage < 60) {
                 liquid.classList.add('color-mid');
+                document.documentElement.style.setProperty('--wave-color-1', 'rgba(217, 119, 6, 1)');
+                document.documentElement.style.setProperty('--wave-color-2', 'rgba(245, 158, 11, 0.7)');
             } else if (percentage < 85) {
                 liquid.classList.add('color-high');
+                document.documentElement.style.setProperty('--wave-color-1', 'rgba(29, 78, 216, 1)');
+                document.documentElement.style.setProperty('--wave-color-2', 'rgba(59, 130, 246, 0.7)');
             } else {
                 liquid.classList.add('color-max');
+                document.documentElement.style.setProperty('--wave-color-1', 'rgba(4, 120, 87, 1)');
+                document.documentElement.style.setProperty('--wave-color-2', 'rgba(16, 185, 129, 0.7)');
             }
         }
 
