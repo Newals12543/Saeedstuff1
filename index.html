@@ -69,6 +69,95 @@
             margin-bottom: 30px;
         }
 
+        /* استایل اختصاصی نوار تسلط (ارلن آزمایشگاهی) */
+        .mastery-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 15px auto 25px auto;
+            cursor: pointer;
+            transition: transform 0.2s ease, filter 0.2s ease;
+        }
+
+        .mastery-container:hover {
+            transform: scale(1.05) translateY(-5px);
+        }
+
+        .flask-wrapper {
+            position: relative;
+            width: 70px;
+            height: 90px;
+            margin-bottom: 10px;
+            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.15));
+        }
+
+        .flask-shape {
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.02);
+            clip-path: polygon(35% 0%, 65% 0%, 65% 35%, 100% 100%, 0% 100%, 35% 35%);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .flask-neck-line {
+            position: absolute;
+            top: 20%;
+            left: 35%;
+            width: 30%;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.3);
+            z-index: 10;
+        }
+
+        .liquid {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 0%;
+            transition: height 1.2s cubic-bezier(0.4, 0, 0.2, 1), background 1s ease;
+        }
+
+        .liquid.color-low { background: linear-gradient(180deg, #f43f5e, #be123c); }
+        .liquid.color-mid { background: linear-gradient(180deg, #f59e0b, #d97706); }
+        .liquid.color-high { background: linear-gradient(180deg, #3b82f6, #1d4ed8); }
+        .liquid.color-max { background: linear-gradient(180deg, #10b981, #047857); }
+
+        .wave {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 40%;
+            transform: translateX(-50%);
+            animation: rotateWave 4s linear infinite;
+        }
+
+        .wave:nth-child(2) {
+            top: -20px;
+            background: rgba(255, 255, 255, 0.1);
+            animation: rotateWave 6s linear infinite;
+        }
+
+        @keyframes rotateWave {
+            0% { transform: translateX(-50%) rotate(0deg); }
+            100% { transform: translateX(-50%) rotate(360deg); }
+        }
+
+        .mastery-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            background: rgba(255,255,255,0.05);
+            padding: 4px 12px;
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+        }
+
         .grid-menu {
             display: grid;
             grid-template-columns: 1fr;
@@ -281,12 +370,27 @@
 </head>
 <body>
 
-    <!-- کانتینر پاپ آپ سفارشی -->
     <div id="modal-container"></div>
 
     <div class="container">
         <div id="dashboard-screen" class="screen active">
             <h2 id="greeting" style="text-align: center; color: var(--accent-primary); margin-bottom: 5px; font-weight: bold;"></h2>
+            
+            <div class="mastery-container" onclick="showMasteryDetails()">
+                <div class="flask-wrapper">
+                    <div class="flask-shape">
+                        <div class="flask-neck-line"></div>
+                        <div class="liquid" id="flask-liquid">
+                            <div class="wave"></div>
+                            <div class="wave"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mastery-label">
+                    تسلط: <span id="mastery-percentage">0%</span>
+                </div>
+            </div>
+
             <h1>بانک سوالات بیوشیمی دیسیپلین</h1>
             <p class="subtitle">سیستم هوشمند ارزیابی و مرور فعال مباحث</p>
             
@@ -494,6 +598,57 @@
             }
         };
 
+        function updateMasteryBar() {
+            const totalQuestionsCount = allQuestions.length;
+            let totalScore = 0;
+
+            for (let qId in stats) {
+                const stat = stats[qId];
+                if (stat.consecutiveCorrect >= 3) {
+                    totalScore += 1;
+                } else if (stat.consecutiveCorrect === 2) {
+                    totalScore += 0.6;
+                } else if (stat.consecutiveCorrect === 1 || stat.wrongCount > 0) {
+                    totalScore += 0.25;
+                }
+            }
+
+            const percentage = totalQuestionsCount > 0 ? Math.round((totalScore / totalQuestionsCount) * 100) : 0;
+            
+            document.getElementById('mastery-percentage').innerText = `${percentage}%`;
+            
+            const liquid = document.getElementById('flask-liquid');
+            liquid.style.height = `${percentage}%`;
+            
+            liquid.className = 'liquid';
+            if (percentage < 30) {
+                liquid.classList.add('color-low');
+            } else if (percentage < 60) {
+                liquid.classList.add('color-mid');
+            } else if (percentage < 85) {
+                liquid.classList.add('color-high');
+            } else {
+                liquid.classList.add('color-max');
+            }
+        }
+
+        function showMasteryDetails() {
+            const pctStr = document.getElementById('mastery-percentage').innerText;
+            const percentage = parseInt(pctStr);
+            let quote = "";
+            
+            if (percentage < 30) {
+                quote = "زوده فعلا برو یکم تمرین کن";
+            } else if (percentage < 80) {
+                quote = "انگار داری یه چیزایی یاد میگیری";
+            } else {
+                quote = "خسته نباشی سوالات امتحان رو فقط حفظ کردی 🙏😂";
+            }
+            
+            const msg = `<span style="font-size:1.1rem; font-weight:bold;">درصد تسلط فعلی شما: ${percentage}%</span><br><br><span style="color:var(--accent-primary);">${quote}</span>`;
+            CustomUI.alert(msg);
+        }
+
         function checkUser() {
             let username = localStorage.getItem('biochem_username');
             if (!username) {
@@ -505,15 +660,18 @@
                         username = 'کاربر مهمان';
                     }
                     document.getElementById('greeting').innerText = `سلام ${username}!`;
+                    updateMasteryBar();
                 });
             } else {
                 document.getElementById('greeting').innerText = `سلام ${username}!`;
+                updateMasteryBar();
             }
         }
 
         function saveStats() {
             localStorage.setItem('biochem_stats', JSON.stringify(stats));
             updateChallengeBadge();
+            updateMasteryBar();
         }
 
         function saveBookmarks() {
@@ -738,6 +896,7 @@
             showScreen('dashboard-screen');
             updateChallengeBadge();
             updateBookmarkBadge();
+            updateMasteryBar();
         }
 
         window.onload = () => {
