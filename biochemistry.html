@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بانک سوالات بیوشیمی دیسیپلین</title>
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #090d16 0%, #15162c 50%, #1e1b4b 100%);
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-hover: rgba(255, 255, 255, 0.07);
+            --card-bg: rgba(255, 255, 255, 0.04);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent-primary: #6366f1;
+            --accent-hover: #4f46e5;
+            --success: #10b981;
+            --error: #ef4444;
+            --warning: #f59e0b;
+            --wave-color-1: rgba(255, 75, 114, 0.8);
+            --wave-color-2: rgba(255, 75, 114, 0.5);
+            --glass-overlay: rgba(255, 255, 255, 0.06);
+            --glass-border-light: rgba(255, 255, 255, 0.2);
+            --accent-overlay: rgba(255, 255, 255, 0.2);
+            --success-text: #a7f3d0;
+            --error-text: #fca5a5;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            transition: background 0.5s ease, color 0.5s ease;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 780px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 20px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+            transition: all 0.5s ease;
+            position: relative;
+        }
+
+        .screen {
+            display: none;
+        }
+
+        .screen.active {
+            display: block;
+            animation: fadeInScreen 0.3s ease forwards;
+        }
+
+        @keyframes fadeInScreen {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .top-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .top-left-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .mode-toggle-switch {
+            display: flex;
+            background: var(--glass-overlay);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            padding: 2px;
+        }
+
+        .mode-option {
+            padding: 5px 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-secondary);
+            border: none;
+            background: transparent;
+        }
+
+        .mode-option.active {
+            background: var(--accent-primary);
+            color: #ffffff;
+            box-shadow: 0 2px 8px rgba(99, 102, 241, 0.4);
+        }
+
+        .icon-btn {
+            padding: 0;
+            border-radius: 12px;
+            width: 38px;
+            height: 38px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            background: var(--glass-overlay);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .icon-btn:hover {
+            background: var(--glass-hover);
+            transform: translateY(-2px);
+            border-color: var(--glass-border-light);
+            color: var(--accent-primary);
+        }
+        
+        .icon-btn:active {
+            transform: translateY(0);
+        }
+
+        .icon-btn svg {
+            width: 18px;
+            height: 18px;
+            stroke-width: 2.2;
+            transition: all 0.3s ease;
+        }
+
+        .hero-card {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .hero-info h2 {
+            font-size: 1.1rem;
+            color: var(--accent-primary);
+            margin-bottom: 2px;
+        }
+
+        .hero-info p {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+        }
+
+        .mastery-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .mastery-container:hover {
+            transform: scale(1.05);
+        }
+
+        .flask-wrapper {
+            position: relative;
+            width: 40px;
+            height: 52px;
+            margin-bottom: 4px;
+        }
+
+        .flask-shape {
+            width: 100%;
+            height: 100%;
+            background: var(--glass-overlay);
+            clip-path: polygon(32% 0%, 68% 0%, 68% 8%, 64% 8%, 64% 35%, 100% 90%, 100% 100%, 0% 100%, 0% 90%, 36% 35%, 36% 8%, 32% 8%);
+            position: relative;
+            overflow: hidden;
+            border: 2px solid var(--glass-border-light);
+        }
+
+        .liquid {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 0%;
+            transition: height 1.2s cubic-bezier(0.4, 0, 0.2, 1), background 0.8s ease;
+        }
+
+        .wave {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            width: 100px;
+            height: 100px;
+            background: var(--wave-color-1);
+            border-radius: 40%;
+            transform: translateX(-50%);
+            animation: rotateWave 3.5s linear infinite;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .wave:nth-child(2) {
+            top: -12px;
+            background: var(--wave-color-2);
+            border-radius: 38%;
+            animation: rotateWave 5.5s linear infinite;
+            z-index: 1;
+        }
+
+        .liquid.color-low { background: #be123c; }
+        .liquid.color-mid { background: #d97706; }
+        .liquid.color-high { background: #1d4ed8; }
+        .liquid.color-max { background: #047857; }
+
+        @keyframes rotateWave {
+            0% { transform: translateX(-50%) rotate(0deg); }
+            100% { transform: translateX(-50%) rotate(360deg); }
+        }
+
+        .mastery-label {
+            font-size: 0.7rem;
+            color: var(--text-primary);
+            font-weight: 600;
+            background: var(--glass-overlay);
+            padding: 1px 6px;
+            border-radius: 10px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .section-title {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--glass-border);
+        }
+
+        .grid-menu {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        @media (min-width: 540px) {
+            .grid-menu {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .full-width {
+                grid-column: span 2;
+            }
+        }
+
+        .btn {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+            padding: 10px 14px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 0.82rem;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            text-align: right;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .btn:not([disabled]):hover {
+            background: var(--glass-hover);
+            border-color: var(--accent-primary);
+            transform: translateY(-1px);
+        }
+
+        .btn-content {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .btn-accent {
+            background: var(--accent-primary);
+            border: none;
+            color: #ffffff;
+        }
+
+        .btn-accent:not([disabled]):hover {
+            background: var(--accent-hover);
+        }
+
+        .btn-nav {
+            padding: 8px 14px;
+            font-size: 0.8rem;
+            justify-content: center;
+            flex-direction: row;
+        }
+
+        .badge {
+            font-size: 0.65rem;
+            background: var(--glass-overlay);
+            padding: 2px 6px;
+            border-radius: 16px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .badge-accent {
+            background: var(--accent-overlay);
+            color: #ffffff;
+        }
+
+        .memorize-container {
+            max-height: 65vh;
+            overflow-y: auto;
+            padding-left: 5px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .memo-card {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            padding: 16px;
+            direction: rtl; /* اصلاح به راست‌چین */
+            text-align: right; /* اصلاح به راست‌چین */
+        }
+
+        .memo-q {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            line-height: 1.5;
+            white-space: pre-line;
+        }
+
+        .memo-opts {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .memo-opt {
+            padding: 8px 12px;
+            border-radius: 8px;
+            background: var(--glass-overlay);
+            border: 1px solid var(--glass-border);
+            font-size: 0.9rem;
+        }
+
+        .memo-opt.correct-ans {
+            background: rgba(16, 185, 129, 0.15);
+            border-color: var(--success);
+            color: var(--success-text);
+            font-weight: 600;
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 10px;
+        }
+
+        .quiz-title {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .question-box {
+            direction: rtl; /* اصلاح به راست‌چین */
+            text-align: right; /* اصلاح به راست‌چین */
+        }
+
+        .question-text {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            font-weight: 500;
+            white-space: pre-line;
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .option-item {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            padding: 12px 16px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+
+        .option-item:hover {
+            background: var(--glass-hover);
+            border-color: var(--glass-border-light);
+        }
+
+        .option-item.correct {
+            background: rgba(16, 185, 129, 0.2) !important;
+            border-color: var(--success) !important;
+            color: var(--success-text) !important;
+        }
+
+        .option-item.wrong {
+            background: rgba(239, 68, 68, 0.2) !important;
+            border-color: var(--error) !important;
+            color: var(--error-text) !important;
+        }
+
+        .option-item.disabled {
+            pointer-events: none;
+        }
+
+        .quiz-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            gap: 10px;
+        }
+
+        .custom-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(9, 13, 22, 0.8);
+            backdrop-filter: blur(8px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeIn 0.2s forwards;
+        }
+
+        .custom-modal {
+            background: #15162c;
+            border: 1px solid var(--glass-border);
+            border-radius: 18px;
+            padding: 20px;
+            width: 90%;
+            max-width: 360px;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            animation: scaleUp 0.2s forwards;
+        }
+
+        .custom-modal p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .custom-modal input {
+            width: 100%;
+            padding: 10px;
+            background: var(--glass-overlay);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            text-align: center;
+            margin-bottom: 15px;
+            outline: none;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes scaleUp { from { transform: scale(0.9); } to { transform: scale(1); } }
+
+        body.light-mode {
+            --bg-gradient: linear-gradient(135deg, #f1f5f9 0%, #cbd5e1 100%);
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(0, 0, 0, 0.1);
+            --glass-hover: rgba(255, 255, 255, 0.98);
+            --card-bg: rgba(255, 255, 255, 0.75);
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --accent-primary: #4f46e5;
+            --accent-hover: #4338ca;
+            --glass-overlay: rgba(0, 0, 0, 0.06);
+            --glass-border-light: rgba(0, 0, 0, 0.15);
+            --success-text: #059669;
+            --error-text: #dc2626;
+        }
+
+        body.light-mode .custom-modal {
+            background: #ffffff;
+            color: #0f172a;
+        }
+
+        body.light-mode .badge {
+            color: var(--text-secondary);
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            letter-spacing: 1px;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- هدر بالا -->
+        <div class="top-controls">
+            <div class="top-left-group">
+                <button id="theme-toggle" class="icon-btn" title="تغییر تم"></button>
+                <button id="home-btn" class="icon-btn" title="بازگشت به منوی اصلی" onclick="location.href='index.html'">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                </button>
+                <button id="logout-btn" class="icon-btn" title="پاک کردن اطلاعات این درس" onclick="logoutSubject()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                        <polyline points="16 17 21 12 16 7"></polyline>
+                        <line x1="21" y1="12" x2="9" y2="12"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="mode-toggle-switch">
+                <button class="mode-option active" id="mode-classic">کلاسیک</button>
+                <button class="mode-option" id="mode-modern" style="opacity:0.5; cursor:not-allowed;" title="غیرفعال شده است">مدرن</button>
+            </div>
+        </div>
+
+        <div id="modal-container"></div>
+
+        <!-- داشبورد اصلی -->
+        <div id="dashboard-screen" class="screen active">
+            <div class="hero-card">
+                <div class="hero-info">
+                    <h2 id="greeting">سلام!</h2>
+                    <p id="dashboard-subtitle">سیستم هوشمند مرور و آزمون بیوشیمی دیسیپلین</p>
+                </div>
+                <div class="mastery-container" onclick="showMasteryDetails()" title="مشاهده درصد تسلط">
+                    <div class="flask-wrapper">
+                        <div class="flask-shape">
+                            <div class="liquid" id="flask-liquid">
+                                <div class="wave"></div>
+                                <div class="wave"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mastery-label" id="mastery-percentage">0%</div>
+                </div>
+            </div>
+
+            <div id="main-content-area"></div>
+
+            <div class="section-title">مرور و آزمون هوشمند</div>
+            <div class="grid-menu" style="grid-template-columns: repeat(3, 1fr) !important; gap: 6px; margin-bottom: 0;">
+                <button class="btn" style="flex-direction: column; align-items: center; text-align: center; padding: 8px 6px; border-color: rgba(239, 68, 68, 0.3); color: #ef4444;" onclick="startChallengeQuiz()">
+                    <span style="font-weight: 600; font-size: 0.78rem;">🎯 چالش</span>
+                    <span class="badge" id="challenge-count" style="background: rgba(239, 68, 68, 0.1); color: #ef4444; margin-top: 2px;">۰ سوال</span>
+                </button>
+                <button class="btn" style="flex-direction: column; align-items: center; text-align: center; padding: 8px 6px; border-color: rgba(234, 179, 8, 0.3); color: #f59e0b;" onclick="startBookmarkQuiz()">
+                    <span style="font-weight: 600; font-size: 0.78rem;">⭐ نشان‌دار</span>
+                    <span class="badge" id="bookmark-count" style="background: rgba(234, 179, 8, 0.1); color: #f59e0b; margin-top: 2px;">۰ سوال</span>
+                </button>
+                <button class="btn btn-accent" style="flex-direction: column; align-items: center; text-align: center; padding: 8px 6px;" onclick="startRandomComprehensiveQuiz()">
+                    <span style="font-weight: 600; font-size: 0.78rem;">🎲 جامع رندوم</span>
+                    <span class="badge badge-accent" id="total-q-badge" style="margin-top: 2px;">۷۵ سوال</span>
+                </button>
+            </div>
+        </div>
+
+        <div id="section-options-screen" class="screen">
+            <div class="quiz-header">
+                <span class="quiz-title" id="section-option-title">بخش</span>
+                <button class="btn btn-nav btn-accent" onclick="goHome()">بازگشت</button>
+            </div>
+            <div class="grid-menu">
+                <button class="btn btn-accent" style="padding: 18px;" onclick="startSectionMemorize()">
+                    <div class="btn-content">
+                        <span style="font-size: 1rem; font-weight: bold;">🧠 حفظ سوالات</span>
+                        <span style="font-size: 0.78rem; opacity: 0.8;">مشاهده تمام سوالات با پاسخ صحیح (اسکرول)</span>
+                    </div>
+                </button>
+                <button class="btn" style="padding: 18px;" onclick="startSectionQuiz()">
+                    <div class="btn-content">
+                        <span style="font-size: 1rem; font-weight: bold;">⏱️ تمرین (رندوم سوال و گزینه)</span>
+                        <span style="font-size: 0.78rem; color: var(--text-secondary);">آزمون و تمرین تعاملی</span>
+                    </div>
+                </button>
+            </div>
+        </div>
+
+        <!-- صفحه حفظ سوالات -->
+        <div id="memorize-screen" class="screen">
+            <div class="quiz-header">
+                <span class="quiz-title" id="memo-header-title">حفظ سوالات</span>
+                <button class="btn btn-nav btn-accent" onclick="backToPreviousFromMemorize()">بازگشت</button>
+            </div>
+            <div class="memorize-container" id="memorize-container"></div>
+        </div>
+
+        <!-- صفحه آزمون / تمرین -->
+        <div id="quiz-screen" class="screen">
+            <div class="quiz-header">
+                <span class="quiz-title" id="quiz-type-title">آزمون</span>
+                <span class="badge" id="progress-text">سوال ۱ از ۱۰</span>
+                <div style="display: flex; gap: 8px;">
+                    <button class="btn btn-nav" id="btn-bookmark" onclick="toggleBookmark()">☆ نشان</button>
+                    <button class="btn btn-nav btn-accent" onclick="goHome()">خانه</button>
+                </div>
+            </div>
+
+            <div class="question-box">
+                <div class="question-text" id="question-text">متن سوال...</div>
+                <div class="options-list" id="options-container"></div>
+            </div>
+
+            <div class="quiz-footer">
+                <button class="btn btn-nav" id="btn-prev" onclick="navigateQuestion(-1)">سوال قبلی</button>
+                <button class="btn btn-nav btn-accent" id="btn-next" onclick="navigateQuestion(1)">سوال بعدی</button>
+            </div>
+        </div>
+        
+        <!-- فوتر -->
+        <div class="footer">
+            By: sommet_s
+        </div>
+    </div>
+
+    <script>
+        // --- بانک سوالات (۷۵ سوال فایل index 3 / بیوشیمی دیسیپلین) ---
+        const allQuestions = [
+            { id: 1, q: "برداشت موثر کراتین نیازمند...\nEfficient uptake of dietary creatine requires?", o: ["سنتز کراتین از گلیسین آرژینین و متیونین است.\nDe novo synthesis from glycine, arginine, and methionine", "ورزش مداوم است.\nContinuous exercise", "سنتز کراتین از گلیسین و متیونین است.\nDe novo synthesis from glycine and methionine", "سنتز کراتین در کبد است.\nDe novo synthesis in liver"], c: 1 },
+            { id: 2, q: "کدام گزینه در مورد متابولیسم انرژی عضله قلبی صحیح است?\nWhich is correct about energy metabolism in heart muscle?", o: ["متابولیسم انرژی کاملا هوازی دارد.\nEnergy metabolism is completely aerobic.", "متابولیسم انرژی کاملا غیر هوازی دارد.\nEnergy metabolism is anaerobic.", "متابولیسم انرژی هوازی و غیر هوازی دارد.\nEnergy metabolism is both aerobic and anaerobic.", "عمدتا از گلوکز بعنوان منبع انرژی استفاده می کند.\nMainly uses glucose as a source of energy."], c: 0 },
+            { id: 3, q: "کدام گزینه در مورد متابولیسم انرژی عضله قلبی صحیح است?\nWhich sentence is correct about energy metabolism in heart muscle?", o: ["مقدار زیادی ذخیره انرژی بصورت فسفوکراتین دارد.\nHas a lot of energy storage as phosphocreatine.", "متابولیسم انرژی آن کاملا غیر هوازی است.\nMetabolism of energy is completely anaerobic", "عمدتا از اسیدهای چرب بعنوان منبع انرژی استفاده می کند.\nMainly uses fatty acids as the source of energy", "عمدتا از گلوکز بعنوان منبع انرژی استفاده می کند\nMainly uses glucose as the source of energy."], c: 2 },
+            { id: 4, q: "در مورد عضله قلبی کدام گزینه صحیح است?\nRelated to Heart muscle which sentence is correct?", o: ["دارای کراتین کیناز (MM) است.\nContains creatine kinase MM", "میزان کراتین کیناز بعد از حمله قلبی افزایش می یابد.\nThe blood level of creatine kinase MM increases after the heart attack", "دارای کراتین کیناز MB است.\nContains creatine kinase MB", "وجود ایزوآنزیم MM در خون تایید کننده حمله قلبی است.\nThe MM isozyme in blood confirms diagnosis of heart attack"], c: 2 },
+            { id: 5, q: "کدام گزینه در ارتباط با عملکرد انسولین است?\nWhat is the function of insulin?", o: ["ناقل گلوکز را کاهش می دهد.\nDecreases glucose transporter", "فعالیت گلوکوکیناز را کم می کند.\nDecreases glucokinase activity", "سنتز گلیکوژن را کم می کند.\nDecreases glycogen synthesis", "سنتز گلیکوژن را افزایش می دهد.\nIncreases glycogen synthesis"], c: 3 },
+            { id: 6, q: "کدام گزینه در مورد داروهای سولفونیل اوره صحیح است?\nThe sulfonylurea drugs…", o: ["سبب افزایش ترشح انسولین می شوند.\nIncreases insulin secretion", "سبب بسته شدن کانالهای پتاسیم می شوند.\nClose the K channel", "سبب کاهش ترشح انسولین می شوند.\nInhibits insulin release", "سبب افزایش ترشح انسولین و بسته شدن کانالهای پتاسیم می شوند.\nA and B"], c: 3 },
+            { id: 7, q: "پروتئین جداکننده شماره 1 (ترموژنین) در کدام بافت وجود دارد?\nUncoupling protein 1 (thermogenin) exists in which tissue?", o: ["بافت چربی سفید\nWhite adipose tissue", "بافت چربی قهوه ای\nBrown adipose tissue", "قلب\nHeart", "عضله اسکلتی.\nSkeletal muscle"], c: 1 },
+            { id: 8, q: "غشا داخلی میتوکندری..\nThe inner membrane is…….", o: ["به تمام مولکولهای کوچک نفوذپذیری دارد\nPermeable to most small molecules", "به بیشتر مولکولهای کوچک و یونها غیرقابل نفوذ است\nImpermeable to most small molecules and ions", "به یونها نفوذذیری دارد.\nPermeable to ions", "به پروتونها نفوذپذیری دارد.\nPermeable to proton"], c: 1 },
+            { id: 9, q: "به ازای هر جفت الکترون چه تعداد پروتون از ماتریکس میتوکندری به خارج پمپ می شود?\nProtons pump out mitochondria matrix for each pair of electrons enter through NADH are:", o: ["6\nA. 6", "10\nB. 10", "12\nC. 12", "4\nD. 4"], c: 1 },
+            { id: 10, q: "منواکسید کربن سبب مهار....\nCO inhibits:", o: ["Complex IV", "Complex I", "Complex III", "Complex II"], c: 0 },
+            { id: 11, q: "در عضله اسکلتی سریع در شرایط ماکزیمم فعالیت بیشتر از چه منبع انرژی استفاده می کند?\nWhat is the energy source in maximally active fast-twitch muscles?", o: ["اسیدهای چرب\nFatty acids", "مواد کتونی\nKetone bodies", "گلوکزخون\nBlood glucose", "ذخیره گلیکوژن\nGlycogen storage"], c: 3 },
+            { id: 12, q: "کدام گزینه در مورد سیکل کوری صحیح است?\nWhich is correct about Cori cycle?", o: ["لاکتات تولید شده در عضله اسکلتی از طریق جریان خون به کبد می رود ودر آنجا تبدیل به گلوکز می شود.\nProduced lactate in skeletal muscle goes to liver and there converted to glucose.", "لاکتات تولید شده در کبد از طریق جریان خون به عضله اسکلتی می رود ودر آنجا تبدیل به گلوکز می شود.\nProduced lactate in liver goes to skeletal muscle and there converted to glucose.", "لاکتات تولید شده دربافتهای بدن در کبد تبدیل به گلوکز می شود.\nProduced lactate in tissues goes to liver and there converted to glucose.", "لاکتات تولید شده در بافتهای بدن در عضله تبدیل به گلوکز می شود.\nProduced lactate in tissues goes to skeletal muscle and there converted to glucose."], c: 0 },
+            { id: 13, q: "در هنگام گرسنگی منبع اصلی انرژی در مغز کدام است?\nWhat is the energy source of brain in fasting?", o: ["گلوکز\nGlucose", "اسیدهای چرب\nFatty acids", "مواد کتونی\nKetone bodies", "گلیکوژن\nGlycogen"], c: 2 },
+            { id: 14, q: "حد واسط کلیدی در متابولیسم کربوهیدراتها کدام است?\nWhat is the key intermediate in carbohydrate metabolism?", o: ["گلوکز\nGlucose", "گلوکز6-فسفات\nGlucose 6-phosphate", "گلوکز1- فسفات\nGlucose 1-phosphate", "فروکتوز 6-فسفات\nFructose 6-phosphate"], c: 1 },
+            { id: 15, q: "آزاد سازی اسیدهای چرب تری آسیل گلیسرول ها در پاسخ به کدام هورمون/هورمون ها انجام می گیرد?\nIn response to which hormone/hormones fatty acids release from triacylglycerol?", o: ["انسولین\nInsulin", "اپی نفرین\nEpinephrine", "گلوکاگن\nGlucagon", "ب و ج\nB and C"], c: 3 },
+            { id: 16, q: "کدام گزینه در مورد گلوکاگن صحیح است?\nWhich is correct about glucagon?", o: ["گلیکولیز و گلوکونئوژنز را مهار می کند.\nInhibits glycolysis and gluconeogenesis", "گلیکولیز و گلوکونئوژنز را فعال می کند.\nActivates glycolysis and gluconeogenesis", "گلیکولیز را فعال و گلوکونئوژنز را مهار می کند\nActivate glycolysis and inhibits gluconeogenesis", "گلیکولیزرا مهار و گلوکونئوژنز را فعال می کند.\nInhibits glycolysis and activates gluconeogenesis"], c: 3 },
+            { id: 17, q: "کدام گزینه در مورد اپی نفرین صحیح نیست?\nWhich is incorrect about epinephrine?", o: ["گلیکوژن سنتاز را فعال می کند.\nActivate glycogen synthase", "گلیکوژن فسفریلاز را فعال می کند.\nActivate glycogen phosphorylase", "لیپاز حساس به هورمون را فعال می کند.\nActivate hormone sensitive lipase", "ترشح گلوکاگن را تحریک می کند.\nStimulate glucagon secretion"], c: 0 },
+            { id: 18, q: "سیکل اوره عمدتا در کدام بافت وجود دارد.\nUrea cycle mainly occurs in which organ?", o: ["عضله اسکلتی\nSkeletal muscle", "کبد.\nliver", "کلیه\nKidney", "روده\nIntestine"], c: 1 },
+            { id: 19, q: "بافتهای ......... نقش اصلی در یکپارچگی متابولیسم دارند.\nTissues of Maryland have dominant role in the integration of metabolism.", o: ["کبد- کلیه- خون- مغز\nLiver-Kidney-Blood-Brain", "کبد- عضله- مغز- بافت چربی\nLiver-Muscle-Brain-Adipose tissue", "کلیه- خون- روده- استخوان\nKidney-Blood-Intestine-Bone", "عضله- بافت چربی-روده- خون\nMuscle-Adipose tissue-Intestine-Blood"], c: 1 },
+            { id: 20, q: "... در کبد دارای عملکرد ایمنی و ..... دارای عملکرد متابولیسمی هستند.\nIn liver ….. have the immune function and….have the metabolic function.", o: ["هپاتوسیت ها- هپاتوسیت ها\nHepatocytes- Hepatocytes", "سلولهای کوپفر-سلولهای کوپفر\nKupffer cells - Kupfer cells", "سلولهای کوپفر- هپاتوسیت ها\nKupffer cells - Hepatocytes", "هپاتوسیت ها-سلولهای کوپفر\nHepatocytes - Kupfer cells"], c: 2 },
+            { id: 21, q: "آزاد سازی اسیدهای چرب از بافت چربی به میزان زیاد توسط .....\nThe release of fatty acids from adipose tissue …....", o: ["اپی نفرین افزایش می یابد.\nIncreases by epinephrine", "اپی نفرین کاهش می یابد.\nDecreases by epinephrine", "انسولین افزایش می یابد.\nIncreases by insulin", "نوراپی نفرین کاهش می یابد.\nDecreases by norepinephrine"], c: 0 },
+            { id: 22, q: "در فعالیت کم منبع انرژی برای انقباض عضلانی .... و در فعالیت شدید..... می باشد.\nIn light activity the energy sources for muscle contraction is….. and in heavy activity is…...", o: ["اسیدهای چرب-گلیکوژن\nFatty acids-Glycogen", "گلیکوژن-اسیدهای چرب\nGlycogen - Fatty acids", "اسیدهای چرب-اسیدهای چرب\nFatty acids - Fatty acids", "گلوکز-اسیدهای چرب\nGlucose- Fatty acids"], c: 0 },
+            { id: 23, q: "انرژی مورد نیاز نورونهای مغز از کدام ترکیب تامین می شود?\nThe energy requirement of the brain neurons is supplied by:", o: ["گلوکز\nGlucose", "اسیدهای چرب\nFatty acids", "کتون بادیها\nKetone bodies", "اسیدهای آمینه\nAmino acids"], c: 0 },
+            { id: 24, q: "کدام هورمون سبب افزایش سنتز اسیدهای چرب می شود?\nWhich hormone increases fatty acid synthesis?", o: ["انسولین\nInsulin", "گلوکاگن\nGlucagon", "کورتیزول\nCortisol", "اپی نفرین\nEpinephrine"], c: 0 },
+            { id: 25, q: "گلوکاگن سبب.... گلوکونیوژنز و .... گلیکولیز می شود.\nGlucagon…. Gluconeogenesis and … Glycolysis.", o: ["افزایش- افزایش\nIncreases-Increases", "کاهش-کاهش\nDecreases-Decreases", "کاهش-افزایش\nDecreases-Increases", "افزایش-کاهش\nIncreases-Decreases"], c: 3 },
+            { id: 26, q: "... بافت هدف اصلی عمل اپی نفرین است.\n… is the main tissue of epinephrine function.", o: ["عضله\nMuscle", "کلیه\nKidney", "مغز\nBrain", "روده\nIntestine"], c: 0 },
+            { id: 27, q: "پروتئین های آهن – سولفور در تمام 4 کمپلکس زنجیر تنفسی بجز....وجود دارند .\nIn all 4 complexes of respiratory chain there are Iron-sulfur proteins except….", o: ["کمپلکس IV\nComplex IV", "کمپلکس I\nComplex I", "کمپلکس II\nComplex II", "کمپلکس III\nComplex III"], c: 0 },
+            { id: 28, q: "...... در پمپ پروتون به فضای بین دو غشا و تولید ATP از طریق زنجیر تنفسی مشارکت ندارد?\n….. does not act as a proton pump and is not involved in ATP production through respiratory chain.", o: ["کمپلکس IV\nComplex IV", "کمپلکس I\nComplex I", "کمپلکس II\nComplex II", "کمپلکس III\nComplex III"], c: 2 },
+            { id: 29, q: "سیانید مهار کننده ......است.\nCyanide inhibits……", o: ["کمپلکس IV\nComplex IV", "کمپلکس I\nComplex I", "کمپلکس II\nComplex II", "کمپلکس III\nComplex III"], c: 0 },
+            { id: 30, q: "NADH از طریق اکسیداسیون در زنجیر تنفسی تولید..... می کند.\nNADH through oxidation in respiratory chain produces….", o: ["1 ATP", "2 ATP", "2.5 ATP", "1.5 ATP"], c: 2 },
+            { id: 31, q: "اپی نفرین سبب....ضربان قلب و …..فشارخون می شود.\nEpinephrine….. heart rate and …..blood pressure.", o: ["افزایش-افزایش\nIncreases-Increases", "کاهش-کاهش\nDecreases-Decreases", "کاهش-افزایش\nDecreases-Increases", "افزایش-کاهش\nIncreases-Decreases"], c: 0 },
+            { id: 32, q: "یوبی کینون یک مولکول ..... است و در هنگام احیا شدن بصورت.... در می آید.\nUbiquinone (Q) is ….. and could be reduced as….", o: ["محلول در چربی- QH\nlipid soluble- QH", "محلول در آب - QH\nWater soluble-QH", "محلول در چربی- QH2\nLipid soluble-QH2", "محلول در آب - QH2\nWater soluble- QH2"], c: 2 },
+            { id: 33, q: "انسولین سبب .... تبدیل گلوکزخون به .... می شود.\nInsulin causes…. Conversion of blood glucose to….", o: ["افزایش- پروتئینها\nIncrease-Proteins", "افزایش- گلیکوژن\nIncrease-Glygen", "کاهش- گلیکوژن\nDecrease-Glycogen", "کاهش- تری گلیسرید\nDecrease-Triglyceride"], c: 1 },
+            { id: 34, q: "انتقال الکترون از کمپلکس II (سوکسینات دهیدروژناز) زنجیر تنفسی، منجر به تولید..... زیرا این کمپلکس...\nTransfer of electron from complex II (succinate dehydrogenase) results in…. because this complex….", o: ["ATP می شود-انتقال دهنده الکترون به کوآنزیم Q است.\nATP production- transfers electron to coenzyme Q.", "ATP نمی شود- انتقال دهنده الکترون به کوآنزیم Q نیست.\nLack of ATP production-does not transfer electron to coenzyme Q", "ATP نمی شود-پمپ پروتون نیست.\nLack of ATP production-is not a proton pump", "ATP می شود-پروتونها را به فضای بین دوغشا میتوکندری پمپ می کند.\nATP production- pumps protons to interspace of mitochondria."], c: 2 },
+            { id: 35, q: "به ترتیب نقش سیانور و 2و 4 دی نیتروفنل در زنجیر تنفسی عبارت است از....\nThe role of cyanide and 2,4 dinitrophenol are….", o: ["جداکردن اکسیداسیون از فسفریلاسیون- مهار انتقال الکترون به یوبی کینون\nSeparation of oxidation from phosphorylation-inhibition of electron transfer to ubiquinone", "مهار انتقال الکترون از سیتوکروم C به اکسیژن- جداکردن اکسیداسیون از فسفریلاسیون\nInhibition of electron transfer from cytochrome C to oxygen- Separation of oxidation from phosphorylation", "مهار F0F1 - جداکردن اکسیداسیون از فسفریلاسیون\nInhibition of F0F1- Separation of oxidation from phosphorylation", "مهار انتقال الکترون از سیتوکروم C به اکسیژن- مهار ترانس لوکاز\nInhibition of electron transfer from cytochrome C to oxygen-Inhibition of translocase"], c: 1 },
+            { id: 36, q: "در کمپلکس..... زنجیر تنفسی یون مس وجود دارد و کمپلکس ..... زنجیر تنفسی بعنوان رابط چرخه کربس نیز عمل می کند.\nIn complex…. Of respiratory chain there is copper ion and complex…. of respiratory chain connects it to Krebs cycle.", o: ["سیتوکروم C -کوآنزیم Q\nCytochrome C-coenzyme Q", "سیتوکروم اکسیداز- کمپلکس 2\nCytochrome oxidase- complex II", "سوکسینات دهیدروژناز-کمپلکس 1\nSuccinate dehydrogenase- complex I", "NADH دهیدروژناز- سیتوکروم C\nNADH dehydrogenase-cytochrome C"], c: 1 },
+            { id: 37, q: "در زنجیر تنفسی به ترتیب از راست به چپ ......دارای بیشترین پتانسیل احیا (دهنده الکترون) و .....دارای کمترین پتانسیل احیا است\nIn respiratory chain from left to right…..has the most reduced potential (electron donor) and ….has the less reduced potential.", o: ["NADH- سیتوکروم aa3 (اکسیداز)\nNADH-Cytochrome aa3", "سیتوکروم aa3- NADH\nCytochrome aa3-NADH", "یوبی کینون- NADH\nUbiquinone- NADH", "یوبی کینون- FADH2\nUbiquinone- FADH2"], c: 0 },
+            { id: 38, q: "بافت چربی.... دارای پروتئین ....است و ..... درکبد نقش متابولیکی دارند\n….adipose tissue contains the protein of…. and the…..in liver have metabolic role", o: ["قهوه ای-ترموژنین-هپاتوسیتها\nBrown-thermogenine-hepatocytes", "سفید-ترموژنین-سلولهای کوپفر\nWhite-thermogenine-Kupfer cells", "قهوه ای-ترموژنین-سلولهای کوپفر\nBrown-thermogenine-Kupfer cells", "سفید- ترموژنین-هپاتوسیتها\nWhite-thermogenine-hepatocytes"], c: 0 },
+            { id: 39, q: "تری گلیسریدهای تشکیل شده در کبد از طریق.... به بافت چربی منتقل شده و هورمون.....آنزیم لیپاز حساس به هورمون را فعال می کند\nTriglycerides through…. from liver are transferred to adipose tissue and the hormone…activates the enzyme of lipase sensitive hormone.", o: ["شیلومیکرون-اپی نفرین\nChylomicrons-epinephrine", "VLDL-اپی نفرین\nVLDL-epinephrine", "LDL-انسولین\nLDL-Insulin", "شیلومیکرون-انسولین\nChylomicrons-insulin"], c: 1 },
+            { id: 40, q: "گلوکاگن سبب ..... و ..... می شود.\nGlucagon…. and…..", o: ["تحریک گلوکونئوژنز-مهار سنتز گلیکوژن\nStimulates gluconeogenesis-inhibits glycogen synthesis", "مهار گلوکونئوژنز-تحریک سنتز گلیکوژن\nInhibits gluconeogenesis-stimulates glycogen synthesis", "افزایش سنتز گلیکوژن- افزایش کتوژنز\nIncreases glycogen synthesis –increases ketogenesis", "مهار سنتز گلیکوژن- مهار کتوژنز\nInhibits glycogen synthesis -inhibits ketogenesis"], c: 0 },
+            { id: 41, q: "کدام مورد صحیح نیست?\nWhich sentence is not correct?", o: ["کورتیزول برخلاف اپی نفرین یک هورمون با عمل آهسته است.\nA. cortisol opposite to epinephrine is a slow acting hormone", "کورتیزول سبب افزایش آزادسازی اسیدهای چرب از تری آسیل گلیسرول بافت چربی می شود.\nB. Cortisol increases release of fatty acids from triacylglycerols of adipose tissue", "کورتیزول سبب مهار فعالیت آنزیم فسفوانول پیروات کربوکسی کیناز می شود.\nC. Cortisol inhibits the activity of phosphoenolpyruvate carboxy kinase enzyme", "گلوکاگن سبب افزایش گلوکونئوژنز می شود.\nD. Glucagon increases gluconeogenesis"], c: 2 },
+            { id: 42, q: "در عضله اسکلتی در حال استراحت منبع/منابع انرژی کدام است?\nIn resting skeletal muscle what is the source of energy?", o: ["اسیدهای چرب و مواد کتونی\nFatty acids and ketone bodies", "مواد کتونی\nketone bodies", "گلوکزخون\nBlood glucose", "ذخیره گلیکوژن\nGlycogen storage"], c: 0 },
+            { id: 43, q: "عضله اسکلتی از کدام منابع سوختی می تواند استفاده کند?\nSkeletal muscle can use which energy sources", o: ["گلوکز\nGlucose", "اسیدهای چرب\nFatty acids", "مواد کتونی\nKetone bodies", "تمام موارد\nAll"], c: 3 },
+            { id: 44, q: "اثرات گلوکاگن بر متابولیسم کربوهیدراتها از چه طریق انجام می گیرد?\nThe effects of glucagon on carbohydrate metabolism is through", o: ["افزایش cAMP و فسفریلاسیون آنزیمها\nIncreases cAMP and phosphorylation of enzymes", "کاهش cAMP و فسفریلاسیون آنزیمها\nDecreases cAMP and phosphorylation of enzymes", "افزایش cGMP و فسفریلاسیون آنزیمها\nIncreases cGMP and phosphorylation of enzymes", "افزایش cAMP و دفسفریلاسیون آنزیمها\nDecreases cGMP and dividends of enzymes"], c: 0 },
+            { id: 45, q: "کدام اعمال مربوط به کورتیزول است?\nWhich function belongs to cortisol?", o: ["آزاد سازی اسیدهای چرپ از بافت چربی\nRelease of fatty acids from adipose tissue", "افزایش گلوکونئوژنز\nIncreases gluconeogenesis", "تحریک تجزیه پروتئینهای غیر ضروری عضله\nStimulation of degradation of unnecessary proteins of muscle", "تمام موارد\nALL"], c: 3 },
+            { id: 46, q: "کدام گزینه صحیح است?\nWhich sentence is correct?", o: ["بافت چربی سفید غنی از میتوکندری است.\nAdipose tissue is rich of mitochondria", "اپی نفرین سبب تحریک فسفریلاسیون پری لیپین می شود.\nEpinephrine stimulates perilipin phosphorylation.", "اپی نفرین سبب تحریک د فسفریلاسیون پری لیپین می شود.\nEpinephrine stimulates dephosphorylation of perilipin.", "انسولین فعالیت لیپاز حساس به هورمون را افزایش می دهد\nInsulin increases the activity of lipase sensitive enzyme."], c: 1 },
+            { id: 47, q: "کدام گزینه صحیح نیست?\nWhich sentence is not correct?", o: ["گلوکاگن تجزیه تری آسیل گلیسرولها در بافت چربی را فعال می کند.\nGlucagon activates degradation of triacylglycerols in adipose tissue.", "اپی نفرین تجزیه تری آسیل گلیسرولها در بافت چربی را فعال می کند.\nEpinephrine activates degradation of triacylglycerols in adipose tissue.", "استیل کوا، آنزیم پیروات کربوکسیلاز را فعال می کند.\nAcetyl CoA activates the pyruvate carboxylase.", "کورتیزول سبب مهار آزادسازی اسیدهای چرب از بافت چربی می شود.\nCortisol inhibits release of fatty acids from adipose tissue."], c: 3 },
+            { id: 48, q: "کدام بافت نقش اساسی در متابولیسم مواد سوختی ندارد?\nWhich tissue does not play a dominant role in fuel metabolism?", o: ["عضله\nMuscle", "مغز\nBrain", "روده\nIntestine", "بافت چربی\nAdipose tissue"], c: 2 },
+            { id: 49, q: "کدام جمله صحیح نیست?\nWhich of the following sentences is not correct?", o: ["سلولهای کوپفر فاگوسیت هستند.\nKupffer cells are phagocytes", "سلولهای بافت چربی از نظر متابولیسمی فعال نیستند.\nAdipocytes are not metabolically active", "بافت چربی می تواند گلوکز را تبدیل به اسیدهای چرب کند.\nAdipose tissue can convert glucose to fatty acids", "اپی نفرین سبب تسریع آزاد سازی اسیدهای چرب از سلولهای بافت چربی می شود.\nEpinephrine accelerate the release of fatty acids from adipocytes"], c: 1 },
+            { id: 50, q: "عضله با فعالیت متوسط از.... استفاده می کند:\nModerately active muscle uses…", o: ["فقط گلوکز خون\nOnly blood glucose", "فقط اسیدهای چرب\nOnly fatty acids", "فقط اجسام کتونی\nOnly ketone bodies", "گلوکز خون، اسیدهای چرب و اجسام کتونی\nBlood glucose, fatty acids, and ketone bodies"], c: 3 },
+            { id: 51, q: "مغز:\nBrain…", o: ["متابولیسم تنفسی بسیار فعالی دارد.\nHas a very active respiratory metabolism", "متابولیسم غیر هوازی بسیار فعالی دارد.\nHas a very active anaerobic metabolism", "40 درصد اکسیژن تام بدن را مصرف می کند.\nConsume 40% of the total O2 consumed by the body", "دارای مقدار زیادی گلیکوژن است.\nContains high amount glycogen"], c: 0 },
+            { id: 52, q: "داروهای سولفونیل اوره....\nThe sulfonylurea drugs…", o: ["کانالهای پتاسیم در سلولهای بتا را می بندند.\nClose K channels in beta cells", "کانالهای پتاسیم در سلولهای بتا را باز می کنند.\nOpen K channels in beta cells", "آزادسازی انسولین را مهار می کنند.\nInhibits insulin release", "آزادسازی گلوکاگن را تحریک می کنند.\nStimulates glucagon release"], c: 0 },
+            { id: 53, q: "کدام هورمون آزادسازی تری آسیل گلیسرول از بافت چربی را فعال نمی کند.\nWhich hormone does not activate triacylglycerol (TAG) release from adipose tissue?", o: ["گلوکاگن\nGlucagon", "انسولین\nInsulin", "اپی نفرین\nEpinephrine", "کورتیزول\nCortisol"], c: 1 },
+            { id: 54, q: "پروتئینهای آهن-سولفور ریسکه در کدام کملکس زنجیر تنفسی وجود دارد?\nRieske Iron-sulfur proteins exist in which complex of respiratory chain?", o: ["کمپلکس 1\nComplex I", "کمپلکس 2\nComplex II", "کمپلکس 3\nComplex III", "کمپلکس 4\nComplex IV"], c: 2 },
+            { id: 55, q: "برای انتقال یک جفت الکترون از NADH چند پروتون از میتوکندری خارج می شود?\nFor transfer a pair of electrons of each NADH molecule how many protons pump out the mitochondria?", o: ["6\n6", "4\n4", "10\n10", "2\n2"], c: 2 },
+            { id: 56, q: "مالونات کدام کمپلکس زنجیر تنفسی را مهار می کند?\nMalonate inhibits which complex of respiratory chain?", o: ["Complex I", "Complex II", "Complex III", "Complex IV"], c: 1 },
+            { id: 57, q: "از چپ به راست نسبت فسفریلاسیون به اکسیداسیون (P/O ratio) برای NADH و برای سوکسینات چه میزان است?\nFrom left to right the P/O ratio is…. For NADH and is…. For succinate.", o: ["1.5 - 2.5", "2.5 - 1.5", "1.5 - 3", "2 - 3"], c: 0 },
+            { id: 58, q: "جذب موثر کراتین رژیم غذایی نیازمند...\nEfficient uptake of dietary creatine requires?", o: ["سنتز از نو کراتین از گلیسین، آرژینین و متیونین است.\nDe novo synthesis of creatine from glycine, arginine, and methionine", "ورزش منظم است.\nContinuous exercise", "سنتز از نو کراتین از آرژینین و متیونین است.\nDe novo synthesis creatine from glycine and methionine", "سنتز از نو کراتین در کبد است.\nDe novo synthesis of creatine in liver"], c: 1 },
+            { id: 59, q: "منواکسیدکربن سبب مهار کدام کمپلکس می شود?\nCO inhibits:", o: ["Complex IV", "Complex I", "Complex III", "Complex II"], c: 0 },
+            { id: 60, q: "در صورت تشخیص سریع مسمومیت با سیانید تجویز سریع ...... بعنوان پادزهر انجام می شود.", o: ["نیترات سدیم", "سولفات سدیم", "بیکربنات سدیم", "کلرید سدیم"], c: 0 },
+            { id: 61, q: "دی نیتروفنل یک عامل ..... است که سبب ..... در زنجیر تنفسی می شود.", o: ["جدا کننده- فقط فسفریلاسیون", "جدا کننده- فقط اکسیداسیون", "جدا کننده- اکسیداسیون و فسفریلاسیون", "احیا کننده- فقط فسفریلاسیون"], c: 1 },
+            { id: 62, q: "ارتباط تنگاتنگ بین چرخه کربس و زنجیر تنفش سلولی از طریق...... است.", o: ["Complex IV", "Complex I", "Complex III", "Complex II"], c: 3 },
+            { id: 63, q: "در پروتئین آهن – سولفور ریسکه......", o: ["اتم آهن به دو ریشه هیستیدین، به جای دو ریشه سیستئین اتصال دارند.", "اتم آهن به دو ریشه سیستئین ، به جای دو ریشه هیستیدین اتصال دارند.", "اتم آهن به یک ریشه هیستیدین، به جای یک ریشه سیستئین اتصال دارد.", "اتم آهن به یک ریشه سیستئین ، به جای یک ریشه هیستیدین اتصال دارد."], c: 0 },
+            { id: 64, q: "فلاووپروتئین ها و اوبی کینون.....", o: ["علاوه بر الکترون، پروتون را نیز انتقال می دهند.", "فقط الکترون را انتقال می دهند.", "فقط پروتون را انتقال می دهند.", "فقط یون هیدرید را انتقال می دهند."], c: 0 },
+            { id: 65, q: "طبق فرضیه شیمیوااسموتیک....", o: ["انرژی حاصل از انتقال الکترون به یک شیب پروتونی در عرض غشاء داخلی میتوکندری تبدیل می شود که سبب سنتز آدنوزین تری فسفات می شود.", "انرژی حاصل از انتقال پروتون به یک شیب الکترونی در عرض غشاء داخلی میتوکندری تبدیل می شود.", "انرژی حاصل از انتقال الکترون مستقیما سبب سنتز آدنوزین تری فسفات می شود.", "انرژی حاصل از انتقال الکترون مستقیما سبب سنتز آدنوزین تری فسفات می شود."], c: 0 },
+            { id: 66, q: "هرگاه در زنجیر تنفسی پتانسیل احیا ترکیب شماره 1 مساوی 22/.+ ولت و ترکیب شماره 2 مساوی 1/.+ ولت باشد کدام گزینه صحیح است؟", o: ["ترکیب شماره 1 دهنده الکترون به ترکیب شماره 2 است.", "ترکیب شماره 1 گیرنده الکترون از ترکیب شماره 2 است.", "ترکیب شماره 1 احیاتر از ترکیب شماره 2 است.", "ترکیب شماره 2 اکسیدتراز ترکیب شماره 1 است."], c: 1 },
+            { id: 67, q: "به ترتیب از راست به چپ کدامیک از کمپلکسهای زنجیر تنفسی بعنوان پمپ پروتون عمل نمی کنند و کدامیک توسط سیانید مهار می شود؟", o: ["کمپلکس II - کمپلکس IV", "کمپلکس III - کمپلکس II", "کمپلکس II - کمپلکس III", "کمپلکس I - کمپلکس IV"], c: 0 },
+            { id: 68, q: "اگر در فردی عبور الکترونها از طریق زنجیر تنفسی منجر به پمپ شدن 10 پروتون به فضای بین دوغشا میتوکندری شود، چه میزان ATP سنتز می شود؟", o: ["2", "3", "1.5", "2.5"], c: 3 },
+            { id: 69, q: "درفردی که دچار مسمومیت با سیانور شده است چگونه متابولیسم وی تغییر می کند？", o: ["کاهش فسفریلاسیون- اکسیداتیو بعلت مهار کمپلکس شماره 1 زنجیر تنفسی", "تمام کمپلکسهای زنجیر تنفسی به حالت اکسید شده در می آیند.", "افزایش فسفریلاسیون- اکسیداتیو با افزایش اکسیداسیون کمپلکس 4", "کاهش و مهار فسفریلاسیون- اکسیداتیو بعلت مهار کمپلکس 4"], c: 3 },
+            { id: 70, q: "موثرترین فاکتور در تعیین سرعت فسفریلاسیون اکسیداتیو در حالت استراحت کدام است؟", o: ["فراهم بودن ADP", "فراهم بودن اکسیژن", "غلظت فسفات", "میزان ATP"], c: 0 },
+            { id: 71, q: "در طول گرسنگی:", o: ["اسکلت کربنی تمام اسیدهای آمینه تبدیل به پیروات می شود.", "اپی نفرین تجزیه تری آسیل گلیسرولها در بافت چربی را فعال می کند.", "میزان استواستات کاهش می یابد", "تبدیل پیروات به اگزالواستات کاهش می یابد."], c: 1 },
+            { id: 72, q: "هرگاه در زنجیر تنفسی پتانسیل احیا ترکیب شماره 1 مساوی 32/.- ولت و ترکیب شماره 2 مساوی 1/.+ ولت باشد کدام گزینه صحیح است؟", o: ["ترکیب شماره 1 دهنده الکترون به ترکیب شماره 2 است.", "ترکیب شماره 1 گیرنده الکترون از ترکیب شماره 2 است.", "ترکیب شماره 1 اکسیدتر از ترکیب شماره 2 است.", "ترکیب شماره 2 احیاتر از ترکیب شماره 1 است."], c: 0 },
+            { id: 73, q: "کدام گزینه صحیح نیست؟", o: ["داروهای نسل دوم سولفونیل اوره (Sulfonylurea) نسبت به نسل اول عوارض کمتر دارند.", "ورود گلوکز به سلولهای بتا پانکراس از طریق GLUT2 است.", "انسولین سبب افزایش سنتز اسیدهای چرب در کبد می شود.", "داروهای سولفونیل اوره با بستن کانالهای کلسیم سبب افزایش ترشح انسولین می شوند."], c: 3 },
+            { id: 74, q: "کراتین در بدن از اسیدهای آمینه...... سنتز می شود و این سنتز عمدتا در....... انجام می گیرد.", o: ["گلیسین-آرژینین-متیونین- کبد و کلیه", "گلیسین-لیزین-متیونین-کبد و کلیه", "آرژینین-لیزین-متیونین-کلیه و عضلات", "لیزین-ترئونین- فنیل آلانین-کبد و قلب"], c: 0 },
+            { id: 75, q: "ایزو آنزیم کراتین کیناز قلب ..... نام دارد و متابولیسم انرژی در قلب.... است.", o: ["MB-هوازی", "MM-هوازی", "BB-بی هوازی و هوازی", "MB-بی هوازی"], c: 0 }
+        ];
+
+        // --- متغیرهای حالت برنامه ---
+        let currentSectionNum = null;
+        let currentQuestionsList = [];
+        let currentIndex = 0;
+        let userAnswers = {};
+        let isChallengeMode = false;
+        let isBookmarkMode = false;
+
+        let stats = JSON.parse(localStorage.getItem('biochem_stats')) || {};
+        let bookmarks = JSON.parse(localStorage.getItem('biochem_bookmarks')) || {};
+
+        const CustomUI = {
+            alert: function(text, callback) {
+                const container = document.getElementById('modal-container');
+                container.innerHTML = `
+                    <div class="custom-modal-overlay">
+                        <div class="custom-modal">
+                            <p>${text}</p>
+                            <div style="margin-top: 15px;">
+                                <button class="btn btn-accent" id="modal-ok" style="width: 100%; justify-content: center;">تایید</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                document.getElementById('modal-ok').onclick = function() {
+                    container.innerHTML = '';
+                    if(callback) callback();
+                };
+            },
+            confirm: function(text, onConfirm) {
+                const container = document.getElementById('modal-container');
+                container.innerHTML = `
+                    <div class="custom-modal-overlay">
+                        <div class="custom-modal">
+                            <p>${text}</p>
+                            <div style="display: flex; gap: 10px; margin-top: 15px;">
+                                <button class="btn btn-accent" id="modal-yes" style="flex:1; justify-content: center;">بله</button>
+                                <button class="btn" id="modal-no" style="flex:1; justify-content: center;">لغو</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                document.getElementById('modal-yes').onclick = function() {
+                    container.innerHTML = '';
+                    onConfirm();
+                };
+                document.getElementById('modal-no').onclick = function() {
+                    container.innerHTML = '';
+                };
+            }
+        };
+
+        function logoutSubject() {
+            CustomUI.confirm('آیا مطمئن هستید؟ فقط اطلاعات و آمارهای مربوط به درس بیوشیمی پاک خواهد شد و نام شما تغییر نخواهد کرد.', function() {
+                localStorage.removeItem('biochem_stats');
+                localStorage.removeItem('biochem_bookmarks');
+                location.reload();
+            });
+        }
+
+        function checkUser() {
+            let username = localStorage.getItem('global_username');
+            if (!username) {
+                // اگر از صفحه اصلی نیامده باشد یک نام پیش‌فرض می‌گذاریم
+                username = 'دانشجو';
+            }
+            document.getElementById('greeting').innerText = `سلام ${username}!`;
+            initApp();
+        }
+
+        function initApp() {
+            renderDashboard();
+        }
+
+        function renderDashboard() {
+            const containerArea = document.getElementById('main-content-area');
+            containerArea.innerHTML = '';
+
+            const titleEl = document.createElement('div');
+            titleEl.className = 'section-title';
+            titleEl.innerText = 'بخش‌های ۳ گانه بانک سوالات';
+            containerArea.appendChild(titleEl);
+
+            const grid = document.createElement('div');
+            grid.className = 'grid-menu';
+
+            for (let i = 1; i <= 3; i++) {
+                let qRange = i === 1 ? "سوالات ۱ تا ۲۵" : 
+                             i === 2 ? "سوالات ۲۶ تا ۵۰" : 
+                             "سوالات ۵۱ تا ۷۵";
+                             
+                const btn = document.createElement('button');
+                btn.className = 'btn';
+                btn.style.padding = '8px 12px';
+                btn.innerHTML = `
+                    <div class="btn-content">
+                        <span style="font-weight: 600; font-size: 0.82rem;">بخش ${i} سوالات</span>
+                        <span style="font-size: 0.72rem; color: var(--text-secondary);">${qRange}</span>
+                    </div>
+                    <span class="badge">بخش ${i}</span>
+                `;
+                btn.onclick = () => openSectionOptions(i);
+                grid.appendChild(btn);
+            }
+            containerArea.appendChild(grid);
+
+            updateBadges();
+            updateMasteryBar();
+        }
+
+        function openSectionOptions(sectionNum) {
+            currentSectionNum = sectionNum;
+            document.getElementById('section-option-title').innerText = `بخش ${sectionNum}`;
+            showScreen('section-options-screen');
+        }
+
+        function startSectionMemorize() {
+            document.getElementById('memo-header-title').innerText = `حفظ سوالات: بخش ${currentSectionNum}`;
+            let startIdx = (currentSectionNum - 1) * 25;
+            let endIdx = startIdx + 25;
+            let questions = allQuestions.slice(startIdx, endIdx);
+            renderMemorizeCards(questions);
+        }
+
+        function startSectionQuiz() {
+            userAnswers = {};
+            document.getElementById('quiz-type-title').innerText = `تمرین بخش ${currentSectionNum}`;
+            let startIdx = (currentSectionNum - 1) * 25;
+            let endIdx = startIdx + 25;
+            let questions = allQuestions.slice(startIdx, endIdx);
+
+            currentQuestionsList = prepareQuestions(questions);
+            currentIndex = 0;
+            showScreen('quiz-screen');
+            renderQuestion();
+        }
+
+        function renderMemorizeCards(questions) {
+            const container = document.getElementById('memorize-container');
+            container.innerHTML = '';
+
+            questions.forEach((qObj, idx) => {
+                const card = document.createElement('div');
+                card.className = 'memo-card';
+                
+                let optsHtml = '';
+                qObj.o.forEach((optText, optIdx) => {
+                    const isCorrect = (optIdx === qObj.c);
+                    optsHtml += `<div class="memo-opt ${isCorrect ? 'correct-ans' : ''}">${optIdx + 1}) ${optText} ${isCorrect ? '✓ (پاسخ صحیح)' : ''}</div>`;
+                });
+
+                card.innerHTML = `<div class="memo-q">سوال ${idx + 1}: ${qObj.q}</div><div class="memo-opts">${optsHtml}</div>`;
+                container.appendChild(card);
+            });
+
+            showScreen('memorize-screen');
+        }
+
+        function startChallengeQuiz() {
+            isChallengeMode = true;
+            isBookmarkMode = false;
+            userAnswers = {};
+            document.getElementById('quiz-type-title').innerText = `🎯 ایستگاه چالش`;
+
+            let filtered = allQuestions.filter(q => stats[q.id] && stats[q.id].wrongCount >= 2);
+            if (filtered.length === 0) {
+                CustomUI.alert('اینجا هوشمنده! یکم تمرین کن تا ایرادتو پیدا کنم 🥸');
+                return;
+            }
+
+            currentQuestionsList = prepareQuestions(filtered);
+            currentIndex = 0;
+            showScreen('quiz-screen');
+            renderQuestion();
+        }
+
+        function startBookmarkQuiz() {
+            isChallengeMode = false;
+            isBookmarkMode = true;
+            userAnswers = {};
+            document.getElementById('quiz-type-title').innerText = `⭐ سوالات نشان‌دار`;
+
+            let filtered = allQuestions.filter(q => bookmarks[q.id]);
+            if (filtered.length === 0) {
+                CustomUI.alert('شما هنوز هیچ سوالی را نشان‌دار نکرده‌اید!');
+                return;
+            }
+
+            currentQuestionsList = prepareQuestions(filtered);
+            currentIndex = 0;
+            showScreen('quiz-screen');
+            renderQuestion();
+        }
+
+        function startRandomComprehensiveQuiz() {
+            isChallengeMode = false;
+            isBookmarkMode = false;
+            userAnswers = {};
+            document.getElementById('quiz-type-title').innerText = `🎲 آزمون جامع رندوم`;
+
+            currentQuestionsList = prepareQuestions([...allQuestions]);
+            currentIndex = 0;
+            showScreen('quiz-screen');
+            renderQuestion();
+        }
+
+        function prepareQuestions(questionsList) {
+            let shuffledQuestions = shuffle(questionsList);
+            return shuffledQuestions.map(item => {
+                let mappedOptions = item.o.map((txt, index) => ({ text: txt, originalIndex: index }));
+                return {
+                    id: item.id,
+                    q: item.q,
+                    c: item.c,
+                    shuffledOptions: shuffle(mappedOptions)
+                };
+            });
+        }
+
+        function renderQuestion() {
+            if (currentQuestionsList.length === 0) return;
+
+            const currentQ = currentQuestionsList[currentIndex];
+            if (!stats[currentQ.id]) stats[currentQ.id] = { wrongCount: 0, consecutiveCorrect: 0 };
+
+            document.getElementById('progress-text').innerText = `سوال ${currentIndex + 1} از ${currentQuestionsList.length}`;
+            document.getElementById('question-text').innerText = currentQ.q;
+
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
+
+            currentQ.shuffledOptions.forEach(opt => {
+                const div = document.createElement('div');
+                div.className = 'option-item';
+                div.innerText = opt.text;
+                div.setAttribute('data-original-index', opt.originalIndex);
+                div.onclick = () => selectOption(div, opt.originalIndex, currentQ.c, currentQ.id);
+
+                if (userAnswers[currentQ.id] !== undefined) {
+                    div.classList.add('disabled');
+                    if (opt.originalIndex === currentQ.c) div.classList.add('correct');
+                    if (opt.originalIndex === userAnswers[currentQ.id] && userAnswers[currentQ.id] !== currentQ.c) div.classList.add('wrong');
+                }
+                container.appendChild(div);
+            });
+
+            document.getElementById('btn-prev').style.visibility = (currentIndex === 0) ? 'hidden' : 'visible';
+            document.getElementById('btn-next').innerText = (currentIndex === currentQuestionsList.length - 1) ? 'پایان' : 'سوال بعدی';
+            updateBookmarkBtnUI();
+        }
+
+        function selectOption(element, selectedIdx, correctIdx, qId) {
+            const items = document.querySelectorAll('.option-item');
+            items.forEach(item => item.classList.add('disabled'));
+            userAnswers[qId] = selectedIdx;
+
+            if (selectedIdx === correctIdx) {
+                element.classList.add('correct');
+                stats[qId].consecutiveCorrect++;
+                if (stats[qId].consecutiveCorrect >= 3) stats[qId].wrongCount = 0;
+            } else {
+                element.classList.add('wrong');
+                stats[qId].wrongCount++;
+                stats[qId].consecutiveCorrect = 0;
+                items.forEach(item => {
+                    if (parseInt(item.getAttribute('data-original-index')) === correctIdx) item.classList.add('correct');
+                });
+            }
+            saveStats();
+        }
+
+        function navigateQuestion(step) {
+            currentIndex += step;
+            if (currentIndex >= currentQuestionsList.length) {
+                CustomUI.alert('آزمون به پایان رسید. خسته نباشید!', () => goHome());
+            } else if (currentIndex < 0) {
+                currentIndex = 0;
+            } else {
+                renderQuestion();
+            }
+        }
+
+        function toggleBookmark() {
+            if (currentQuestionsList.length === 0) return;
+            const qId = currentQuestionsList[currentIndex].id;
+            bookmarks[qId] = !bookmarks[qId];
+            saveBookmarks();
+            updateBookmarkBtnUI();
+        }
+
+        function updateBookmarkBtnUI() {
+            if (currentQuestionsList.length === 0) return;
+            const qId = currentQuestionsList[currentIndex].id;
+            const btn = document.getElementById('btn-bookmark');
+            if (bookmarks[qId]) {
+                btn.innerText = '⭐ نشان شده';
+                btn.style.background = 'rgba(234, 179, 8, 0.2)';
+            } else {
+                btn.innerText = '☆ نشان';
+                btn.style.background = '';
+            }
+        }
+
+        function saveStats() {
+            localStorage.setItem('biochem_stats', JSON.stringify(stats));
+            updateBadges();
+            updateMasteryBar();
+        }
+
+        function saveBookmarks() {
+            localStorage.setItem('biochem_bookmarks', JSON.stringify(bookmarks));
+            updateBadges();
+        }
+
+        function updateBadges() {
+            let chCount = 0;
+            for (let qId in stats) {
+                if (stats[qId].wrongCount >= 2) chCount++;
+            }
+            const chEl = document.getElementById('challenge-count');
+            if (chEl) chEl.innerText = `${chCount} سوال`;
+
+            let bmCount = Object.keys(bookmarks).filter(k => bookmarks[k]).length;
+            const bmEl = document.getElementById('bookmark-count');
+            if (bmEl) bmEl.innerText = `${bmCount} سوال`;
+        }
+
+        function updateMasteryBar() {
+            const total = allQuestions.length;
+            let score = 0;
+            for (let qId in stats) {
+                const st = stats[qId];
+                if (st.consecutiveCorrect >= 3) score += 1;
+                else if (st.consecutiveCorrect === 2) score += 0.6;
+                else if (st.consecutiveCorrect === 1 || st.wrongCount > 0) score += 0.25;
+            }
+            const pct = total > 0 ? Math.round((score / total) * 100) : 0;
+            document.getElementById('mastery-percentage').innerText = `${pct}%`;
+
+            const liquid = document.getElementById('flask-liquid');
+            liquid.style.height = `${pct}%`;
+            liquid.className = 'liquid';
+
+            if (pct < 30) {
+                liquid.classList.add('color-low');
+                document.documentElement.style.setProperty('--wave-color-1', 'rgba(190, 18, 60, 0.8)');
+                document.documentElement.style.setProperty('--wave-color-2', 'rgba(225, 29, 72, 0.5)');
+            } else if (pct < 60) {
+                liquid.classList.add('color-mid');
+                document.documentElement.style.setProperty('--wave-color-1', 'rgba(217, 119, 6, 0.8)');
+                document.documentElement.style.setProperty('--wave-color-2', 'rgba(245, 158, 11, 0.5)');
+            } else if (pct < 85) {
+                liquid.classList.add('color-high');
+                document.documentElement.style.setProperty('--wave-color-1', 'rgba(29, 78, 216, 0.8)');
+                document.documentElement.style.setProperty('--wave-color-2', 'rgba(59, 130, 246, 0.5)');
+            } else {
+                liquid.classList.add('color-max');
+                document.documentElement.style.setProperty('--wave-color-1', 'rgba(4, 120, 87, 0.8)');
+                document.documentElement.style.setProperty('--wave-color-2', 'rgba(16, 185, 129, 0.5)');
+            }
+        }
+
+        function showMasteryDetails() {
+            const pct = parseInt(document.getElementById('mastery-percentage').innerText);
+            let quote = "";
+            if (pct < 30) {
+                quote = "زوده فعلا برو یکم تمرین کن";
+            } else if (pct < 80) {
+                quote = "انگار داری یه چیزایی یاد میگیری";
+            } else {
+                quote = "خسته نباشی سوالات امتحان رو فقط حفظ کردی 🙏😂";
+            }
+            CustomUI.alert(`درصد تسلط فعلی شما: ${pct}%<br><br><span style="color:var(--accent-primary);">${quote}</span>`);
+        }
+
+        function shuffle(arr) {
+            let a = [...arr];
+            for (let i = a.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [a[i], a[j]] = [a[j], a[i]];
+            }
+            return a;
+        }
+
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+        }
+
+        function goHome() {
+            showScreen('dashboard-screen');
+            renderDashboard();
+        }
+
+        function backToPreviousFromMemorize() {
+            showScreen('section-options-screen');
+        }
+
+        // SVG Icons definitions
+        const sunIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>`;
+
+        const moonIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>`;
+
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        
+        // همگام‌سازی تم با صفحه اصلی
+        if (localStorage.getItem('global_theme') === 'light') {
+            document.body.classList.add('light-mode');
+            themeToggleBtn.innerHTML = moonIcon;
+        } else {
+            themeToggleBtn.innerHTML = sunIcon;
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            document.body.classList.toggle('light-mode');
+            if (document.body.classList.contains('light-mode')) {
+                localStorage.setItem('global_theme', 'light');
+                themeToggleBtn.innerHTML = moonIcon;
+            } else {
+                localStorage.setItem('global_theme', 'dark');
+                themeToggleBtn.innerHTML = sunIcon;
+            }
+        });
+
+        window.onload = () => {
+            checkUser();
+        };
+    </script>
+</body>
+</html>

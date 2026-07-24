@@ -1,0 +1,1751 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بانک سوالات و درسنامه جامع قارچ‌شناسی پزشکی</title>
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #090d16 0%, #15162c 50%, #1e1b4b 100%);
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-hover: rgba(255, 255, 255, 0.07);
+            --card-bg: rgba(255, 255, 255, 0.04);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent-primary: #6366f1;
+            --accent-hover: #4f46e5;
+            --success: #10b981;
+            --error: #ef4444;
+            --warning: #f59e0b;
+            --wave-color-1: rgba(255, 75, 114, 0.8);
+            --wave-color-2: rgba(255, 75, 114, 0.5);
+            --glass-overlay: rgba(255, 255, 255, 0.06);
+            --glass-border-light: rgba(255, 255, 255, 0.2);
+            --accent-overlay: rgba(255, 255, 255, 0.2);
+            --success-text: #a7f3d0;
+            --error-text: #fca5a5;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            transition: background 0.5s ease, color 0.5s ease;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 780px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 20px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+            transition: all 0.5s ease;
+            position: relative;
+        }
+
+        .screen {
+            display: none;
+        }
+
+        .screen.active {
+            display: block;
+            animation: fadeInScreen 0.3s ease forwards;
+        }
+
+        @keyframes fadeInScreen {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .top-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .top-left-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .mode-toggle-switch {
+            display: flex;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            padding: 2px;
+        }
+
+        .mode-option {
+            padding: 5px 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-secondary);
+            border: none;
+            background: transparent;
+        }
+
+        .mode-option.active {
+            background: var(--accent-primary);
+            color: #ffffff;
+            box-shadow: 0 2px 8px rgba(99, 102, 241, 0.4);
+        }
+
+        .icon-btn {
+            padding: 0;
+            border-radius: 12px;
+            width: 38px;
+            height: 38px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .icon-btn:hover {
+            background: var(--glass-hover);
+            transform: translateY(-2px);
+            border-color: var(--glass-border-light);
+            color: var(--accent-primary);
+        }
+
+        .icon-btn svg {
+            width: 18px;
+            height: 18px;
+            stroke-width: 2.2;
+            transition: all 0.3s ease;
+        }
+
+        .hero-card {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .hero-info h2 {
+            font-size: 1.1rem;
+            color: var(--accent-primary);
+            margin-bottom: 2px;
+        }
+
+        .hero-info p {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+        }
+
+        .mastery-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .mastery-container:hover {
+            transform: scale(1.05);
+        }
+
+        .flask-wrapper {
+            position: relative;
+            width: 40px;
+            height: 52px;
+            margin-bottom: 4px;
+        }
+
+        .flask-shape {
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.01);
+            clip-path: polygon(32% 0%, 68% 0%, 68% 8%, 64% 8%, 64% 35%, 100% 90%, 100% 100%, 0% 100%, 0% 90%, 36% 35%, 36% 8%, 32% 8%);
+            position: relative;
+            overflow: hidden;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .liquid {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 0%;
+            transition: height 1.2s cubic-bezier(0.4, 0, 0.2, 1), background 0.8s ease;
+        }
+
+        .wave {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            width: 100px;
+            height: 100px;
+            background: var(--wave-color-1);
+            border-radius: 40%;
+            transform: translateX(-50%);
+            animation: rotateWave 3.5s linear infinite;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .wave:nth-child(2) {
+            top: -12px;
+            background: var(--wave-color-2);
+            border-radius: 38%;
+            animation: rotateWave 5.5s linear infinite;
+            z-index: 1;
+        }
+
+        .liquid.color-low { background: #be123c; }
+        .liquid.color-mid { background: #d97706; }
+        .liquid.color-high { background: #1d4ed8; }
+        .liquid.color-max { background: #047857; }
+
+        @keyframes rotateWave {
+            0% { transform: translateX(-50%) rotate(0deg); }
+            100% { transform: translateX(-50%) rotate(360deg); }
+        }
+
+        .mastery-label {
+            font-size: 0.7rem;
+            color: var(--text-primary);
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.06);
+            padding: 1px 6px;
+            border-radius: 10px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .section-title {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--glass-border);
+        }
+
+        .grid-menu {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        @media (min-width: 540px) {
+            .grid-menu {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .full-width {
+                grid-column: span 2;
+            }
+        }
+
+        .btn {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+            padding: 10px 14px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 0.82rem;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            text-align: right;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .btn:hover {
+            background: var(--glass-hover);
+            border-color: var(--accent-primary);
+            transform: translateY(-1px);
+        }
+
+        .btn-content {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .btn-accent {
+            background: var(--accent-primary);
+            border: none;
+            color: #ffffff;
+        }
+
+        .btn-accent:hover {
+            background: var(--accent-hover);
+        }
+
+        .btn-nav {
+            padding: 8px 14px;
+            font-size: 0.8rem;
+            justify-content: center;
+            flex-direction: row;
+        }
+
+        .badge {
+            font-size: 0.65rem;
+            background: rgba(255,255,255,0.08);
+            padding: 2px 6px;
+            border-radius: 16px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .badge-accent {
+            background: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+        }
+
+        .summary-box {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 15px;
+            line-height: 1.8;
+            font-size: 0.9rem;
+            max-height: 60vh;
+            overflow-y: auto;
+            text-align: justify;
+        }
+
+        .summary-box h3 {
+            color: var(--accent-primary);
+            margin: 14px 0 6px 0;
+            font-size: 1.05rem;
+        }
+
+        .summary-box ul {
+            padding-right: 18px;
+            margin-bottom: 10px;
+        }
+
+        .summary-box li {
+            margin-bottom: 5px;
+        }
+
+        .memorize-container {
+            max-height: 65vh;
+            overflow-y: auto;
+            padding-left: 5px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .memo-card {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            padding: 16px;
+            direction: rtl;
+            text-align: right;
+        }
+
+        .memo-q {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            line-height: 1.5;
+            white-space: pre-line;
+        }
+
+        .memo-opts {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .memo-opt {
+            padding: 8px 12px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--glass-border);
+            font-size: 0.85rem;
+        }
+
+        .memo-opt.correct-ans {
+            background: rgba(16, 185, 129, 0.15);
+            border-color: var(--success);
+            color: #a7f3d0;
+            font-weight: 600;
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 10px;
+        }
+
+        .quiz-title {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .question-box {
+            direction: rtl;
+            text-align: right;
+        }
+
+        .question-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            font-weight: 500;
+            white-space: pre-line;
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .option-item {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            padding: 12px 16px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.88rem;
+            line-height: 1.4;
+        }
+
+        .option-item:hover {
+            background: var(--glass-hover);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .option-item.correct {
+            background: rgba(16, 185, 129, 0.2) !important;
+            border-color: var(--success) !important;
+            color: #a7f3d0;
+        }
+
+        .option-item.wrong {
+            background: rgba(239, 68, 68, 0.2) !important;
+            border-color: var(--error) !important;
+            color: #fca5a5;
+        }
+
+        .option-item.disabled {
+            pointer-events: none;
+        }
+
+        .quiz-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            gap: 10px;
+        }
+
+        .custom-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(9, 13, 22, 0.8);
+            backdrop-filter: blur(8px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeIn 0.2s forwards;
+        }
+
+        .custom-modal {
+            background: #15162c;
+            border: 1px solid var(--glass-border);
+            border-radius: 18px;
+            padding: 20px;
+            width: 90%;
+            max-width: 360px;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            animation: scaleUp 0.2s forwards;
+        }
+
+        .custom-modal p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .custom-modal input {
+            width: 100%;
+            padding: 10px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            text-align: center;
+            margin-bottom: 15px;
+            outline: none;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes scaleUp { from { transform: scale(0.9); } to { transform: scale(1); } }
+
+        body.light-mode {
+            --bg-gradient: linear-gradient(135deg, #f1f5f9 0%, #cbd5e1 100%);
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(0, 0, 0, 0.1);
+            --glass-hover: rgba(255, 255, 255, 0.98);
+            --card-bg: rgba(255, 255, 255, 0.75);
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --accent-primary: #4f46e5;
+            --accent-hover: #4338ca;
+        }
+
+        body.light-mode .custom-modal {
+            background: #ffffff;
+            color: #0f172a;
+        }
+
+        body.light-mode .badge {
+            background: rgba(0, 0, 0, 0.06);
+            color: var(--text-secondary);
+        }
+
+        body.light-mode .badge-accent {
+            background: rgba(79, 70, 229, 0.15);
+            color: var(--accent-primary);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            letter-spacing: 1px;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- هدر بالا شامل تاگل تم، بازگشت به خانه، خروج اختصاصی و مود -->
+        <div class="top-controls">
+            <div class="top-left-group">
+                <button id="theme-toggle" class="icon-btn" title="تغییر تم">☀️</button>
+                <button id="home-btn" class="icon-btn" title="بازگشت به منوی اصلی" onclick="location.href='index.html'">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                </button>
+                <button id="logout-btn" class="icon-btn" title="پاک کردن اطلاعات این درس" onclick="logoutSubject()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                        <polyline points="16 17 21 12 16 7"></polyline>
+                        <line x1="21" y1="12" x2="9" y2="12"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="mode-toggle-switch">
+                <button class="mode-option" id="mode-classic" onclick="setMode('classic')">کلاسیک</button>
+                <button class="mode-option active" id="mode-modern" onclick="setMode('modern')">مدرن</button>
+            </div>
+        </div>
+
+        <div id="modal-container"></div>
+
+        <!-- داشبورد اصلی -->
+        <div id="dashboard-screen" class="screen active">
+            <!-- هیرو کارت -->
+            <div class="hero-card">
+                <div class="hero-info">
+                    <h2 id="greeting">سلام!</h2>
+                    <p id="dashboard-subtitle">سیستم هوشمند مرور و آزمون قارچ‌شناسی</p>
+                </div>
+                <div class="mastery-container" onclick="showMasteryDetails()" title="مشاهده درصد تسلط">
+                    <div class="flask-wrapper">
+                        <div class="flask-shape">
+                            <div class="liquid" id="flask-liquid">
+                                <div class="wave"></div>
+                                <div class="wave"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mastery-label" id="mastery-percentage">0%</div>
+                </div>
+            </div>
+
+            <div id="main-content-area"></div>
+
+            <div class="section-title">مرور و آزمون هوشمند</div>
+            <div class="grid-menu" style="grid-template-columns: repeat(3, 1fr) !important; gap: 6px; margin-bottom: 0;">
+                <button class="btn" style="flex-direction: column; align-items: center; text-align: center; padding: 8px 6px; border-color: rgba(239, 68, 68, 0.3); color: #ef4444;" onclick="startChallengeQuiz()">
+                    <span style="font-weight: 600; font-size: 0.78rem;">🎯 چالش</span>
+                    <span class="badge" id="challenge-count" style="background: rgba(239, 68, 68, 0.1); color: #ef4444; margin-top: 2px;">۰ سوال</span>
+                </button>
+                <button class="btn" style="flex-direction: column; align-items: center; text-align: center; padding: 8px 6px; border-color: rgba(234, 179, 8, 0.3); color: #f59e0b;" onclick="startBookmarkQuiz()">
+                    <span style="font-weight: 600; font-size: 0.78rem;">⭐ نشان‌دار</span>
+                    <span class="badge" id="bookmark-count" style="background: rgba(234, 179, 8, 0.1); color: #f59e0b; margin-top: 2px;">۰ سوال</span>
+                </button>
+                <button class="btn btn-accent" style="flex-direction: column; align-items: center; text-align: center; padding: 8px 6px;" onclick="startRandomComprehensiveQuiz()">
+                    <span style="font-weight: 600; font-size: 0.78rem;">🎲 جامع رندوم</span>
+                    <span class="badge badge-accent" style="margin-top: 2px;">۱۵۳ سوال</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- صفحه زیرمبحث‌های جلسه (مدرن) -->
+        <div id="subtopics-screen" class="screen">
+            <div class="quiz-header">
+                <span class="quiz-title" id="session-main-title">جلسه</span>
+                <button class="btn btn-nav btn-accent" onclick="goHome()">بازگشت به خانه</button>
+            </div>
+            <div class="section-title">انتخاب زیرمبحث</div>
+            <div class="grid-menu" id="subtopics-grid"></div>
+        </div>
+
+        <!-- صفحه درسنامه‌ها به تفکیک جلسه و زیرمبحث (کلاسیک) -->
+        <div id="classic-notes-sessions-screen" class="screen">
+            <div class="quiz-header">
+                <span class="quiz-title">درسنامه‌ها به تفکیک جلسات</span>
+                <button class="btn btn-nav btn-accent" onclick="goHome()">بازگشت به خانه</button>
+            </div>
+            <div class="grid-menu" id="classic-notes-sessions-grid"></div>
+        </div>
+
+        <div id="classic-notes-subtopics-screen" class="screen">
+            <div class="quiz-header">
+                <span class="quiz-title" id="classic-sess-title">جلسه</span>
+                <button class="btn btn-nav btn-accent" onclick="openClassicNotesSessions()">بازگشت</button>
+            </div>
+            <div class="grid-menu" id="classic-notes-subtopics-grid"></div>
+        </div>
+
+        <!-- صفحه انتخاب گزینه (درسنامه یا سوالات) برای جلسات (مدرن) -->
+        <div id="options-screen" class="screen">
+            <div class="quiz-header">
+                <span class="quiz-title" id="subtopic-header-title">زیرمبحث</span>
+                <button class="btn btn-nav btn-accent" onclick="backToSubtopics()">بازگشت</button>
+            </div>
+            <div class="grid-menu">
+                <button class="btn btn-accent" style="padding: 18px;" onclick="openSummary()">
+                    <div class="btn-content">
+                        <span style="font-size: 1rem; font-weight: bold;">📖 درسنامه خلاصه</span>
+                        <span style="font-size: 0.78rem; opacity: 0.8;">مطالعه نکات کلیدی و مفهومی</span>
+                    </div>
+                </button>
+                <button class="btn" style="padding: 18px;" id="btn-goto-questions" onclick="openQuestionsMenu()">
+                    <div class="btn-content">
+                        <span style="font-size: 1rem; font-weight: bold;">❓ بانک سوالات تستی</span>
+                        <span style="font-size: 0.78rem; color: var(--text-secondary);" id="subtopic-q-count">سوالات تستی</span>
+                    </div>
+                </button>
+            </div>
+        </div>
+
+        <!-- صفحه انتخاب گزینه برای حالت ۵ بخشی (کلاسیک) -->
+        <div id="section-options-screen" class="screen">
+            <div class="quiz-header">
+                <span class="quiz-title" id="section-option-title">بخش</span>
+                <button class="btn btn-nav btn-accent" onclick="goHome()">بازگشت</button>
+            </div>
+            <div class="grid-menu">
+                <button class="btn btn-accent" style="padding: 18px;" onclick="startSectionMemorize()">
+                    <div class="btn-content">
+                        <span style="font-size: 1rem; font-weight: bold;">🧠 حفظ سوالات</span>
+                        <span style="font-size: 0.78rem; opacity: 0.8;">مشاهده تمام سوالات با پاسخ صحیح (اسکرول)</span>
+                    </div>
+                </button>
+                <button class="btn" style="padding: 18px;" onclick="startSectionQuiz()">
+                    <div class="btn-content">
+                        <span style="font-size: 1rem; font-weight: bold;">⏱️ تمرین (رندوم سوال و گزینه)</span>
+                        <span style="font-size: 0.78rem; color: var(--text-secondary);">آزمون و تمرین تعاملی</span>
+                    </div>
+                </button>
+            </div>
+        </div>
+
+        <!-- صفحه انتخاب حالت سوالات (حفظ یا تمرین) برای جلسات -->
+        <div id="questions-mode-screen" class="screen">
+            <div class="quiz-header">
+                <span class="quiz-title" id="qmode-header-title">حالت سوالات</span>
+                <button class="btn btn-nav btn-accent" onclick="backToOptions()">بازگشت</button>
+            </div>
+            <div class="grid-menu">
+                <button class="btn btn-accent" style="padding: 18px;" onclick="startMemorizeMode()">
+                    <div class="btn-content">
+                        <span style="font-size: 1rem; font-weight: bold;">🧠 حفظ سوالات</span>
+                        <span style="font-size: 0.78rem; opacity: 0.8;">مشاهده تمام سوالات با پاسخ صحیح (اسکرول)</span>
+                    </div>
+                </button>
+                <button class="btn" style="padding: 18px;" onclick="startQuizMode()">
+                    <div class="btn-content">
+                        <span style="font-size: 1rem; font-weight: bold;">⏱️ تمرین (رندوم سوال و گزینه)</span>
+                        <span style="font-size: 0.78rem; color: var(--text-secondary);">تمرین رندوم و ارزیابی تسلط</span>
+                    </div>
+                </button>
+            </div>
+        </div>
+
+        <!-- صفحه نمایش درسنامه -->
+        <div id="summary-screen" class="screen">
+            <div class="quiz-header">
+                <span class="quiz-title" id="summary-header-title">درسنامه</span>
+                <button class="btn btn-nav btn-accent" onclick="backFromSummary()">بازگشت</button>
+            </div>
+            <div class="summary-box" id="summary-content"></div>
+        </div>
+
+        <!-- صفحه حفظ سوالات (Memorize Mode) -->
+        <div id="memorize-screen" class="screen">
+            <div class="quiz-header">
+                <span class="quiz-title" id="memo-header-title">حفظ سوالات</span>
+                <button class="btn btn-nav btn-accent" onclick="backToPreviousFromMemorize()">بازگشت</button>
+            </div>
+            <div class="memorize-container" id="memorize-container"></div>
+        </div>
+
+        <!-- صفحه آزمون / تمرین (Quiz Mode) -->
+        <div id="quiz-screen" class="screen">
+            <div class="quiz-header">
+                <span class="quiz-title" id="quiz-type-title">آزمون</span>
+                <span class="badge" id="progress-text">سوال ۱ از ۱۰</span>
+                <div style="display: flex; gap: 8px;">
+                    <button class="btn btn-nav" id="btn-bookmark" onclick="toggleBookmark()">☆ نشان</button>
+                    <button class="btn btn-nav btn-accent" onclick="goHome()">خانه</button>
+                </div>
+            </div>
+
+            <div class="question-box">
+                <div class="question-text" id="question-text">متن سوال...</div>
+                <div class="options-list" id="options-container"></div>
+            </div>
+
+            <div class="quiz-footer">
+                <button class="btn btn-nav" id="btn-prev" onclick="navigateQuestion(-1)">سوال قبلی</button>
+                <button class="btn btn-nav btn-accent" id="btn-next" onclick="navigateQuestion(1)">سوال بعدی</button>
+            </div>
+        </div>
+
+        <!-- فوتر -->
+        <div class="footer">
+            By: sommet_s
+        </div>
+    </div>
+
+    <script>
+        const mycologyData = {
+            sessions: [
+                {
+                    id: 1,
+                    title: "جلسه اول: مقدمات، ریخت‌شناسی، تولید مثل و طبقه‌بندی",
+                    subtopics: [
+                        { 
+                            name: "مقدمات و ویژگی‌های کلی موجودات", 
+                            hasQuestions: false,
+                            summary: `<ul><li><b>جایگاه تکاملی:</b> قارچ‌ها یکی از سلسله‌های پنج‌گانه موجودات زنده (در کنار گیاهان، جانوران، آغازیان و مونرا) هستند.</li><li><b>ویژگی‌های سلولی:</b> یوکاریوت (دارای هسته مشخص)، هتروتروف (بدون قدرت فتوسنتز) و گندرو (تجزیه‌کننده مواد).</li><li><b>تفاوت با جانوران:</b> قارچ‌ها قادر به بلع (فاگوسیتوز) نیستند و تغذیه آن‌ها از طریق جذب (Absorption) انجام می‌شود. فاقد تاژک، مژک و حرکت هستند.</li><li><b>دیواره سلولی:</b> از پلی‌ساکاریدهایی مانند کیتین، مانان، گالاکتومانان و کیتوزان تشکیل شده است (مهم برای داروهای ضدقارچ).</li><li><b>غشای سیتوپلاسمی (پلاسمالما):</b> حاوی ارگوسترول است (برخلاف کلسترول در حیوانات). بیش از ۶۰ درصد داروهای ضدقارچ این بخش را هدف قرار می‌دهند.</li><li><b>شرایط رشد:</b> نیاز خاصی جز رطوبت (حداقل ۸۰٪) ندارند. در دمای اتاق (۲۵ تا ۳۰ درجه) و حتی در شرایط اسیدی و قلیایی رشد می‌کنند.</li></ul>`
+                        },
+                        { 
+                            name: "ریخت‌شناسی و ساختار قارچ‌ها", 
+                            hasQuestions: true, 
+                            qIds: [1, 2],
+                            summary: `<ul><li><b>اندازه:</b> ۱۰ تا ۱۰۰ برابر بزرگتر از باکتری‌ها (۲ تا ۵ میکرون).</li><li><b>اشکال ماکروسکوپیک:</b> ۱. کپک (Mould)، ۲. قارچ چتری (Mushroom - ساختار موقت زایشی جنسی)، ۳. مخمر (Yeast - ژله‌ای/خامه‌ای).</li><li><b>ساختار میکروسکوپیک:</b> ساختار اصلی قارچ‌های رشته‌ای «هایف» (Hyphae) نام دارد و تجمع آن‌ها «میسلیوم» (کپک) را می‌سازد.</li><li><b>انواع هایف:</b> دارای تیغه عرضی (Septate) و فاقد تیغه عرضی (Aseptate/Coenocytic).</li><li><b>بخش‌های قارچ رشته‌ای بالغ:</b> الف) بخش رویشی (Vegetative hyphae): نفوذ در محیط، جذب غذا، استحکام و تولید آنزیم. ب) بخش زایشی (Reproductive/Aerial hyphae): بخش هوایی که شامل کونیدیوفور، سلول‌های کونیدی‌زا (فیالید) و کونیدی‌ها (اسپورهای مقاوم برای پخش و تکثیر) است.</li><li><b>قارچ‌های دو شکلی (Dimorphic):</b> ۵ جنس از قارچ‌ها بر اساس دما تغییر شکل می‌دهند (مثلاً در ۲۵ درجه به شکل رشته‌ای و در ۳۷ درجه بدن انسان به شکل مخمری). عامل بیماری‌های بسیار خطرناک (مانند هیستوپلاسما کپسولاتوم).</li></ul>`
+                        },
+                        { 
+                            name: "مکانیزم‌های تولید مثل", 
+                            hasQuestions: true, 
+                            qIds: [3],
+                            summary: `<ul><li><b>ویژگی ژنتیکی:</b> قارچ‌ها معمولاً هاپلوئید (n) هستند و برای مدت کوتاهی جهت تولید مثل جنسی دیپلوئید (2n) می‌شوند.</li><li><b>تولید مثل جنسی (در قارچ‌های کامل/Perfect):</b> هدف اصلی آن ایجاد تنوع ژنتیکی است. به شرایط خاص محیطی (دما و رطوبت) نیاز دارد. روش‌ها شامل تولید زیگوسپور، آسکوسپور و بازیدیواسپور است.</li><li><b>تولید مثل غیرجنسی (در همه قارچ‌ها):</b> هدف آن تکثیر انبوه، پخش آسان و ایجاد مقاومت است. روش‌ها عبارتند از: تولید کونیدی (برهنه) و اسپور (درون کیسه)، آرتروکونیدی (خرد شدن هایف‌های دارای تیغه عرضی)، کلامیدوکونیدی (مقاوم‌ترین ساختار با دیواره ضخیم)، جوانه زدن (Budding) و تقسیم دوتایی در مخمرها.</li></ul>`
+                        },
+                        { 
+                            name: "طبقه‌بندی و شاخه‌بندی قارچ‌ها", 
+                            hasQuestions: false,
+                            summary: `<ul><li><b>شاخه زیگومایکوتا (Zygomycota):</b> رشته‌ای و فاقد تیغه عرضی. تولید مثل جنسی: زیگوسپور. اهمیت پزشکی متوسط.</li><li><b>شاخه آسکومایکوتا (Ascomycota):</b> دارای تیغه عرضی (هیفومیست) و مخمر. تولید مثل جنسی: آسکوسپور. دارای بیشترین اهمیت پزشکی و آلرژیک.</li><li><b>شاخه بازیدیومایکوتا (Basidiomycota):</b> قارچ‌های چتری و کپک‌های دارای تیغه عرضی. تولید مثل جنسی: بازیدیواسپور. اهمیت پزشکی پایین (بیشتر از نظر مسمومیت).</li><li><b>شبه‌شاخه دئوترومایکوتا (Deuteromycota / قارچ‌های ناقص):</b> هیفومیست و مخمر. تولید مثل جنسی آن‌ها هنوز شناخته نشده است اما اهمیت پزشکی بسیار بالایی دارند.</li><li><b>دسته‌بندی تکاملی جایگزین:</b> قارچ‌ها به دو دسته فاقد تیغه عرضی (زیگومایکوتا) و دارای تیغه عرضی با تاخیر در ادغام هسته (دیکاریومایکوتا، شامل آسکو و بازیدیو) تقسیم می‌شوند.</li></ul>`
+                        },
+                        { 
+                            name: "اهمیت پزشکی، بیماری‌زایی و سموم", 
+                            hasQuestions: true, 
+                            qIds: [4, 5, 6, 7, 8],
+                            summary: `<ul><li><b>کاربردها:</b> تغذیه (انواع خوراکی، خمیرمایه)، شیمیایی (تولید الکل و اسیدها)، داروسازی (آنتی‌بیوتیک‌هایی مثل پنی‌سیلین، داروی ضدقارچ گریزئوفولوین از پنی‌سیلیوم).</li><li><b>منشأ بیماری‌های قارچی (مایکوزیس):</b> ۱. داخلی (Endogenous / فرصت‌طلب): در حالت عادی جزو فلور طبیعی هستند اما با بروز ریسک‌فاکتورها بیماری‌زا می‌شوند. ۲. خارجی (Exogenous / پاتوژن): بسیار مسری هستند و نیازی به نقص ایمنی ندارند (مثل درماتومایکوزیس یا کچلی).</li><li><b>مسمومیت‌های قارچی:</b> الف) مایسیتسموس (Mycetismus): خوردن قارچ‌های چتری سمی. مانند آمانیتا که سم آمانیتین دارد (کشنده، مقاوم به جوشاندن، دوره کمون طولانی). ب) مایکوتوکسیکوزیس (Mycotoxicosis): خوردن غذای آلوده به سم کپک. مانند آفلاتوکسین (تولید شده توسط آسپرژیلوس فلاووس در پسته خام شکسته، سرطان‌زای کبد).</li></ul>`
+                        }
+                    ]
+                },
+                {
+                    id: 2,
+                    title: "جلسه دوم: محیط‌های کشت، رنگ‌آمیزی و قارچ‌های ساپروفیت",
+                    subtopics: [
+                        { 
+                            name: "محیط‌های کشت رایج در قارچ‌شناسی", 
+                            hasQuestions: true, 
+                            qIds: [9, 10],
+                            summary: `<ul><li><b>محیط S (سابرودکستروز آگار):</b> بهترین محیط کشت برای کپک‌ها و قارچ‌ها در دمای اتاق که دارای قند است. باکتری‌ها نیز در آن رشد می‌کنند.</li><li><b>محیط SC (سابرو + کلرامفنیکل):</b> برای جلوگیری از رشد باکتری‌ها آنتی‌بیوتیک کلرامفنیکل اضافه می‌شود. مناسب برای نمونه‌های دهان، خلط و واژن.</li><li><b>محیط SCC:</b> سابرو + کلرامفنیکل + سیکلوهگزامید. سیکلوهگزامید مانع رشد قارچ‌های ساپروفیت (سریع‌الرشد) شده و فقط اجازه رشد به درماتوفیت‌ها (رشد در ۲ تا ۴ هفته) را می‌دهد.</li><li><b>محیط BHI (عصاره مغز و قلب):</b> حاوی خون، برای کشت قارچ‌های دوشکلی در دمای ۳۷ درجه استفاده می‌شود. فاقد قند ساده است و شرایط بدن را شبیه‌سازی می‌کند.</li></ul>`
+                        },
+                        { 
+                            name: "مواد و روش‌های رنگ‌آمیزی", 
+                            hasQuestions: false,
+                            summary: `<ul><li><b>هیدروکسید پتاسیم (KOH):</b> پرمصرف‌ترین ماده جهت هضم بافت‌ها و شفاف‌سازی نمونه‌ها (غیر از مو). اثری بر حیات قارچ ندارد.</li><li><b>لاکتوفنل:</b> شفاف‌کننده ضعیف، منحصراً برای شفاف‌سازی نمونه مو (جلوگیری از تخریب مو).</li><li><b>لاکتوفنل کاتن بلو (LCB):</b> ترکیبی از لاکتوفنل و کاتن بلو برای تهیه لام مرطوب از کلنی قارچ‌ها و مشاهده زیر میکروسکوپ.</li><li><b>رنگ‌آمیزی‌های تخصصی:</b> اسمیر (گیمسا و گرم) و بافت (هماتوکسیلین ائوزین، پاس و گومری متنامین سیلور برای نشان دادن پیگمان واضح‌تر).</li></ul>`
+                        },
+                        { 
+                            name: "روش‌های شناسایی و آماده‌سازی لام", 
+                            hasQuestions: false,
+                            summary: `<ul><li><b>روش‌های شناسایی:</b> ۱. ماکروسکوپی (ساده‌ترین). ۲. میکروسکوپی (رایج‌ترین). ۳. بیوشیمیایی (تخمیر قند). ۴. ژنتیکی (PCR، دقیق‌ترین روش).</li><li><b>آماده‌سازی لام:</b> لام مرطوب (Wet mount) با برداشتن تکه‌ای از کلنی و افزودن LCB. کشت روی لام (Slide culture) با قرار دادن بلوک محیط کشت روی لام و نشاء قارچ، سپس رنگ‌آمیزی با LCB.</li></ul>`
+                        },
+                        { 
+                            name: "آشنایی با قارچ‌های ساپروفیت", 
+                            hasQuestions: false,
+                            summary: `<ul><li><b>ویژگی‌ها:</b> بزرگترین گروه، همه‌جا حضور دارند، بیماری‌زایی خفیف دارند و فقط در شرایط مساعد (ایدز، دیابت، مصرف بی‌رویه آنتی‌بیوتیک، پیوند عضو) بیماری ایجاد می‌کنند.</li><li><b>دسته‌بندی کلی سرعت رشد:</b> ۱. زیگومیست‌ها (بسیار تند رشد). ۲. هایفومیست‌ها (روشن و تیره، تند رشد). ۳. مخمرها (تک‌سلولی دارای جوانه).</li></ul>`
+                        },
+                        { 
+                            name: "بررسی اختصاصی گونه‌های قارچی", 
+                            hasQuestions: false,
+                            summary: `<ul><li><b>موکور (Mucor) و رایزوپوس (Rhizopus):</b> از زیگومیست‌ها. عامل موکورمایکوزیس (قارچ سیاه). هایف پهن فاقد تیغه عرضی. رایزوپوس عامل بیش از ۹۰ درصد موارد است و دارای ریشک (رایزوئید) است.</li><li><b>آسپرژیلوس فومیگاتوس (A. fumigatus):</b> شایع‌ترین عامل آسپرژیلوزیس، ترموتولرانت، وزیکول راکتی شکل با یک ردیف استریگما.</li><li><b>آسپرژیلوس فلاووس (A. flavus):</b> تولیدکننده سم آفلاتوکسین (سرطان‌زای کبد)، وزیکول کاملاً گرد با دو ردیف استریگما.</li><li><b>آسپرژیلوس نیجر (A. niger):</b> شایع‌ترین عامل عفونت قارچی گوش خارجی (اتومایکوزیس)، کلنی و کنیدی‌های سیاه رنگ.</li><li><b>پنی‌سیلیوم (Penicillium):</b> کاربرد دارویی، کونیدی‌زایی دسته جارویی.</li><li><b>فوزاریوم (Fusarium):</b> عامل کراتومایکوزیس (عفونت قرنیه)، تولید ماکروکونیدی داسی شکل.</li><li><b>آلترناریا و کلادوسپوریوم:</b> هایفومیست‌های تیره. کلادوسپوریوم عامل کروموبلاستومایکوزیس با کونیدی‌های بیضی در زنجیره است.</li><li><b>کاندیدا (Candida):</b> مخمر عامل کاندیدیازیس. گونه C. albicans بیماری‌زاترین است. دارای سودوهایف (هایف کاذب) و کلامیدوکونیدی.</li></ul>`
+                        }
+                    ]
+                },
+                {
+                    id: 3,
+                    title: "جلسه سوم: بیماری‌های قارچی سطحی و باکتری‌های مشابه",
+                    subtopics: [
+                        { 
+                            name: "طبقه‌بندی کلی اشکال بالینی بیماری‌های قارچی", 
+                            hasQuestions: false,
+                            summary: `<ul><li><b>سطحی (Superficial):</b> ساده‌ترین گروه، به بافت‌های غیرزنده پوست و مو حمله می‌کنند. التهاب و درد ندارند، مسری نیستند. شایع‌ترین شکایت: لکه و شوره‌ریزی.</li><li><b>پوستی (Cutaneous):</b> به پوست، مو و ناخن زنده حمله می‌کنند. درماتوفیتوزیس شایع‌ترین است. علائم شامل التهاب و درد است و مسری هستند.</li><li><b>زیرپوستی (Subcutaneous):</b> به شکل توده، بافت‌های زیرجلدی را تغییر داده و باعث دفورمیتی می‌شوند (مثل مایستوما).</li><li><b>منتشر یا سیستمیک (Systemic):</b> شامل پاتوژن‌های حقیقی (بدون گزارش در ایران) و قارچ‌های فرصت‌طلب (مثل کاندیدیازیس، آسپرژیلوزیس، موکورمایکوزیس و پنوموسیستوزیس در بیماران نقص ایمنی).</li></ul>`
+                        },
+                        { 
+                            name: "بیماری‌های قارچی سطحی پوست", 
+                            hasQuestions: true, 
+                            qIds: [11, 12, 13, 14, 15, 16],
+                            summary: `<ul><li><b>پیتریازیس ورسیکالر (Tinea versicolor):</b> ایجاد لکه‌های پوستی رنگارنگ (هایپرپیگمانته یا هایپوپیگمانته) نامنظم شبیه نقشه جغرافیایی. بیشتر در سینه‌ها، پشت و بازوها (نواحی چرب). عامل آن مخمر مالاسزیا فورفور (Malassezia furfur) است که چربی‌دوست می‌باشد. تشخیص با وود لامپ (درخشش طلایی) و تست چسب اسکاچ (مشاهده خوشه‌های متعدد قارچ). درمان با کتوکونازول.</li><li><b>کچلی سیاه (Tinea nigra):</b> لکه‌های قهوه‌ای مایل به سیاه در کف دست و پا. بدون درد و التهاب. عامل آن هیفومایست‌های تیره مانند کلادوسپوریوم است. تشخیص با نمونه‌برداری و پتاس (چسب اسکاچ و وود لامپ کاربرد ندارند).</li></ul>`
+                        },
+                        { 
+                            name: "بیماری‌های قارچی سطحی مو", 
+                            hasQuestions: false,
+                            summary: `<ul><li><b>پیدرای سفید (White piedra):</b> ایجاد غلاف نرم، سیمانی و بدبو در اطراف مو که مثل آدامس قابل جدا شدن است. عامل آن مخمر Trichosporon beigelii است. وابسته به چربی و عرق زیاد (کشاله ران و زیربغل).</li><li><b>پیدرای سیاه (Black piedra):</b> گره‌ها و غلاف‌های بسیار سفت و محکم سیاه رنگ اطراف ساقه مو. عامل آن Piedraia hortae است. بیشتر موهای سر و ابرو را درگیر می‌کند.</li></ul>`
+                        },
+                        { 
+                            name: "بیماری‌های باکتریایی مشابه با قارچ‌ها", 
+                            hasQuestions: true, 
+                            qIds: [17],
+                            summary: `<ul><li><b>اریتراسما (Erythrasma):</b> عامل آن کورینه باکتریوم مینوتیسموم است. بسیار شبیه تینیا ورسیکالر است (لکه‌های تیره و روشن). زیر وود لامپ رنگ قرمز مرجانی دیده می‌شود. درمان با اریترومایسین.</li><li><b>ترایکومایکوز آگزیلاریس:</b> عامل آن باکتری کورینه باکتریوم تنویس است. غلافی سیمانی در اطراف موی زیربغل و عانه ایجاد می‌کند و به شدت بدبو است (شبیه پیدرای سفید). درمان با اریترومایسین.</li></ul>`
+                        }
+                    ]
+                },
+                {
+                    id: 4,
+                    title: "جلسه چهارم: درماتوفیتوز و انواع کچلی‌ها (Tinea)",
+                    subtopics: [
+                        { 
+                            name: "کلیات بیماری درماتوفیتوز", 
+                            hasQuestions: false,
+                            summary: `<ul><li><b>محدوده اثر:</b> این قارچ‌ها به زیر پوست و عمق بدن حمله نمی‌کنند و حد تجاوز آن‌ها به پوست، مو و ناخن محدود است (کراتوفیلیک هستند).</li><li><b>پایداری:</b> می‌توانند ۲ تا ۳ سال بیرون از بدن (مثلاً در وسایل چرمی) زنده بمانند. تنها بیماری قارچی مسری است که در این ترم بررسی می‌شود.</li></ul>`
+                        },
+                        { 
+                            name: "اشکال بالینی بیماری (انواع کچلی‌ها - Tinea)", 
+                            hasQuestions: true, 
+                            qIds: [18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55],
+                            summary: `<ul><li><b>کچلی سر (Tinea capitis):</b> شامل اکتوتریکس (اسپور خارج مو، چرکی شدید)، اندوتریکس (اسپور درون مو، ریزش وسیع مو و ایجاد Black dot) و فاووس (هایف درون مو، شدیدترین نوع با ایجاد اسکاجولا و آسیب دائمی به ریشه مو با عامل T. schoenleinii).</li><li><b>کچلی بدن (Tinea corporis):</b> ضایعات حلقوی قرمز با مرکز سالم. نمونه‌برداری باید از ناحیه قرمز اطراف حلقه انجام شود، نه مرکز آن.</li><li><b>کچلی پا (Tinea pedis):</b> شامل فرم بین انگشتی (پوست‌پوست شدن) و فرم هایپرکراتوز (قطور شدن شدید لایه شاخی پا).</li><li><b>کچلی ناخن (Tinea unguium):</b> شامل لوکونیشیا قارچی (سفیدک سطحی) و کچلی مهاجم زیر ناخنی (مقاوم‌ترین فرم با عامل T. rubrum که تا ۲ سال درمان می‌طلبد).</li><li><b>کچلی دست (Tinea manuum):</b> واکنش اید (Id reaction) واکنش حساسیتی بدون قارچ است که از نواحی دیگر مثل پا وارد خون شده و حساسیت را بروز می‌دهد.</li></ul>`
+                        },
+                        { 
+                            name: "زیستگاه و اکولوژی قارچ‌ها (مخازن)", 
+                            hasQuestions: false,
+                            summary: `<ul><li><b>انسان‌دوست (Anthropophilic):</b> ضایعات التهابی نیستند، اما درمان و پاک کردن آن‌ها بسیار سخت و مزمن است.</li><li><b>حیوان‌دوست (Zoophilic):</b> واکنش‌های التهابی و حساسیتی بسیار شدید ایجاد می‌کنند.</li><li><b>خاک‌دوست (Geophilic):</b> بیماری‌های حادی ایجاد می‌کنند.</li></ul>`
+                        },
+                        { 
+                            name: "جنس‌ها و گونه‌های مهم درماتوفیت‌ها", 
+                            hasQuestions: true, 
+                            qIds: [50,51,52,53,54,55],
+                            summary: `<ul><li><b>ترایکوفایتون (Trichophyton):</b> درگیرکننده پوست، مو و ناخن. گونه T. mentagrophytes دارای هایف فنری است. T. rubrum ماکروکونیدی مدادی دارد و مزمن‌ترین کچلی‌ها را می‌سازد. T. verrucosum حادترین کچلی التهابی (مخزن دام) را ایجاد می‌کند.</li><li><b>میکروسپوروم (Microsporum):</b> درگیرکننده مو و پوست (اکتوتریکس). گونه M. canis مخزن گربه/سگ دارد و ماکروکونیدی دوکی‌شکل خاردار تولید می‌کند. M. gypseum خاک‌دوست است.</li><li><b>اپیدرموفایتون (Epidermophyton):</b> فقط پوست و ناخن را درگیر می‌کند (به مو حمله نمی‌کند). E. floccosum بسیار مقاوم در آب است و ماکروکونیدی‌های راکت‌تنس‌شکل بدون میکروکونیدی دارد.</li></ul>`
+                        },
+                        { 
+                            name: "تشخیص، درمان و پیشگیری", 
+                            hasQuestions: false,
+                            summary: `<ul><li><b>تشخیص:</b> شفاف‌سازی پوست و ناخن با KOH (گزارش میسلیوم + آرتروکونیدی). کشت در محیط SCC به مدت ۴ هفته.</li><li><b>درمان:</b> بهترین داروها تربینافین و گریزوفولوین هستند. هشدار بالینی: کورتون برای ضایعات قارچی مانند بنزین روی آتش است.</li></ul>`
+                        }
+                    ]
+                },
+                {
+                    id: 5,
+                    title: "جلسه پنجم: بیماری‌های قارچی زیرجلدی و سیستمیک",
+                    subtopics: [
+                        { 
+                            name: "بیماری‌های قارچی زیرجلدی", 
+                            hasQuestions: true, 
+                            qIds: [56,57,58,59,60,61,62,63,64,65,66,67],
+                            summary: `<ul><li><b>ویژگی‌های کلی:</b> ورود قارچ از طریق زخم و جراحت. دوره کمون طولانی (چند ماه تا سال‌ها)، روند رشد کند، مسری نیستند و غالبا توده زیرجلدی ایجاد می‌کنند.</li><li><b>مایستوما (Madura Foot):</b> آبسه زیرجلدی با مجاری ترشحی و گرانول (میکروکلونی). در دو نوع اکتینومیستی (باکتریایی شایع با نوکاردیا، گرانول ریز روشن) و قارچی حقیقی (توسط سودواستلشربیا بوئیدی، زگیلی‌فرم با گرانول درشت تیره) بروز می‌کند.</li><li><b>اسپوروتریکوزیس (بیماری باغبان‌ها):</b> عامل دوشکلی *Sporothrix schenckii* (در ۲۵ درجه گل مینا، در ۳۷ درجه مخمر). فرم شایع آن جلدی لنفاوی است که زنجیره‌ای از ضایعات (شروع با شانکر) ایجاد می‌کند. درمان با یدور پتاسیم است.</li><li><b>کروموبلاستومایکوزیس:</b> ایجاد ضایعات گل‌کلمی خشن روی دست و پا. عامل آن قارچ‌های تیره هستند که «جسم اسکلروتیک» تیره رنگ در بافت تشکیل می‌دهند.</li><li><b>رینوسپوریدیوزیس:</b> عامل *Rhinosporidium seeberi* (غیرقابل کشت در آزمایشگاه، منبع آب و گل‌آلود). پولیپ‌های آویزان در بینی و چشم به دلیل تشکیل اسفرول پر از اندوسپور. تشخیص فقط با دید مستقیم میکروسکوپی است.</li></ul>`
+                        },
+                        { 
+                            name: "بیماری‌های قارچی سیستمیک", 
+                            hasQuestions: true, 
+                            qIds: [68,69],
+                            summary: `<ul><li><b>پاتوژن‌های حقیقی:</b> ویرولانس بالا، دوشکلی (Dimorphic)، دارای محدودیت جغرافیایی خاص (در ایران گزارش نشده‌اند).</li><li><b>کوکسیدیوایدومایکوزیس:</b> عامل *Coccidioides immitis*. ورود از طریق استنشاق آرتروکونیدی و تبدیل به اسفرول در ریه.</li><li><b>بلاستومایکوزیس:</b> مخمر با اتصال پهن بین جوانه و سل مادر (Broad-based budding yeast) در بافت، ایجاد ضایعات پوستی و ریوی.</li><li><b>پاراکوکسیدیوایدومایکوزیس:</b> مخمر با جوانه‌های متعدد شبیه «فرمان کشتی»، آسیب شدید به بافت فک و صورت در دندانپزشکی.</li><li><b>هیستوپلاسموزیس (بیماری غار):</b> مخزن خفاش. ویژگی بارز: انگل درون سلول‌های ایمنی (ماکروفاژها) است. تشخیص طلایی کشت دوگانه است و درمان با ترکیب آمفوتریسین ب و فلوسایتوزین انجام می‌شود.</li></ul>`
+                        }
+                    ]
+                },
+                {
+                    id: 6,
+                    title: "جلسه ششم: قارچ‌های فرصت‌طلب (کاندیدا، آسپرژیلوس، کریپتوکوکوس، موکور)",
+                    subtopics: [
+                        { 
+                            name: "ویژگی‌های عمومی قارچ‌های فرصت‌طلب", 
+                            hasQuestions: true, 
+                            qIds: [70,71],
+                            summary: `<ul><li><b>ویژگی‌ها:</b> انتشار همه‌مکانی (حتی داخل بدن)، بیماری‌زایی خفیف در حالت عادی. با شرایطی چون دیابت، ایدز، مصرف بی‌رویه آنتی‌بیوتیک و داروهای پیوند عضو بیماری‌زا می‌شوند.</li></ul>`
+                        },
+                        { 
+                            name: "بیماری کاندیدیازیس (Candidiasis)", 
+                            hasQuestions: true, 
+                            qIds: [79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108],
+                            summary: `<ul><li><b>عامل اصلی:</b> مخمر *Candida albicans* (بیش از ۸۰ درصد موارد). ویژگی مهم آن تولید هایف کاذب (سوسیسی‌شکل) است که حذف آن توسط سیستم ایمنی سخت است.</li><li><b>کاندیدیازیس مخاطی-جلدی:</b> شامل برفک دهان (علامت مهم افت ایمنی در بزرگسالان)، ترک گوشه لب (همراه با کمبود B2)، کاندیدیازیس ریوی (همیشه ثانویه است) و واژنیت کاندیدایی.</li><li><b>کاندیدیازیس جلدی:</b> نواحی چین‌دار بدن، پارونشیا (ورم اطراف ناخن، شایع‌ترین فرم جلدی به دلیل تماس با آب)، بثورات قنداقی (Diaper rash) و گرانولوم کاندیدایی.</li><li><b>کاندیدیازیس منتشره:</b> ورود مخمر به خون (کاندیدمی) و درگیری آندوکاردیت قلب، مننژیت و نفریت کلیه. درمان فرم سیستمیک با ترکیب آمفوتریسین-B و فلوسیتوزین است.</li></ul>`
+                        },
+                        { 
+                            name: "بیماری آسپرژیلوزیس (Aspergillosis)", 
+                            hasQuestions: true, 
+                            qIds: [109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146],
+                            summary: `<ul><li><b>اهمیت و عامل:</b> شایع‌ترین عفونت قارچی فرصت‌طلب در میان قارچ‌های رشته‌ای. گونه *A. fumigatus* (ترموتولرانت) بیماری‌زاترین عامل است. *A. flavus* تولیدکننده آفلاتوکسین و *A. niger* عامل اتومایکوزیس گوش است.</li><li><b>اشکال بالینی ریوی:</b> الف) آلرژی (آسم و ABPA). ب) آسپرژیلوما (توپ قارچی در حفرات ریه، خلط منفی است، عکس ریه هلال هوایی دارد). ج) مهاجم (التهاب شدید و خلط خونی شبیه سل).</li><li><b>تشخیص:</b> در دید مستقیم دارای هایف‌های دارای تیغه عرضی و انشعاب دو شاخه (دیکتوموس با زاویه ۴۵ درجه) است.</li></ul>`
+                        },
+                        { 
+                            name: "بیماری کریپتوکوکوزیس (Cryptococcosis)", 
+                            hasQuestions: true, 
+                            qIds: [147,148,149,150],
+                            summary: `<ul><li><b>عامل و مخزن:</b> مخمر کپسول‌دار *Cryptococcus neoformans*. مخزن اصلی آن فضله کبوتر است.</li><li><b>اشکال بالینی:</b> مننژیت کریپتوکوکال مزمن (مرگبارترین فرم)، ریوی، پوستی، استخوانی و منتشره.</li><li><b>تشخیص:</b> رنگ‌آمیزی اختصاصی مرکب چین (India ink) که کپسول را مانند ستاره درخشان نشان می‌دهد. سرولوژی با تست لاتکس آگلوتینیشن بسیار دقیق است.</li></ul>`
+                        },
+                        { 
+                            name: "بیماری موکورمایکوزیس (Mucormycosis)", 
+                            hasQuestions: true, 
+                            qIds: [72,73,74,75,76,77,78],
+                            summary: `<ul><li><b>اهمیت:</b> حادترین و مرگبارترین بیماری قارچی، شایع در دیابت، لوسمی و کرونا (به دلیل کورتون).</li><li><b>موکورمایکوزیس رینوسربرال:</b> از بینی شروع شده و با رسیدن به مغز شریان‌ها را ترومبوز (ایسکمی و نکروز) می‌کند.</li><li><b>عوامل و تشخیص:</b> زیگومیست‌ها (مثل *Rhizopus*). در دید مستقیم هایف‌های بسیار پهن، بدون تیغه عرضی و روبانی‌شکل دیده می‌شود. درمان اورژانسی با آمفوتریسین-B و کنترل شدید قند خون الزامی است.</li></ul>`
+                        }
+                    ]
+                },
+                {
+                    id: 7,
+                    title: "جلسه هفتم: پنوموسیستیس و داروهای ضدقارچ",
+                    subtopics: [
+                        { 
+                            name: "بیماری نئومایستوزیس (Pneumocystosis) و ذات‌الریه ناشی از آن", 
+                            hasQuestions: false,
+                            summary: `<ul><li><b>عامل بیماری:</b> ذات‌الریه پنوموسیستیس (PCP) نوعی ذات‌الریه ناشی از قارچ مخمرمانند *Pneumocystis jirovecii* است که اختصاصی انسان است.</li><li><b>پاتوفیزیولوژی:</b> خطر عفونت زمانی که سطح سلول‌های CD4 کمتر از ۲۰۰ سلول در میکرولیتر باشد (نقص ایمنی/ایدز) به شدت افزایش می‌یابد. باعث ضخیم شدن آلوئول‌ها و هیپوکسی (کاهش اکسیژن) می‌شود.</li><li><b>علائم بالینی:</b> تب، سرفه غیرمولد (به دلیل خلط بسیار لزج)، تنگی نفس و تعریق شبانه.</li><li><b>تشخیص و درمان:</b> شست‌وشوی برونکوآلوئولار (BAL) با رنگ‌آمیزی Toluidin blue O. داروی اصلی آن کوتریموکسازول (Co-trimoxazole) است. پنتامیدین به دلیل عوارض جانبی شدید (مثل پانکراتیت و نارسایی کلیه) کمتر استفاده می‌شود.</li></ul>`
+                        },
+                        { 
+                            name: "طبقه‌بندی و مکانیسم عمل داروهای ضد قارچی", 
+                            hasQuestions: true, 
+                            qIds: [151,152,153],
+                            summary: `<ul><li><b>آلیل‌آمین‌ها (مانند تربینافین):</b> مهار سنتز ارگوسترول در مرحله تبدیل اسکوالن به اسکوالن اپوکسید. درماتوفیت‌ها به آن حساس‌اند.</li><li><b>آنتی‌متابولیت‌ها (مانند فلوسایتوزین):</b> مهار سنتز DNA و تکثیر هسته. عارضه جانبی آن سرکوب مغز استخوان است. به عنوان اثر هم‌افزایی با آمفوتریسین B استفاده می‌شود.</li><li><b>آزول‌ها (فلوکونازول، کتوکونازول):</b> مهار سنتز ارگوسترول با جلوگیری از تبدیل لانوسترول به ارگوسترول. طیف اثر بسیار گسترده‌ای دارند.</li><li><b>اکینوکاندین‌ها (مانند کاسپوفانژین):</b> معروف به «پنی‌سیلین قارچ‌ها». از سنتز بتا-گلوکان در دیواره سلولی جلوگیری می‌کنند.</li><li><b>پلی‌ان‌ها (آمفوتریسین B و نیستاتین):</b> متصل شدن به ارگوسترول غشا، ایجاد منافذ (حفره‌زایی) و تخریب غشای سیتوپلاسمی که باعث مرگ سریع سلول می‌شود.</li><li><b>داروهای متفرقه (گریزوفلوین):</b> جلوگیری از تکثیر سلول قارچی و ممانعت از دسترسی درماتوفیت‌ها به مواد غذایی در سطح پوست.</li></ul>`
+                        },
+                        { 
+                            name: "خلاصه مکانیسم اثر (جمع‌بندی داروها)", 
+                            hasQuestions: false,
+                            summary: `<ul><li><b>اکینوکاندین‌ها (کاسپوفانژین):</b> مهار سنتز بتا-گلوکان در دیواره سلولی.</li><li><b>پلی‌ان‌ها (آمفوتریسین B و نیستاتین):</b> اتصال به ارگوسترول و ایجاد منافذ در غشای سیتوپلاسمی (تخریب و نفوذپذیری).</li><li><b>آزول‌ها (فلوکونازول، کتوکونازول):</b> مهار سنتز ارگوسترول در مرحله تبدیل لانوسترول به ارگوسترول.</li><li><b>آلیل‌آمین‌ها (تربینافین):</b> مهار سنتز ارگوسترول در مرحله تبدیل اسکوالن به اسکوالن اپوکسید.</li><li><b>فلوسایتوزین:</b> مهار سنتز DNA و تکثیر هسته.</li></ul>`
+                        }
+                    ]
+                }
+            ]
+        };
+
+        const allQuestions = [
+            { id: 1, q: "کدام مورد جزء ویژگیهای قارچ ها است؟", o: ["داشتن ارگوسترول", "داشتن حرکت آمیبی", "داشتن کلروفیل", "داشتن تاژک"], c: 0 },
+            { id: 2, q: "ویژگی قارچ ها نیست ؟", o: ["Mould و mushroom بودن", "مخمری و رشته ای بودن", "حرکت آمیبی", "رشته های فاقد تیغه میانی"], c: 2 },
+            { id: 3, q: "کدامیک از عبارات زیر صحیح است؟", o: ["قارچ های ناقص دارای تولید مثل جنسی هستند", "قارچ ها موجوداتی دیپلوئید هستند", "جمعیت قارچ ها کمتر از ۵۰۰۰۰ است", "آسکومایکوتا عضو شاخه دیکاریومایکوتا هستند"], c: 3 },
+            { id: 4, q: "دمای مناسب رشد قارچ ها است.", o: ["16", "26", "36", "37"], c: 1 },
+            { id: 5, q: "از ویژگی قارچها نیست:", o: ["واجد ساختمان مخمری هستند", "فتوسنتز کننده هستند", "غشای سیتوپلاسم واجد ارگوسترول است", "رشد در دمای ۲۵ درجه سانتی گراد"], c: 1 },
+            { id: 6, q: "این سم قارچی بسیار مرگبار است:", o: ["Amanitin", "L.S.D", "Aflatoxin", "هیچکدام"], c: 0 },
+            { id: 7, q: "این سم قارچی از کشندگی بسیار بالاتری برخوردار است؟", o: ["L.S.D", "PSILOCYBE", "AMANITIN", "AFLATOXIN"], c: 2 },
+            { id: 8, q: "کدامیک از مایکوتوکسین های زیر به شدت مرگبار است؟", o: ["AFLATOXIN", "L.S.D", "AMANITIN", "PSILOCYBE"], c: 2 },
+            { id: 9, q: "شفاف کننده مناسب مو در تشخیص قارچ است.", o: ["کاتن بلو", "KOH", "لاکتوفنل", "BHI"], c: 2 },
+            { id: 10, q: "کدام نمونه پس از ۲ ساعت ارزش آزمایش قارچ شناسی ندارد ؟", o: ["نمونه خلط", "چسب اسکاج", "نمونه موی سر", "نمونه ناخن"], c: 0 },
+            { id: 11, q: "زمینه مساعد جهت ابتلا به بیماری پیتریازیس ورسیکالر است؟", o: ["ابتلا به سل", "تعریق", "تماس با حیوانات", "مصرف بی رویه آنتی بیوتیک ها"], c: 1 },
+            { id: 12, q: "مالاسزیا فورفور .......", o: ["در ایران وجود ندارد", "دیمورفیک است", "عامل لکه صورت است", "هیچکدام"], c: 2 },
+            { id: 13, q: "مناسب ترین روش تشخیص آزمایشگاهی بیماری تینه آ ورسیکالر است:", o: ["سرولوژی", "تلقیح به حیوان آزمایشگاهی", "تست جلدی", "دید مستقیم میکروسکوپی"], c: 3 },
+            { id: 14, q: "درمان تینه آ ورسیکالر؟", o: ["کتوکونازول", "تربینافین", "نیستاتین", "اریترومایسین"], c: 0 },
+            { id: 15, q: "کدام مورد از شرایط لازم جهت ابتلا به تینه آ ورسیکالر است؟", o: ["سن در دوره دبستان", "مسری است", "ابتلا به ایدز", "چرب بودن پوست"], c: 3 },
+            { id: 16, q: "کدام نمونه بعد دو ساعت ارزش آزمایش قارچی ندارد؟", o: ["خلط", "ناخن", "موی سر", "چسب اسکاچ"], c: 0 },
+            { id: 17, q: "اکتینومایسس اسرائیلی ........ است.", o: ["قارچی دوشکلی", "مخمر", "عامل فک ناهنجار است", "هیفومیست"], c: 2 },
+            { id: 18, q: "درمان کچلی ریش است.", o: ["گریزئوفولوین", "پنی سیلین", "پیماریسین", "فلوسیتوزین"], c: 0 },
+            { id: 19, q: "از اشکال کچلی سر نیست؟", o: ["فاووس", "اکتوتریکس", "پیدرا", "اندوتریکس"], c: 2 },
+            { id: 20, q: "شایع ترین عامل کچلی فاووس کدام است؟", o: ["Trichophyton schoenleinii", "Trichophyton rubrum", "Trichophyton tonsurans", "Epidermophyton floccosum"], c: 0 },
+            { id: 21, q: "نام این بیماری قارچ چیست؟ (اسپاگتی و کوفته قلقلی)", o: ["Pityriasis versicolor", "Ectothrix", "Endothrix", "Favus"], c: 0 },
+            { id: 22, q: "تولید گره نرم و روشن در ساقه مو میکند:", o: ["فاووس", "کچلی اندو تریکس", "پیتریازیس ورسیکالر", "پیدرای سفید"], c: 3 },
+            { id: 23, q: "مزمن ترین فرم کچلی کدام است؟", o: ["کچلی بدن", "کچلی ناخن", "اکتوتریکس", "کچلی دست"], c: 1 },
+            { id: 24, q: "درمان اختصاصی کچلی ناخن است:", o: ["Penicillin", "Erythromycin", "Amphotericin-B", "Terbinafine"], c: 3 },
+            { id: 25, q: "این درماتوفیت شایع ترین عامل کچلی ناخن است:", o: ["T. verrucosum", "T. rubrum", "M. canis", "T. tonsurans"], c: 1 },
+            { id: 26, q: "این درماتوفیت عامل بیماری کچلی مزمن در انسان است:", o: ["Microsporum audouinii", "Trichophyton verrucosum", "Epidermophyton floccosum", "Trichophyton rubrum"], c: 3 },
+            { id: 27, q: "پوست چرب زمینه ابتلا به کدام بیماری است؟", o: ["Tinea capitis", "Tinea versicolor", "Tinea nigra", "Dermatophytosis"], c: 1 },
+            { id: 28, q: "لکه های قهوه ای روی شانه یک بیمار نشانه کدام بیماری است؟", o: ["کچلی بدن", "فاووس", "تینه آ ورسیکالر", "پیدرا"], c: 2 },
+            { id: 29, q: "این درماتوفیت حیوان دوست و عامل کچلی اکتوتریکس است؟", o: ["T. rubrum", "M. canis", "E. floccosum", "M. gypseum"], c: 1 },
+            { id: 30, q: "کدامیک از عبارات زیر در مورد کچلی ها غلط است؟", o: ["نمونه مو را در محیط SCC کشت میدهند", "ترایکوفایتون روبروم عامل کچلی پا است", "در کچلی بدن نمونه از مرکز ضایعه گرفته میشود", "درمان در کچلی ناخن طولانی است"], c: 2 },
+            { id: 31, q: "میکروسپوروم کانیس...", o: ["حیوان دوست و عامل اندوتریکس", "انسان دوست اندوتریکس", "حیوان دوست عامل اکتوتریکس", "انسان دوست اکتوتریکس"], c: 2 },
+            { id: 32, q: "شایعترین عامل فاووس است.", o: ["ترایکوفایتون روبروم", "ترایکوفایتون ویولاسئوم", "ترایکوفایتون تونسورانس", "هیچ کدام"], c: 3 },
+            { id: 33, q: "اسکوتولا در...", o: ["اکتوتریکس دیده میشوند", "اندوتریکس دیده میشود", "اندوتریکس و اکتوتریکس دیده میشود", "فاووس دیده میشود"], c: 3 },
+            { id: 34, q: "کدامیک از عبارات زیر در مورد قارچ ها غلط است؟", o: ["در clamp connection زیگومایکوتا دیده می شود", "ترایکوفایتون منتاگروفایتس عامل کچلی پا است", "در کچلی ناخن نمونه از بستر ناخن گرفته میشود", "ترایکوفایتون ها به پوست مو و ناخن حمله میکنند"], c: 0 },
+            { id: 35, q: "عامل کچلی اندوتریکس است.", o: ["اپیدرموفایتون فلوکوزوم", "ترایکوفایتون وروکوزوم", "ترایکوفایتون تونسورانس", "هیچکدام"], c: 2 },
+            { id: 36, q: "درمان انتخابی کچلی دست...... است؟", o: ["پنی سیلین", "سالیسیلیک اسید", "اریترومایسین", "گریزئوفولوین"], c: 3 },
+            { id: 37, q: "فلورسانس زرد طلایی تحت وود لامپ در .....", o: ["پیتریازیس ورسیکالر دیده میشوند", "اریتراسما دیده میشوند", "فاووس دیده میشوند", "هیچکدام"], c: 0 },
+            { id: 38, q: "عامل شایع تر کچلی ناخن است.", o: ["ترایکوفایتون وروکوزوم", "میکروسپوروم کانیس", "میکروسپوروم جیپسئوم", "ترایکوفایتون روبروم"], c: 3 },
+            { id: 39, q: "این دارو درمان درماتوفیتوزیس (کچلی) است؟", o: ["تربینافین", "پنی سیلین", "استرپتومایسین", "همه موارد"], c: 0 },
+            { id: 40, q: "عامل کچلی سر اکتوتریکس حاد اطفال:", o: ["ترایکوفایتون وروکوزوم", "ترایکوفایتون تونسورانس", "ترایکوفایتون روبروم", "اپیدرموفایتون فلوکوزوم"], c: 0 },
+            { id: 41, q: "این درماتوفیت عامل کچلی مزمن کف پا است:", o: ["میکروسپوروم جیپسئوم", "ترایکوفایتون روبروم", "ترایکوفایتون وروکوزوم", "میکروسپوروم کانیس"], c: 1 },
+            { id: 42, q: "تحت اشعه وود لامپ فلورسانس زرد طلایی در بیماری:", o: ["پتریازیس ورسیکالر", "اریتراسما", "فاووس", "اکتوتریکس"], c: 0 },
+            { id: 43, q: "شایع ترین عامل کچلی فاووس؟", o: ["ترایکوفایتون شوئن لاینی", "اپیدرموفایتون فلوکوزوم", "میکروسپوروم کنیس", "میکروسپوروم جیپسئوم"], c: 0 },
+            { id: 44, q: "کدام درماتوفیت بیشتر مسبب کچلی کشاله ران است؟", o: ["M. canis", "E. floccosum", "T. tonsurans", "T. violaceum"], c: 1 },
+            { id: 45, q: "خالهای سیاه یا نقاط سیاه روی پوست سر (black dots) در .... دیده میشود.", o: ["ترایکومایکوزیس", "اندوتریکس", "اگزوتریکس", "فاووس"], c: 1 },
+            { id: 46, q: "نام این بیماری قارچی (هایف و اسپور درون مو) چیست ؟", o: ["اکتوتریکس", "فاووس", "تینه آورسیکالر", "اندوتریکس"], c: 3 },
+            { id: 47, q: "این درماتوفیت عامل کچلی بسیار حاد دست است؟", o: ["ترایکوفایتون ورکوزوم", "میکروسپوروم ادئینی", "اپیدرموفایتون فلوکوزوم", "ترایکوفایتون روبروم"], c: 3 },
+            { id: 48, q: "خالهای سیاه یا نقاط سیاه روی پوست سر در ...... دیده میشود.", o: ["اندوتریکس", "ترایکومایکوزیس", "اکتوتریکس", "فاووس"], c: 0 },
+            { id: 49, q: "شایعترین عامل کچلی کشاله ران است ؟", o: ["ترایکوفایتون شوئن لاینی", "میکروسپوروم چیپسئوم", "میکروسپوروم کنیس", "اپیدرموفایتون فلوکوزوم"], c: 3 },
+            { id: 50, q: "نام این قارچ چیست؟ (ماکروکونیدی دوکی‌شکل خاردار)", o: ["Trichophyton mentagrophytes", "Trichophyton verrucosum", "Trichophyton rubrum", "Microsporum canis"], c: 3 },
+            { id: 51, q: "کدام یک از درماتوفیتهای زیر حیوان دوست است؟", o: ["E. floccosum", "T. schoenleinii", "T. verrucosum", "T. rubrum"], c: 2 },
+            { id: 52, q: "عامل سفیدک سطحی است.", o: ["ترایکوفیتون تونسورانس", "ترایکوفایتون منتاگروفایتس", "ترایکوفایتون روبروم", "ترایکوفایتون وروکوزوم"], c: 1 },
+            { id: 53, q: "نام این قارچ چیست ؟ (ماکروکونیدی‌های دوکی‌شکل با دیواره ضخیم و خاردار)", o: ["ترایکوفایتون وروکوزوم", "میکروسپوروم کنیس", "اپیدرموفایتون فلوکوزوم", "ترایکوفایتون روبروم"], c: 1 },
+            { id: 54, q: "شایعترین عامل سفیدک سطحی قارچی ناخن کدام است؟", o: ["میکروسپوروم کنیس", "ترایکوفایتون منتاگروفایتس", "ترایکوفایتون ویولا سئوم", "ترایکوفایتون وروکوزوم"], c: 1 },
+            { id: 55, q: "مخزن آن گربه است ؟", o: ["E.flocosum", "M.canis", "T.tonsurans", "T.violaceum"], c: 1 },
+            { id: 56, q: "این بیماری با چسب اسکاچ تشخیص داده می شود.", o: ["کچلی ریش", "تینه آ ورسیکالر", "اسپورتریکوزیس", "رینواسپوریدیوزیس"], c: 1 },
+            { id: 57, q: "این قارچ دوشکلی است.", o: ["هیستوپلاسما کپسولاتوم", "پاراکوکسیدیویدس برازیلینسیس", "اسپوروتریکس شنکئی", "همه موارد فوق"], c: 3 },
+            { id: 58, q: "کدام عبارت در مورد اسپورتریکس شنکئی درست است؟", o: ["قارچی است مخمری", "قارچی دوشکلی است", "فقط در پوست ایجاد بیماری میکند", "قارچ تیره است"], c: 1 },
+            { id: 59, q: "توده زیر جلدی در پای یک بیمار با سابقه دو سال ممکن است ......... باشد:", o: ["Tinea nigra", "Sporotrichosis", "Rhinosporidiosis", "Mycetoma"], c: 3 },
+            { id: 60, q: "این بیماری ایجاد گرانول میکند:", o: ["کچلی سر", "پارونیشیا", "کچلی بدن", "مایستوما"], c: 3 },
+            { id: 61, q: "این بیماری فقط با دید مستقیم میکروسکوپ قابلیت شناسایی دارد:", o: ["Rhinosporidiosis", "Sporotrichosis", "Chromoblastomycosis", "Mycetoma"], c: 0 },
+            { id: 62, q: "زنجیره ای از ضایعات جلدی لنفاوی نشانه ی کدام بیماری زیر جلدی است:", o: ["Sporotrichosis", "Mycetoma", "Dermatophytosis", "Rhinosporidiosis"], c: 0 },
+            { id: 63, q: "عامل مایستومای قارچی کدام است:", o: ["M. furfur", "T. verrucosum", "M. canis", "Pseudallescheria boydii"], c: 3 },
+            { id: 64, q: "در خصوص اسپوروتریکس شنکئی کدام گزینه غلط است؟", o: ["قارچی دوشکلی است", "در دمای ۲۵ درجه به شکل رشته ای گل مینائی دیده می شود.", "فرم ریوی شبیه سل ریوی است", "در بافت بدن تولید اسفرول می نماید"], c: 3 },
+            { id: 65, q: "توده زیر جلدی که اغلب پاها را مبتلا میکند و باعث تغییر شکل عضو می شود را .............. می گویند", o: ["کچلی بدن", "مای ستوما", "کچلی پا", "پیتریازیس ورسیکالر"], c: 1 },
+            { id: 66, q: "یکی از عوامل مایستوما قارچی کدام است؟", o: ["پنیسلیوم", "کلاسد و پوریوم", "الشریا بوئیدی", "آلترنتریا"], c: 2 },
+            { id: 67, q: "کدامیک از عبارات زیر غلط است ؟", o: ["ارگوسترول ترکیب غشا سیتوپلاسمی قارچها را تشکیل میدهد.", "مورکومایکوزیس رینو سربال روندی حاد دارد.", "فرم جلدی لنفاوی شایعترین فرم اسپورتریکوزیس است.", "آمفوتریسین ب ، درمان انتخابی پیتریازیس ورسیکالر است."], c: 3 },
+            { id: 68, q: "میزبان هیستوپلاسما کپسولاتوم ......... است:", o: ["کبوتر", "گاو", "گوسفند", "خفاش"], c: 3 },
+            { id: 69, q: "کدامیک از جملات زیر غلط است؟", o: ["ترایکوفایتون منتاگروفایتس عامل کچلی ریش است.", "فرم غالب کچلی بدن حلقه های قرمز است.", "میکروسپوروم کانیس ایجاد کچلی سر در انسان می نماید.", "هیستوپلاسموزیس عفونت ریوی است که از ایران گزارش شده است."], c: 3 },
+            { id: 70, q: "این بیماری در مبتلایان به دیابت شایع است.", o: ["Mycetoma", "Mucormycosis", "Piedra", "Dermatophytosis"], c: 1 },
+            { id: 71, q: "قارچی دوشکلی است؟", o: ["هیستوپلاسما", "موکور", "ترایکوفایتون", "هیچکدام"], c: 0 },
+            { id: 72, q: "مرگبارترین فرم موکور مایکوزیس است:", o: ["ریوی", "گوارشی", "رینو سربرال", "جلدی"], c: 2 },
+            { id: 73, q: "در بیمار مبتلا به موکور مایکوزیس کدام روش تشخیصی آزمایشگاهی و کدام دارو را جهت درمان توصیه می کنید؟", o: ["تست گالاکتومانان، درمان آمفوتریسین ب", "تراشه داخل بینی به شکل پتاس، درمان آمفوتریسین - ب", "رنگ آمیزی تولوئیدن بلو خلط، درمان کوتریموکسازول", "هیچکدام"], c: 1 },
+            { id: 74, q: "کدامیک از عبارات زیر در مورد موکورمایکوزیس غلط است؟", o: ["لوسمی یکی از زمینه های مهم ابتلاء است", "موکورمیکوزیس جلدی غالبا متعاقب سوختگی ها ایجاد میشود", "موکورمایکوزیس پوستی را شانکر اسپوروتریکوم می گویند", "رایزوپوس از مهمترین عوامل بیماری است"], c: 2 },
+            { id: 75, q: "کدام در مورد موکور مایکوزیس رینو سربرال غلط است؟", o: ["دیابت زمینه ابتلاست", "دید مستقیم میکروسکوپی از نمونه داخل بینی تهیه میشود.", "بیماری سیر بسیار کند و مزمنی دارد.", "رایزوپوس شایع ترین عامل بیماری است."], c: 2 },
+            { id: 76, q: "کدام غلط است؟", o: ["فرم جلدی لنفاوی شایع ترین فرم اسپورتریکوزیس است.", "موکورمایکوزیس رینو سبرال روندی حاد دارد.", "آمفوتریسین درمان انتخابی اریتراسما است.", "ارگسترول ترکیب غشا سیتوپلاسمی قارچ ها را تشکیل میدهد."], c: 2 },
+            { id: 77, q: "کدام یک از عبارات زیر در مورد موکور مایکوزیس رینو سربرال غلط است ؟", o: ["با تریبینافین درمان میشود بیماری سیر کند و مزمنی دارد.", "دید مستقیم میکروسکوپی را میتوان از داخل تراشه بینی تهیه نمود.", "دید مستقیم میکروسکوپی و کشت تنها راه تشخیص بیماری است.", "رایزوپوس شایع ترین عامل بیماری است."], c: 0 },
+            { id: 78, q: "In microscopic study, how does Mucor appear in the patient's tissue?", o: ["none of them", "Favus", "Septate hanched (dichotomous) hyphae", "aseptate hyphae"], c: 3 },
+            { id: 79, q: "این بیماری مسری و مشترک بین انسان و حیوان است.", o: ["کچلی ریش", "برفک", "رینوسپوریدیوزیس", "هیستوپلاسموزیس"], c: 0 },
+            { id: 80, q: "این قارچ دوشکلی نیست.", o: ["هیستوپلاسما کپسولاتوم", "کاندیدا آلبیکنس", "اسپوروتریکس شنکئی", "پاراکوکسیدیویدس برازیلینسیس"], c: 1 },
+            { id: 81, q: "درمان انتخابی کاندیدیازیس سیستمیک است.", o: ["گریزئوفولوین", "تربینافین", "آمفوتریسین - ب", "پنی سیلین ها"], c: 2 },
+            { id: 82, q: "در ایجاد ترک گوشه لب نقش دارد.", o: ["کمبود ویتامین B2", "اسپوروتریکس شنکئی", "زندگی در مناطق اندمیک قارچ بیماری زا", "داشتن سابقه جراحی"], c: 0 },
+            { id: 83, q: "این بیماری قارچی مسری است.", o: ["اکتینومایکوریس", "درماتوفیتوزیس", "کریپتوکوکوزیس", "برفک"], c: 1 },
+            { id: 84, q: "مهمترین بیماری قارچی دهان، لب و زبان است.", o: ["کچلی ریش", "رینوسپوریدیوزیس", "کاندیدیازیس دهانی", "اسپوروتریکوزیس"], c: 2 },
+            { id: 85, q: "کلید تشخیصی آزمایشگاهی برفک دهانی محسوب می شود.", o: ["گرانول", "هایف", "مخمر جوانه دار", "مخمر کپسول دار"], c: 2 },
+            { id: 86, q: "درمان انتخابی کاندیدیازیس مخاطی است.", o: ["گریزئوفولوین", "تربینافین", "فلوکونازول", "پنی سیلین ها"], c: 2 },
+            { id: 87, q: "این بیماری به طور معمول در ایران گزارش می شود.", o: ["پاراکوکسیدیوئیدومایکوزیس", "هیستوپلاسموزیس", "کاندیدیازیس", "همه موارد"], c: 2 },
+            { id: 88, q: "عامل برفک است.", o: ["رطوبت", "مالاسزیا", "کاندیدا", "همه موارد"], c: 2 },
+            { id: 89, q: "زمینه لازم جهت ابتلا به کاندیدیازیس دهانی محسوب نمی شود.", o: ["استفاده بی رویه از آنتی بیوتیک ها", "دیابت", "ابتلا به ایدز", "ابتلا به کچلی ریش"], c: 3 },
+            { id: 90, q: "منشا ابتلا به این قارچ داخلی است.", o: ["هیستوپلاسما کپسولاتوم", "کریپتوکوکوس نئوفورمنس", "اسپوروتریکس شنکئی", "کاندیدا آلبیکنس"], c: 3 },
+            { id: 91, q: "این بیماری اورژانس قارچ شناسی و بسیار مرگبار است.", o: ["کریپتوکوکوزیس مخاطی", "موکورمایکوزیس رینوسربرال", "کاندیدیازیس دهانی", "رینوسپوریدیوزیس"], c: 1 },
+            { id: 92, q: "در این بیماری با تخریب و التهاب لثه نظم دندان ها بهم ریخته می شود.", o: ["کچلی ریش", "برفک", "رینوسپوریدیوزیس", "هیستوپلاسموزیس"], c: 2 },
+            { id: 93, q: "این بیماری در اثر تماس با آب ایجاد میشود.", o: ["کچلی ناخن", "پارونیشیا", "هیستوپلاسموزیس", "کاندیدیازیس دهانی"], c: 1 },
+            { id: 94, q: "شایع ترین گونه‌های کاندیدا در ایجاد عفونت؟", o: ["C. albicans", "C. tropicalis", "C. glabrata", "هیچکدام"], c: 0 },
+            { id: 95, q: "کدام عبارت غلط است؟", o: ["هیستوپلاسما کپسولاتوم دارای کپسول قندی است.", "پیتریازیس ورسیکالر مسری نیست.", "دیر حمام رفتن عامل ابتلا به تینه آورسیکالر است.", "پیوند عضو موجب ابتلا به کاندیدیازیس میشود."], c: 0 },
+            { id: 96, q: "کدامیک از فرم های کاندیدیازیس زیر مرتبط با کمبود ویتامین B2 است؟", o: ["ترک گوشه لبها", "کاندیدیازیس نواحی چین دار بدن", "بثورات قنداقی", "کاندیدیازیس مخاطی جلدی مزمن (CMC)"], c: 0 },
+            { id: 97, q: "درباره کاندیدیازیس کدامیک از عبارات زیر غلط است؟", o: ["دیابت جزء زمینه های مهم ابتلاء به فرم احشایی است", "تربینافین و پنی سیلین داروی انتخابی اشکال مخاطی بیماری است", "در مبتلایان به ایدز فرم جلدی مخاطی بیماری شایعتر است", "بثورات قنداقی یک فرم بسیار شایع جلدی است"], c: 1 },
+            { id: 98, q: "کدامیک از عبارات زیر غلط است؟", o: ["کاندیدا آلبیکنس شایع ترین عامل کاندیدیازیس انسان است", "موکور مایکوزیس رینو سربرال روندی بسیار مزمن دارد", "آمفوتریسین ب درمان انتخابی کریپتوکوکوزیس است", "فرم جلدی لنفاوی شایعترین فرم اسپورتریکوزیس است"], c: 1 },
+            { id: 99, q: "قرمزی و لکه سفید پنیری بر روی زبان یک نوزاد ممکن است کدام بیماری باشد؟", o: ["پیتریازیس ورسیکالر", "درماتوفیتوزیس", "کاندیدیازیس", "مای ستوما"], c: 2 },
+            { id: 100, q: "این بیماری ایجاد توده زیر جلدی می نماید.", o: ["اسپوروتریکوزیس", "کاندیدیازیس", "پیتریازیس ورسیکالر", "مایستوما"], c: 3 },
+            { id: 101, q: "این قارچ از عوامل درماتوفیتوزیس نیست", o: ["میکروسپوروم", "ترایکوفایتون", "اپیدرموفایتون", "کاندیدا"], c: 3 },
+            { id: 102, q: "این بیماری قارچی در حضور ایدز بسیار شایع است.", o: ["برفک (کاندیدیازیس دهانی)", "کچلی بدن", "مایستوما", "پیتریازیس ورسیکالر"], c: 0 },
+            { id: 103, q: "این دارو در درمان کاندیدیازیس کاربرد دارد؟", o: ["گریزئوفولوین", "جنتامایسین", "کلوتریمازول", "پنی سیلین"], c: 2 },
+            { id: 104, q: "کدامیک از سندروم های قارچی زیر، مربوط به کمبود ویتامین است؟", o: ["گرانولوم کاندیدایی", "کاندیدیازیس نواحی چین دار", "بثورات قنداقی", "ترک گوشه لب"], c: 3 },
+            { id: 105, q: "شایع ترین بیماری قارچی در زمینه AIDS؟", o: ["بثورات قنداقی", "پارونیشیا", "برفک", "واژنیت کاندیدایی"], c: 2 },
+            { id: 106, q: "درمان انتخابی کاندیدیازیس قنداقی است ؟", o: ["پماد و ایتفیلد", "پنی سیلین", "فلوکونازول", "تربینافین"], c: 2 },
+            { id: 107, q: "کدام یک از سندرمهای قارچی زیر، مرتبط با نقص سیستم ایمنی است ؟", o: ["ترک گوشه لب", "کاندیدیازیس نواحی چین دار", "بثورات قدامی", "گرانولوم کاندیدایی"], c: 3 },
+            { id: 108, q: "درباره کاندیدا و کاندیدیازیس کدامیک از عبارات زیر غلط است ؟", o: ["دیابت جزء زمینه های مهم ابتلاء به فرم احشایی است.", "فرم ریوی در بیماران مبتلا به سل ممکن است دیده شود.", "مشاهده مخمر کاندیدا در مدفوع یعنی بیماری.", "اندوکاردیت از مهمترین فرمهای احشایی بیماری است."], c: 2 },
+            { id: 109, q: "زمینه ابتلا به اکتینومایکوزیس فکی است.", o: ["آسپرژیلوزیس", "برفک", "دندان پوسیده", "کریپتوکوکوزیس"], c: 2 },
+            { id: 110, q: "شکل مقابل قارچ ... است. (ساختار قلم‌مویی شکل)", o: ["Alternaria", "Aspergillus", "Penicillium", "Candida"], c: 2 },
+            { id: 111, q: "نام این قارچ (هایف فنری) چیست؟", o: ["Trichophyton rubrum", "Aspergillus", "Penicillium", "Trichophyton mentagrophytes"], c: 3 },
+            { id: 112, q: "یدید پتاسیم برای درمان این بیماری است:", o: ["Aspergillosis", "Mucormycosis", "Sporotrichosis", "Pneumocystosis"], c: 2 },
+            { id: 113, q: "این بیماری باعث کاهش اکسیژن خون محیطی بیمار میشود:", o: ["Mucormycosis", "Histoplasmosis", "Aspergillosis", "Pneumocystosis"], c: 3 },
+            { id: 114, q: "مخزن این قارچ کبوتر است؟", o: ["Aspergillus fumigatus", "Sporothrix schenckii", "Mucor spp", "Cryptococcus neoformans"], c: 3 },
+            { id: 115, q: "در زمینه ایدز شایع است:", o: ["Rhinosporidiosis", "Aspergillosis", "Oral candidiasis", "Mycetoma"], c: 2 },
+            { id: 116, q: "این قارچ تولید سلولهای مخمری جوانه دار مینماید:", o: ["Candida", "Fusarium", "Penicillium", "Aspergillus"], c: 0 },
+            { id: 117, q: "شایعترین گونه آسپرژیلوس در بیماری زایی؟", o: ["نیگر", "ترئوس", "فلاووس", "فومیگاتوس"], c: 3 },
+            { id: 118, q: "مرکب چین در شناسایی این بیماری کاربرد دارد؟", o: ["Cryptococcosis", "Histoplasmosis", "Mucormycosis", "Aspergillosis"], c: 0 },
+            { id: 119, q: "هایف این ساپروفیت فاقد تیغه عرضی است؟", o: ["رایزوپوس", "آسپرژیلوس", "فوزاریوم", "پنی سیلیوم"], c: 0 },
+            { id: 120, q: "بیماری مبتلا به ایدز دارای نارسایی تنفسی و افزایش CO2 خون محیطی است. مشکوک به کدام بیماری قارچی است؟", o: ["مننژیت آسپرژیلوسی", "پنوموسیستوزیس", "موکور میکوزیس", "سینوزیت آسپرژیلوسی"], c: 1 },
+            { id: 121, q: "مهمترین عفونت قارچی گوش خارجی است؟", o: ["Penicillium", "Dermatophytes", "Aspergillus", "Acremonium"], c: 2 },
+            { id: 122, q: "این عفونت قارچی در زمینه ایدز شایع تر است", o: ["keratomycosis", "Aspergilloma", "cryptococcal meningitis", "Rhinocerebral mucormycosis"], c: 2 },
+            { id: 123, q: "گونه شایع تر آسپرژیلوس در بیماری زایی است؟", o: ["فلاووس", "نیجر", "ترئوس", "نیدولانس"], c: 0 },
+            { id: 124, q: "عامل پیدرای سفید است؟", o: ["آسپرژیلوس", "ترایکوسپورون", "آکرمونیوم", "کاندیدا"], c: 1 },
+            { id: 125, q: "کدام یک جزء درماتوفیت ها است؟", o: ["آسپرژیلوس فلاووس", "ترایکوفایتون", "مالاسزیا فور فور", "پسودو آلشریا بوئیدی"], c: 1 },
+            { id: 126, q: "این بیماری قارچی در حضور فقر بهداشت فردی و محیط مسری است", o: ["مایستوما", "آسپرژیلوزیس", "کاندیدیازیس دهانی", "کچلی سر"], c: 3 },
+            { id: 127, q: "این بیماری در زمینه پوست چرب و تعریق در روی پوست ایجاد میشود", o: ["کچلی بدن", "آسپرژیلوزیس", "مایستوما", "تینه آ ورسیکالر"], c: 3 },
+            { id: 128, q: "این قارچ مولد افلاتوکسین است.", o: ["ترایکوفایتون وروکوزوم", "آسپرژیلوس فلاووس", "کاندیدا آلبیکنس", "هیچکدام"], c: 1 },
+            { id: 129, q: "کدام روش جهت تشخیص آسپرژیلوما ارزشمندتر است؟", o: ["سرولوژی", "عکس سینه", "تست پوستی", "کشت خلط"], c: 0 },
+            { id: 130, q: "یدید پتاسیم در درمان ........... کارایی دارد.", o: ["کوکسیدیوئیدومایکوزیس", "اسپوروتریکوزیس جلدی لنفاوی", "کریپتوکوکوزیس", "آسپرژیلوزیس"], c: 1 },
+            { id: 131, q: "In microscopic study, how does aspergillus appear in the patient's tissue?", o: ["aseptate hyphae", "septate branched (dichotomous) hyphae", "favus", "none of them"], c: 1 },
+            { id: 132, q: "این بیماری قارچی فقط با دید مستقیم میکروسکوپی قابل شناسایی است؟", o: ["کراتومایکوزیس", "راینوسپوریدیوزیس", "آسپرژیلوما", "اورال کاندیدیازیس"], c: 1 },
+            { id: 133, q: "عامل عفونت، مسمومیت و آلرژی قارچی در انسان است؟", o: ["آسپرژیلوس", "آلترناریا", "درماتوفیت", "پنی سیلیوم"], c: 0 },
+            { id: 134, q: "شایع ترین گونه های آسپرژیلوس در ایجاد عفونت آسپرژیلوس کدام است؟", o: ["آ نیجر", "آ فومیگاتوس", "هیچ کدام", "آ فلاووس"], c: 1 },
+            { id: 135, q: "کدام جمله غلط است؟", o: ["آسپرژیلوس از عوامل آلرژی تنفسی است.", "خفاش میزبان اصلی هیستوپلاسما است.", "موکورالها از تهاجم عروقی بالایی برخوردارند.", "عفونت گوش خارجی بوسیله پنیسیلیوم ها ایجاد میشود."], c: 3 },
+            { id: 136, q: "شایع ترین بیماری قارچی ریوی در زمینه ایدز؟", o: ["پنموسیتوزیس", "کریپتوکوکوزیس", "موکورمایکوزیس", "آسپرژیلوزیس"], c: 0 },
+            { id: 137, q: "تشخیص این بیماری با چسب اسکاچ است:", o: ["درماتوفیتوزیس", "تینه آ ورسیکالر", "آسپرژیلوزیس", "کاندیدیازیس"], c: 1 },
+            { id: 138, q: "در چرم حیوانات کدام بیماری زا است؟", o: ["ترایکوفایتون", "کاندیدا", "آسپرژیلوس", "پنیسیلیوم"], c: 0 },
+            { id: 139, q: "این بیماری قارچی با تست سرولوژی قابل تشخیص است؟", o: ["oral candidiasis", "Rhinosporidiosis", "keratomycosia", "Aspergilloma"], c: 3 },
+            { id: 140, q: "کتوکونازول در درمان ......... کارایی دارد ؟", o: ["کوکسید یوئید و مایوکوزیس", "آسپرژیلوزیس", "اسپوروتریکوزیس جلدی لنفاوی", "تینه آورسیکالر"], c: 3 },
+            { id: 141, q: "تشخیص این بیماری با چسب اسکاج میسر است :", o: ["Dermatophytosis", "Tinea versicolor", "Aspergillosis", "Candidiasis"], c: 1 },
+            { id: 142, q: "کدام یک از عبارتهای زیر غلط است ؟", o: ["در اشکال آلرژی بیماری آسپرژیلوس نمونه خلط واجد قارچ است", "در بافت بیمار کریپتوکوکوس فاقد هاید است.", "آسپرژیلوس برونکوپولمونز را با آمفوتریسین ب درمان می کنند.", "ابتلا به دیابت زمینه آسپرژیلوس است."], c: 0 },
+            { id: 143, q: "کدامیک از عبارات زیر صحیح است ؟", o: ["درماتوفیتهای خاکدوست تولید ضایعات ریوی می نمایند.", "گریزئوفولوین درمان انتخابی موکور مایکوزیس است.", "قارچ های پاتوژن حقیقی ریوی غالبا دو شکلی هستند.", "آسپرژیلوزیس را فقط با رادیوگرافی سینه میتوان شناسایی نمود."], c: 2 },
+            { id: 144, q: "کدام یک از روشهای زیر جهت تشخیص آسپرژیلوما ارزشمندتر است ؟", o: ["فقط کشت خلط", "عکس برداری سینه", "تست پوستی", "تست سرولوژی"], c: 3 },
+            { id: 145, q: "شایع ترین گونه‌های آسپرژیلوس در ایجاد عفونت گوش خارجی کدام است؟", o: ["آ. فومیگاتوس", "آفلاووس", "آ نیجر", "هیچکدام"], c: 2 },
+            { id: 146, q: "شایع ترین بیماری قارچی ریوی در زمینه ایدز است ؟", o: ["کریپتوکوکوزیس", "آسپرژیلوزیس", "موکور مایکوزیس", "پنموسیستوزیس"], c: 3 },
+            { id: 147, q: "درمان اختصاصی کریپتوکوکوزیس است.", o: ["گریزئوفولوین", "پنی سیلین", "فلوسیتوزین", "استرپتومایسین"], c: 2 },
+            { id: 148, q: "درمان انتخابی کریپتوکوکوزیس؟", o: ["Terbinafine", "Clotrimazole", "Amphotericin-B + Flucytosine", "Terbinafine + Griseofulvin"], c: 2 },
+            { id: 149, q: "در مورد کریپتوکوکوزیس کدامیک از عبارات زیر غلط است؟", o: ["قارچ از فضله کبوتر جدا میشود", "مننژیت شایع ترین فرم بیماری است", "فرم جلدی آن نادر است", "کپسول قارچ با استفاده رنگ آمیزی گرم قابل مشاهده است"], c: 3 },
+            { id: 150, q: "در مورد کریپتوکوکوزیس کدام غلط است؟", o: ["کیست استخوانی از اشکال این بیماری است.", "بیماری مسری است.", "ایجاد مننژیت مزمن میکند.", "با کشت قارچ شناسی قابل شناسایی است."], c: 1 },
+            { id: 151, q: "این دارو با مهار سنتز ارگوسترول باعث ممانعت از رشد قارچ میشود:", o: ["نیستاتین", "آمفوتریسین ب", "فلوسیتوزین", "تربینافین"], c: 3 },
+            { id: 152, q: "مکانیسم عمل ضد قارچی تربینافین ......... است.", o: ["مهار سنتز گلوکاگون دیواره سلولی", "مهار سنتز ارگسترول", "مهار سنتز DNA", "مهار تشکیل دوک تقسیم"], c: 1 },
+            { id: 153, q: "مکانیسم عمل ضد قارچی آزولها (فلوکونازول) شامل ......... است .", o: ["مهارتشکیل دوک تقسیم", "مهار سنتز گلوکان دیواره سلولی", "مهار سنتز DNA", "مهار سنتز ارگوسترول"], c: 3 }
+        ];
+
+        let viewMode = localStorage.getItem('mycology_view_mode') || 'modern';
+        let currentSession = null;
+        let currentSubtopic = null;
+        let currentSectionNum = null;
+        let currentQuestionsList = [];
+        let currentIndex = 0;
+        let userAnswers = {};
+
+        let stats = JSON.parse(localStorage.getItem('mycology_stats')) || {};
+        let bookmarks = JSON.parse(localStorage.getItem('mycology_bookmarks')) || {};
+
+        const CustomUI = {
+            alert: function(text, callback) {
+                const container = document.getElementById('modal-container');
+                container.innerHTML = `
+                    <div class="custom-modal-overlay">
+                        <div class="custom-modal">
+                            <p>${text}</p>
+                            <div style="margin-top: 15px;">
+                                <button class="btn btn-accent" id="modal-ok" style="width: 100%; justify-content: center;">تایید</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                document.getElementById('modal-ok').onclick = function() {
+                    container.innerHTML = '';
+                    if(callback) callback();
+                };
+            },
+            confirm: function(text, onConfirm) {
+                const container = document.getElementById('modal-container');
+                container.innerHTML = `
+                    <div class="custom-modal-overlay">
+                        <div class="custom-modal">
+                            <p>${text}</p>
+                            <div style="display: flex; gap: 10px; margin-top: 15px;">
+                                <button class="btn btn-accent" id="modal-yes" style="flex:1; justify-content: center;">بله</button>
+                                <button class="btn" id="modal-no" style="flex:1; justify-content: center;">لغو</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                document.getElementById('modal-yes').onclick = function() {
+                    container.innerHTML = '';
+                    onConfirm();
+                };
+                document.getElementById('modal-no').onclick = function() {
+                    container.innerHTML = '';
+                };
+            }
+        };
+
+        function logoutSubject() {
+            CustomUI.confirm('آیا مطمئن هستید؟ فقط اطلاعات و آمارهای مربوط به درس قارچ‌شناسی پاک خواهد شد و نام شما تغییر نخواهد کرد.', function() {
+                localStorage.removeItem('mycology_stats');
+                localStorage.removeItem('mycology_bookmarks');
+                localStorage.removeItem('mycology_view_mode');
+                location.reload();
+            });
+        }
+
+        function checkUser() {
+            let username = localStorage.getItem('global_username');
+            if (!username) {
+                username = 'دانشجو';
+            }
+            document.getElementById('greeting').innerText = `سلام ${username}!`;
+            initApp();
+        }
+
+        function initApp() {
+            updateToggleUI();
+            renderDashboard();
+        }
+
+        function setMode(mode) {
+            viewMode = mode;
+            localStorage.setItem('mycology_view_mode', mode);
+            updateToggleUI();
+            renderDashboard();
+        }
+
+        function updateToggleUI() {
+            document.getElementById('mode-classic').classList.toggle('active', viewMode === 'classic');
+            document.getElementById('mode-modern').classList.toggle('active', viewMode === 'modern');
+        }
+
+        function renderDashboard() {
+            const containerArea = document.getElementById('main-content-area');
+            containerArea.innerHTML = '';
+            const subtitleEl = document.getElementById('dashboard-subtitle');
+
+            if (viewMode === 'modern') {
+                subtitleEl.innerText = 'سیستم آموزشی مدرن (۷ جلسه و زیرمبحث‌ها)';
+                
+                const titleEl = document.createElement('div');
+                titleEl.className = 'section-title';
+                titleEl.innerText = 'سرفصل جلسات آموزشی';
+                containerArea.appendChild(titleEl);
+
+                const grid = document.createElement('div');
+                grid.className = 'grid-menu';
+                grid.style.maxHeight = '240px';
+                grid.style.overflowY = 'auto';
+                grid.style.paddingLeft = '4px';
+
+                mycologyData.sessions.forEach(sess => {
+                    const btn = document.createElement('button');
+                    btn.className = 'btn';
+                    btn.style.padding = '8px 12px';
+                    btn.innerHTML = `
+                        <div class="btn-content">
+                            <span style="font-weight: 600; font-size: 0.82rem;">${sess.title}</span>
+                            <span style="font-size: 0.72rem; color: var(--text-secondary);">ورود به درسنامه و سوالات</span>
+                        </div>
+                        <span class="badge">جلسه ${sess.id}</span>
+                    `;
+                    btn.onclick = () => openSession(sess.id);
+                    grid.appendChild(btn);
+                });
+                containerArea.appendChild(grid);
+
+            } else {
+                subtitleEl.innerText = 'بانک سوالات ۵ بخشی و درسنامه‌های جامع';
+
+                const notesContainer = document.createElement('div');
+                notesContainer.style.marginBottom = '8px';
+                notesContainer.innerHTML = `
+                    <button class="btn full-width btn-accent" style="padding: 10px 14px;" onclick="openClassicNotesSessions()">
+                        <div class="btn-content">
+                            <span style="font-size: 0.9rem; font-weight: bold;">📖 مطالعه درسنامه‌های جامع (تفکیک‌شده)</span>
+                        </div>
+                        <span class="badge badge-accent">جزوه</span>
+                    </button>
+                `;
+                containerArea.appendChild(notesContainer);
+
+                const titleEl = document.createElement('div');
+                titleEl.className = 'section-title';
+                titleEl.innerText = 'بخش‌های ۵ گانه بانک سوالات';
+                containerArea.appendChild(titleEl);
+
+                const grid = document.createElement('div');
+                grid.className = 'grid-menu';
+
+                for (let i = 1; i <= 5; i++) {
+                    let qRange = i === 1 ? "سوالات ۱ تا ۳۰" : i === 2 ? "سوالات ۳۱ تا ۶۰" : i === 3 ? "سوالات ۶۱ تا ۹۰" : i === 4 ? "سوالات ۹۱ تا ۱۲۰" : "سوالات ۱۲۱ تا ۱۵۳";
+                    const btn = document.createElement('button');
+                    btn.className = 'btn';
+                    btn.style.padding = '8px 12px';
+                    btn.innerHTML = `
+                        <div class="btn-content">
+                            <span style="font-weight: 600; font-size: 0.82rem;">بخش ${i} قارچ‌شناسی</span>
+                            <span style="font-size: 0.72rem; color: var(--text-secondary);">${qRange}</span>
+                        </div>
+                        <span class="badge">بخش ${i}</span>
+                    `;
+                    btn.onclick = () => openSectionOptions(i);
+                    grid.appendChild(btn);
+                }
+                containerArea.appendChild(grid);
+            }
+
+            updateBadges();
+            updateMasteryBar();
+        }
+
+        function openClassicNotesSessions() {
+            const grid = document.getElementById('classic-notes-sessions-grid');
+            grid.innerHTML = '';
+            mycologyData.sessions.forEach(sess => {
+                const btn = document.createElement('button');
+                btn.className = 'btn';
+                btn.innerHTML = `
+                    <div class="btn-content">
+                        <span style="font-weight: 600;">${sess.title}</span>
+                        <span style="font-size: 0.8rem; color: var(--text-secondary);">مشاهده زیرمبحث‌ها و متن درسنامه</span>
+                    </div>
+                    <span class="badge">جزوه</span>
+                `;
+                btn.onclick = () => openClassicNotesSubtopics(sess.id);
+                grid.appendChild(btn);
+            });
+            showScreen('classic-notes-sessions-screen');
+        }
+
+        function openClassicNotesSubtopics(sessId) {
+            currentSession = mycologyData.sessions.find(s => s.id === sessId);
+            document.getElementById('classic-sess-title').innerText = currentSession.title;
+            const grid = document.getElementById('classic-notes-subtopics-grid');
+            grid.innerHTML = '';
+
+            currentSession.subtopics.forEach(sub => {
+                const btn = document.createElement('button');
+                btn.className = 'btn';
+                btn.innerHTML = `
+                    <div class="btn-content">
+                        <span style="font-weight: 600;">${sub.name}</span>
+                        <span style="font-size: 0.8rem; color: var(--text-secondary);">مطالعه نکات این زیرمبحث</span>
+                    </div>
+                    <span class="badge">مطالعه</span>
+                `;
+                btn.onclick = () => openClassicSummary(sub.name);
+                grid.appendChild(btn);
+            });
+            showScreen('classic-notes-subtopics-screen');
+        }
+
+        function openClassicSummary(subName) {
+            document.getElementById('summary-header-title').innerText = `درسنامه: ${subName}`;
+            const sub = currentSession.subtopics.find(s => s.name === subName);
+            document.getElementById('summary-content').innerHTML = sub.summary;
+            showScreen('summary-screen');
+        }
+
+        function backFromSummary() {
+            if (viewMode === 'modern') {
+                showScreen('options-screen');
+            } else {
+                showScreen('classic-notes-subtopics-screen');
+            }
+        }
+
+        function openSession(sessionId) {
+            currentSession = mycologyData.sessions.find(s => s.id === sessionId);
+            document.getElementById('session-main-title').innerText = currentSession.title;
+            
+            const subGrid = document.getElementById('subtopics-grid');
+            subGrid.innerHTML = '';
+
+            currentSession.subtopics.forEach(sub => {
+                const btn = document.createElement('button');
+                btn.className = 'btn';
+                btn.innerHTML = `
+                    <div class="btn-content">
+                        <span style="font-weight: 600;">${sub.name}</span>
+                        <span style="font-size: 0.8rem; color: var(--text-secondary);">${sub.hasQuestions ? 'دارای درسنامه و سوال تستی' : 'فقط درسنامه آموزشی'}</span>
+                    </div>
+                    <span class="badge">${sub.hasQuestions ? 'درسنامه و سوال' : 'فقط درسنامه'}</span>
+                `;
+                btn.onclick = () => selectSubtopic(sub);
+                subGrid.appendChild(btn);
+            });
+
+            showScreen('subtopics-screen');
+        }
+
+        function selectSubtopic(sub) {
+            currentSubtopic = sub;
+            document.getElementById('subtopic-header-title').innerText = sub.name;
+            
+            const qBtn = document.getElementById('btn-goto-questions');
+            if (!sub.hasQuestions) {
+                qBtn.style.display = 'none';
+            } else {
+                qBtn.style.display = 'flex';
+                document.getElementById('subtopic-q-count').innerText = `${sub.qIds.length} سوال تستی`;
+            }
+
+            showScreen('options-screen');
+        }
+
+        function openSummary() {
+            document.getElementById('summary-header-title').innerText = `درسنامه: ${currentSubtopic.name}`;
+            document.getElementById('summary-content').innerHTML = currentSubtopic.summary;
+            showScreen('summary-screen');
+        }
+
+        function openQuestionsMenu() {
+            document.getElementById('qmode-header-title').innerText = `سوالات: ${currentSubtopic.name}`;
+            showScreen('questions-mode-screen');
+        }
+
+        function openSectionOptions(sectionNum) {
+            currentSectionNum = sectionNum;
+            document.getElementById('section-option-title').innerText = `بخش ${sectionNum} قارچ‌شناسی`;
+            showScreen('section-options-screen');
+        }
+
+        function startSectionMemorize() {
+            document.getElementById('memo-header-title').innerText = `حفظ سوالات: بخش ${currentSectionNum}`;
+            let startIdx = (currentSectionNum - 1) * 30;
+            let endIdx = currentSectionNum === 5 ? allQuestions.length : startIdx + 30;
+            let questions = allQuestions.slice(startIdx, endIdx);
+            renderMemorizeCards(questions);
+        }
+
+        function startSectionQuiz() {
+            userAnswers = {};
+            document.getElementById('quiz-type-title').innerText = `تمرین بخش ${currentSectionNum}`;
+            let startIdx = (currentSectionNum - 1) * 30;
+            let endIdx = currentSectionNum === 5 ? allQuestions.length : startIdx + 30;
+            let questions = allQuestions.slice(startIdx, endIdx);
+
+            currentQuestionsList = prepareQuestions(questions);
+            currentIndex = 0;
+            showScreen('quiz-screen');
+            renderQuestion();
+        }
+
+        function startMemorizeMode() {
+            document.getElementById('memo-header-title').innerText = `حفظ سوالات: ${currentSubtopic.name}`;
+            let questions = currentSubtopic.qIds.map(id => allQuestions.find(q => q.id === id)).filter(Boolean);
+            renderMemorizeCards(questions);
+        }
+
+        function renderMemorizeCards(questions) {
+            const container = document.getElementById('memorize-container');
+            container.innerHTML = '';
+
+            questions.forEach((qObj, idx) => {
+                const card = document.createElement('div');
+                card.className = 'memo-card';
+                
+                let optsHtml = '';
+                qObj.o.forEach((optText, optIdx) => {
+                    const isCorrect = (optIdx === qObj.c);
+                    optsHtml += `<div class="memo-opt ${isCorrect ? 'correct-ans' : ''}">${optIdx + 1}) ${optText} ${isCorrect ? '✓ (پاسخ صحیح)' : ''}</div>`;
+                });
+
+                card.innerHTML = `<div class="memo-q">سؤال ${idx + 1}: ${qObj.q}</div><div class="memo-opts">${optsHtml}</div>`;
+                container.appendChild(card);
+            });
+
+            showScreen('memorize-screen');
+        }
+
+        function startQuizMode() {
+            userAnswers = {};
+            document.getElementById('quiz-type-title').innerText = currentSubtopic.name;
+
+            let questions = currentSubtopic.qIds.map(id => allQuestions.find(q => q.id === id)).filter(Boolean);
+            currentQuestionsList = prepareQuestions(questions);
+            currentIndex = 0;
+
+            showScreen('quiz-screen');
+            renderQuestion();
+        }
+
+        function startChallengeQuiz() {
+            userAnswers = {};
+            document.getElementById('quiz-type-title').innerText = `🎯 ایستگاه چالش`;
+
+            let filtered = allQuestions.filter(q => stats[q.id] && stats[q.id].wrongCount >= 2);
+            if (filtered.length === 0) {
+                CustomUI.alert('هنوز سوالی با تکرار اشتباه بالا ندارید. عالیه! 🥸');
+                return;
+            }
+
+            currentQuestionsList = prepareQuestions(filtered);
+            currentIndex = 0;
+            showScreen('quiz-screen');
+            renderQuestion();
+        }
+
+        function startBookmarkQuiz() {
+            userAnswers = {};
+            document.getElementById('quiz-type-title').innerText = `⭐ سوالات نشان‌دار`;
+
+            let filtered = allQuestions.filter(q => bookmarks[q.id]);
+            if (filtered.length === 0) {
+                CustomUI.alert('شما هنوز هیچ سوالی را نشان‌دار نکرده‌اید!');
+                return;
+            }
+
+            currentQuestionsList = prepareQuestions(filtered);
+            currentIndex = 0;
+            showScreen('quiz-screen');
+            renderQuestion();
+        }
+
+        function startRandomComprehensiveQuiz() {
+            userAnswers = {};
+            document.getElementById('quiz-type-title').innerText = `🎲 آزمون جامع رندوم (کل سوالات)`;
+
+            currentQuestionsList = prepareQuestions([...allQuestions]);
+            currentIndex = 0;
+            showScreen('quiz-screen');
+            renderQuestion();
+        }
+
+        function prepareQuestions(questionsList) {
+            let shuffledQuestions = shuffle(questionsList);
+            return shuffledQuestions.map(item => {
+                let mappedOptions = item.o.map((txt, index) => ({ text: txt, originalIndex: index }));
+                return {
+                    id: item.id,
+                    q: item.q,
+                    c: item.c,
+                    shuffledOptions: shuffle(mappedOptions)
+                };
+            });
+        }
+
+        function renderQuestion() {
+            if (currentQuestionsList.length === 0) return;
+
+            const currentQ = currentQuestionsList[currentIndex];
+            if (!stats[currentQ.id]) stats[currentQ.id] = { wrongCount: 0, consecutiveCorrect: 0 };
+
+            document.getElementById('progress-text').innerText = `سوال ${currentIndex + 1} از ${currentQuestionsList.length}`;
+            document.getElementById('question-text').innerText = currentQ.q;
+
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
+
+            currentQ.shuffledOptions.forEach(opt => {
+                const div = document.createElement('div');
+                div.className = 'option-item';
+                div.innerText = opt.text;
+                div.setAttribute('data-original-index', opt.originalIndex);
+                div.onclick = () => selectOption(div, opt.originalIndex, currentQ.c, currentQ.id);
+
+                if (userAnswers[currentQ.id] !== undefined) {
+                    div.classList.add('disabled');
+                    if (opt.originalIndex === currentQ.c) div.classList.add('correct');
+                    if (opt.originalIndex === userAnswers[currentQ.id] && userAnswers[currentQ.id] !== currentQ.c) div.classList.add('wrong');
+                }
+                container.appendChild(div);
+            });
+
+            document.getElementById('btn-prev').style.visibility = (currentIndex === 0) ? 'hidden' : 'visible';
+            document.getElementById('btn-next').innerText = (currentIndex === currentQuestionsList.length - 1) ? 'پایان' : 'سوال بعدی';
+            updateBookmarkBtnUI();
+        }
+
+        function selectOption(element, selectedIdx, correctIdx, qId) {
+            const items = document.querySelectorAll('.option-item');
+            items.forEach(item => item.classList.add('disabled'));
+            userAnswers[qId] = selectedIdx;
+
+            if (selectedIdx === correctIdx) {
+                element.classList.add('correct');
+                stats[qId].consecutiveCorrect++;
+                if (stats[qId].consecutiveCorrect >= 3) stats[qId].wrongCount = 0;
+            } else {
+                element.classList.add('wrong');
+                stats[qId].wrongCount++;
+                stats[qId].consecutiveCorrect = 0;
+                items.forEach(item => {
+                    if (parseInt(item.getAttribute('data-original-index')) === correctIdx) item.classList.add('correct');
+                });
+            }
+            saveStats();
+        }
+
+        function navigateQuestion(step) {
+            currentIndex += step;
+            if (currentIndex >= currentQuestionsList.length) {
+                CustomUI.alert('آزمون به پایان رسید. خسته نباشید!', () => goHome());
+            } else if (currentIndex < 0) {
+                currentIndex = 0;
+            } else {
+                renderQuestion();
+            }
+        }
+
+        function toggleBookmark() {
+            if (currentQuestionsList.length === 0) return;
+            const qId = currentQuestionsList[currentIndex].id;
+            bookmarks[qId] = !bookmarks[qId];
+            saveBookmarks();
+            updateBookmarkBtnUI();
+        }
+
+        function updateBookmarkBtnUI() {
+            if (currentQuestionsList.length === 0) return;
+            const qId = currentQuestionsList[currentIndex].id;
+            const btn = document.getElementById('btn-bookmark');
+            if (bookmarks[qId]) {
+                btn.innerText = '⭐ نشان شده';
+                btn.style.background = 'rgba(234, 179, 8, 0.2)';
+            } else {
+                btn.innerText = '☆ نشان';
+                btn.style.background = '';
+            }
+        }
+
+        function saveStats() {
+            localStorage.setItem('mycology_stats', JSON.stringify(stats));
+            updateBadges();
+            updateMasteryBar();
+        }
+
+        function saveBookmarks() {
+            localStorage.setItem('mycology_bookmarks', JSON.stringify(bookmarks));
+            updateBadges();
+        }
+
+        function updateBadges() {
+            let chCount = 0;
+            for (let qId in stats) {
+                if (stats[qId].wrongCount >= 2) chCount++;
+            }
+            const chEl = document.getElementById('challenge-count');
+            if (chEl) chEl.innerText = `${chCount} سوال`;
+
+            let bmCount = Object.keys(bookmarks).filter(k => bookmarks[k]).length;
+            const bmEl = document.getElementById('bookmark-count');
+            if (bmEl) bmEl.innerText = `${bmCount} سوال`;
+        }
+
+        function updateMasteryBar() {
+            const total = allQuestions.length;
+            let score = 0;
+            for (let qId in stats) {
+                const st = stats[qId];
+                if (st.consecutiveCorrect >= 3) score += 1;
+                else if (st.consecutiveCorrect === 2) score += 0.6;
+                else if (st.consecutiveCorrect === 1 || st.wrongCount > 0) score += 0.25;
+            }
+            const pct = total > 0 ? Math.round((score / total) * 100) : 0;
+            document.getElementById('mastery-percentage').innerText = `${pct}%`;
+
+            const liquid = document.getElementById('flask-liquid');
+            liquid.style.height = `${pct}%`;
+            liquid.className = 'liquid';
+
+            if (pct < 30) {
+                liquid.classList.add('color-low');
+                document.documentElement.style.setProperty('--wave-color-1', 'rgba(190, 18, 60, 0.8)');
+                document.documentElement.style.setProperty('--wave-color-2', 'rgba(225, 29, 72, 0.5)');
+            } else if (pct < 60) {
+                liquid.classList.add('color-mid');
+                document.documentElement.style.setProperty('--wave-color-1', 'rgba(217, 119, 6, 0.8)');
+                document.documentElement.style.setProperty('--wave-color-2', 'rgba(245, 158, 11, 0.5)');
+            } else if (pct < 85) {
+                liquid.classList.add('color-high');
+                document.documentElement.style.setProperty('--wave-color-1', 'rgba(29, 78, 216, 0.8)');
+                document.documentElement.style.setProperty('--wave-color-2', 'rgba(59, 130, 246, 0.5)');
+            } else {
+                liquid.classList.add('color-max');
+                document.documentElement.style.setProperty('--wave-color-1', 'rgba(4, 120, 87, 0.8)');
+                document.documentElement.style.setProperty('--wave-color-2', 'rgba(16, 185, 129, 0.5)');
+            }
+        }
+
+        function showMasteryDetails() {
+            const pct = parseInt(document.getElementById('mastery-percentage').innerText);
+            let msg = pct < 30 ? "ابتدای راه هستید، درسنامه‌ها را دقیق‌تر مطالعه کنید!" : pct < 70 ? "پیشرفت خوبی داشتید، به تمرین ادامه دهید." : "تسلط فوق‌العاده‌ای روی مباحث قارچ‌شناسی پیدا کرده‌اید! عالیه 🌸";
+            CustomUI.alert(`درصد تسلط کل شما: ${pct}%<br><br>${msg}`);
+        }
+
+        function shuffle(arr) {
+            let a = [...arr];
+            for (let i = a.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [a[i], a[j]] = [a[j], a[i]];
+            }
+            return a;
+        }
+
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+        }
+
+        function goHome() {
+            showScreen('dashboard-screen');
+            renderDashboard();
+        }
+
+        function backToSubtopics() {
+            showScreen('subtopics-screen');
+        }
+
+        function backToOptions() {
+            showScreen('options-screen');
+        }
+
+        function backToPreviousFromMemorize() {
+            if (viewMode === 'modern') {
+                showScreen('questions-mode-screen');
+            } else {
+                showScreen('section-options-screen');
+            }
+        }
+
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        if (localStorage.getItem('global_theme') === 'light') {
+            document.body.classList.add('light-mode');
+            themeToggleBtn.innerText = '🌙';
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            document.body.classList.toggle('light-mode');
+            if (document.body.classList.contains('light-mode')) {
+                localStorage.setItem('global_theme', 'light');
+                themeToggleBtn.innerText = '🌙';
+            } else {
+                localStorage.setItem('global_theme', 'dark');
+                themeToggleBtn.innerText = '☀️';
+            }
+        });
+
+        window.onload = () => {
+            checkUser();
+        };
+    </script>
+</body>
+</html>

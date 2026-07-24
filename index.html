@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پورتال جامع آزمون‌های علوم پزشکی</title>
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #090d16 0%, #15162c 50%, #1e1b4b 100%);
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-hover: rgba(255, 255, 255, 0.07);
+            --card-bg: rgba(255, 255, 255, 0.04);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent-primary: #6366f1;
+            --accent-hover: #4f46e5;
+            --success: #10b981;
+            --error: #ef4444;
+            --glass-overlay: rgba(255, 255, 255, 0.06);
+            --glass-border-light: rgba(255, 255, 255, 0.2);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            transition: background 0.5s ease, color 0.5s ease;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 25px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+            position: relative;
+        }
+
+        .top-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .icon-btn {
+            padding: 0;
+            border-radius: 12px;
+            width: 42px;
+            height: 42px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            background: var(--glass-overlay);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .icon-btn:hover {
+            background: var(--glass-hover);
+            transform: translateY(-2px);
+            border-color: var(--glass-border-light);
+            color: var(--accent-primary);
+        }
+        
+        .icon-btn.danger:hover {
+            color: var(--error);
+            border-color: rgba(239, 68, 68, 0.5);
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .icon-btn svg {
+            width: 20px;
+            height: 20px;
+            stroke-width: 2.2;
+        }
+
+        .hero-card {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .hero-info h2 {
+            font-size: 1.4rem;
+            color: var(--accent-primary);
+            margin-bottom: 5px;
+        }
+
+        .hero-info p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .main-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .menu-btn {
+            background: var(--glass-overlay);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+            padding: 18px 20px;
+            border-radius: 16px;
+            cursor: pointer;
+            font-size: 1.05rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .menu-btn:hover {
+            background: var(--accent-primary);
+            border-color: var(--accent-hover);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+        }
+        
+        .menu-btn .emoji-icon {
+            font-size: 1.5rem;
+            background: rgba(255,255,255,0.1);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            letter-spacing: 1px;
+            opacity: 0.7;
+        }
+
+        /* Modal Styles */
+        .custom-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(9, 13, 22, 0.85);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeIn 0.3s forwards;
+        }
+
+        .custom-modal {
+            background: #15162c;
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 25px;
+            width: 90%;
+            max-width: 380px;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            animation: scaleUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        .custom-modal p {
+            font-size: 1rem;
+            color: var(--text-primary);
+            margin-bottom: 20px;
+            line-height: 1.6;
+            font-weight: 500;
+        }
+
+        .custom-modal input {
+            width: 100%;
+            padding: 12px 15px;
+            background: var(--glass-overlay);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            text-align: center;
+            margin-bottom: 20px;
+            outline: none;
+            transition: all 0.3s;
+        }
+        
+        .custom-modal input:focus {
+            border-color: var(--accent-primary);
+            background: rgba(255,255,255,0.1);
+        }
+
+        .modal-btn {
+            background: var(--accent-primary);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 12px;
+            width: 100%;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .modal-btn:hover {
+            background: var(--accent-hover);
+        }
+
+        .modal-btn.secondary {
+            background: var(--glass-overlay);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+            margin-top: 10px;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes scaleUp { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+        /* Light Mode */
+        body.light-mode {
+            --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            --glass-bg: rgba(255, 255, 255, 0.9);
+            --glass-border: rgba(0, 0, 0, 0.08);
+            --glass-hover: rgba(255, 255, 255, 1);
+            --card-bg: rgba(255, 255, 255, 0.8);
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --accent-primary: #4f46e5;
+            --glass-overlay: rgba(0, 0, 0, 0.04);
+            --glass-border-light: rgba(0, 0, 0, 0.15);
+        }
+        body.light-mode .custom-modal {
+            background: #ffffff;
+        }
+        body.light-mode .menu-btn {
+            background: #ffffff;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- هدر و دکمه‌های کنترل -->
+        <div class="top-controls">
+            <button id="theme-toggle" class="icon-btn" title="تغییر تم"></button>
+            <button class="icon-btn danger" title="خروج کامل و ریست همه درس‌ها" onclick="logoutAll()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                    <polyline points="16 17 21 12 16 7"></polyline>
+                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                </svg>
+            </button>
+        </div>
+
+        <div id="modal-container"></div>
+
+        <!-- خوش‌آمدگویی -->
+        <div class="hero-card">
+            <div class="hero-info">
+                <h2 id="greeting">سلام!</h2>
+                <p>به پورتال جامع هوشمند مرور و آزمون خوش آمدید.<br>لطفاً درس مورد نظر خود را انتخاب کنید.</p>
+            </div>
+        </div>
+
+        <!-- منوی اصلی انتخاب دروس -->
+        <div class="main-menu">
+            <button class="menu-btn" onclick="location.href='biochemistry.html'">
+                <span>بیوشیمی دیسیپلین</span>
+                <div class="emoji-icon">🧬</div>
+            </button>
+            
+            <button class="menu-btn" onclick="location.href='mycology.html'">
+                <span>قارچ‌شناسی پزشکی</span>
+                <div class="emoji-icon">🍄</div>
+            </button>
+            
+            <button class="menu-btn" onclick="location.href='english.html'">
+                <span>زبان تخصصی پزشکی</span>
+                <div class="emoji-icon">📝</div>
+            </button>
+        </div>
+
+        <!-- فوتر -->
+        <div class="footer">
+            By: sommet_s
+        </div>
+    </div>
+
+    <script>
+        const CustomUI = {
+            prompt: function(text, onSubmit) {
+                const container = document.getElementById('modal-container');
+                container.innerHTML = `
+                    <div class="custom-modal-overlay">
+                        <div class="custom-modal">
+                            <p>${text}</p>
+                            <input type="text" id="modal-input" placeholder="نام خود را وارد کنید..." autofocus autocomplete="off"/>
+                            <button class="modal-btn" id="modal-submit">ثبت و ورود</button>
+                        </div>
+                    </div>
+                `;
+                const submitAction = function() {
+                    const val = document.getElementById('modal-input').value;
+                    if(val.trim() !== "") {
+                        container.innerHTML = '';
+                        onSubmit(val);
+                    } else {
+                        document.getElementById('modal-input').style.borderColor = "var(--error)";
+                    }
+                };
+                document.getElementById('modal-submit').onclick = submitAction;
+                document.getElementById('modal-input').onkeydown = function(e) {
+                    if (e.key === 'Enter') submitAction();
+                };
+            },
+            confirm: function(text, onConfirm) {
+                const container = document.getElementById('modal-container');
+                container.innerHTML = `
+                    <div class="custom-modal-overlay">
+                        <div class="custom-modal">
+                            <p>${text}</p>
+                            <div style="display: flex; flex-direction: column;">
+                                <button class="modal-btn" style="background: var(--error);" id="modal-yes">بله، همه چیز پاک شود</button>
+                                <button class="modal-btn secondary" id="modal-no">انصراف</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                document.getElementById('modal-yes').onclick = function() {
+                    container.innerHTML = '';
+                    onConfirm();
+                };
+                document.getElementById('modal-no').onclick = function() {
+                    container.innerHTML = '';
+                };
+            }
+        };
+
+        // مدیریت نام کاربری به صورت گلوبال
+        function checkUser() {
+            let username = localStorage.getItem('global_username');
+            if (!username) {
+                CustomUI.prompt('خوش آمدید! برای شروع لطفاً نام خود را وارد کنید:', function(inputName) {
+                    username = inputName.trim();
+                    localStorage.setItem('global_username', username);
+                    document.getElementById('greeting').innerText = `سلام ${username}!`;
+                });
+            } else {
+                document.getElementById('greeting').innerText = `سلام ${username}!`;
+            }
+        }
+
+        // خروج از صفحه اصلی = پاک کردن کل اطلاعات
+        function logoutAll() {
+            CustomUI.confirm('آیا مطمئن هستید؟ با این کار نام شما و آمار/نشان‌دارها در **تمامی درس‌ها** به طور کامل حذف خواهد شد.', function() {
+                localStorage.clear();
+                location.reload();
+            });
+        }
+
+        // تم و ظاهر
+        const sunIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>`;
+
+        const moonIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>`;
+
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        
+        // همگام‌سازی تم با سایر صفحات
+        if (localStorage.getItem('global_theme') === 'light') {
+            document.body.classList.add('light-mode');
+            themeToggleBtn.innerHTML = moonIcon;
+        } else {
+            themeToggleBtn.innerHTML = sunIcon;
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            document.body.classList.toggle('light-mode');
+            if (document.body.classList.contains('light-mode')) {
+                localStorage.setItem('global_theme', 'light');
+                themeToggleBtn.innerHTML = moonIcon;
+            } else {
+                localStorage.setItem('global_theme', 'dark');
+                themeToggleBtn.innerHTML = sunIcon;
+            }
+        });
+
+        window.onload = () => {
+            checkUser();
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بانک سوالات زبان تخصصی پزشکی</title>
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #090d16 0%, #15162c 50%, #1e1b4b 100%);
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-hover: rgba(255, 255, 255, 0.07);
+            --card-bg: rgba(255, 255, 255, 0.04);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent-primary: #6366f1;
+            --accent-hover: #4f46e5;
+            --success: #10b981;
+            --error: #ef4444;
+            --warning: #f59e0b;
+            --wave-color-1: rgba(255, 75, 114, 0.8);
+            --wave-color-2: rgba(255, 75, 114, 0.5);
+            --glass-overlay: rgba(255, 255, 255, 0.06);
+            --glass-border-light: rgba(255, 255, 255, 0.2);
+            --accent-overlay: rgba(255, 255, 255, 0.2);
+            --success-text: #a7f3d0;
+            --error-text: #fca5a5;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            transition: background 0.5s ease, color 0.5s ease;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 780px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 20px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+            transition: all 0.5s ease;
+            position: relative;
+        }
+
+        .screen {
+            display: none;
+        }
+
+        .screen.active {
+            display: block;
+            animation: fadeInScreen 0.3s ease forwards;
+        }
+
+        @keyframes fadeInScreen {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .top-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .top-left-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .mode-toggle-switch {
+            display: flex;
+            background: var(--glass-overlay);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            padding: 2px;
+        }
+
+        .mode-option {
+            padding: 5px 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-secondary);
+            border: none;
+            background: transparent;
+        }
+
+        .mode-option.active {
+            background: var(--accent-primary);
+            color: #ffffff;
+            box-shadow: 0 2px 8px rgba(99, 102, 241, 0.4);
+        }
+
+        .icon-btn {
+            padding: 0;
+            border-radius: 12px;
+            width: 38px;
+            height: 38px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            background: var(--glass-overlay);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .icon-btn:hover {
+            background: var(--glass-hover);
+            transform: translateY(-2px);
+            border-color: var(--glass-border-light);
+            color: var(--accent-primary);
+        }
+        
+        .icon-btn:active {
+            transform: translateY(0);
+        }
+
+        .icon-btn svg {
+            width: 18px;
+            height: 18px;
+            stroke-width: 2.2;
+            transition: all 0.3s ease;
+        }
+
+        .hero-card {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .hero-info h2 {
+            font-size: 1.1rem;
+            color: var(--accent-primary);
+            margin-bottom: 2px;
+        }
+
+        .hero-info p {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+        }
+
+        .mastery-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .mastery-container:hover {
+            transform: scale(1.05);
+        }
+
+        .flask-wrapper {
+            position: relative;
+            width: 40px;
+            height: 52px;
+            margin-bottom: 4px;
+        }
+
+        .flask-shape {
+            width: 100%;
+            height: 100%;
+            background: var(--glass-overlay);
+            clip-path: polygon(32% 0%, 68% 0%, 68% 8%, 64% 8%, 64% 35%, 100% 90%, 100% 100%, 0% 100%, 0% 90%, 36% 35%, 36% 8%, 32% 8%);
+            position: relative;
+            overflow: hidden;
+            border: 2px solid var(--glass-border-light);
+        }
+
+        .liquid {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 0%;
+            transition: height 1.2s cubic-bezier(0.4, 0, 0.2, 1), background 0.8s ease;
+        }
+
+        .wave {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            width: 100px;
+            height: 100px;
+            background: var(--wave-color-1);
+            border-radius: 40%;
+            transform: translateX(-50%);
+            animation: rotateWave 3.5s linear infinite;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .wave:nth-child(2) {
+            top: -12px;
+            background: var(--wave-color-2);
+            border-radius: 38%;
+            animation: rotateWave 5.5s linear infinite;
+            z-index: 1;
+        }
+
+        .liquid.color-low { background: #be123c; }
+        .liquid.color-mid { background: #d97706; }
+        .liquid.color-high { background: #1d4ed8; }
+        .liquid.color-max { background: #047857; }
+
+        @keyframes rotateWave {
+            0% { transform: translateX(-50%) rotate(0deg); }
+            100% { transform: translateX(-50%) rotate(360deg); }
+        }
+
+        .mastery-label {
+            font-size: 0.7rem;
+            color: var(--text-primary);
+            font-weight: 600;
+            background: var(--glass-overlay);
+            padding: 1px 6px;
+            border-radius: 10px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .section-title {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--glass-border);
+        }
+
+        .grid-menu {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        @media (min-width: 540px) {
+            .grid-menu {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .full-width {
+                grid-column: span 2;
+            }
+        }
+
+        .btn {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+            padding: 10px 14px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 0.82rem;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            text-align: right;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .btn:not([disabled]):hover {
+            background: var(--glass-hover);
+            border-color: var(--accent-primary);
+            transform: translateY(-1px);
+        }
+
+        .btn-content {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .btn-accent {
+            background: var(--accent-primary);
+            border: none;
+            color: #ffffff;
+        }
+
+        .btn-accent:not([disabled]):hover {
+            background: var(--accent-hover);
+        }
+
+        .btn-nav {
+            padding: 8px 14px;
+            font-size: 0.8rem;
+            justify-content: center;
+            flex-direction: row;
+        }
+
+        .badge {
+            font-size: 0.65rem;
+            background: var(--glass-overlay);
+            padding: 2px 6px;
+            border-radius: 16px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .badge-accent {
+            background: var(--accent-overlay);
+            color: #ffffff;
+        }
+
+        .memorize-container {
+            max-height: 65vh;
+            overflow-y: auto;
+            padding-left: 5px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .memo-card {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            padding: 16px;
+            direction: ltr;
+            text-align: left;
+        }
+
+        .memo-q {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            line-height: 1.5;
+            white-space: pre-line;
+        }
+
+        .memo-opts {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .memo-opt {
+            padding: 8px 12px;
+            border-radius: 8px;
+            background: var(--glass-overlay);
+            border: 1px solid var(--glass-border);
+            font-size: 0.9rem;
+        }
+
+        .memo-opt.correct-ans {
+            background: rgba(16, 185, 129, 0.15);
+            border-color: var(--success);
+            color: var(--success-text);
+            font-weight: 600;
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 10px;
+        }
+
+        .quiz-title {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .question-box {
+            direction: ltr;
+            text-align: left;
+        }
+
+        .question-text {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            font-weight: 500;
+            white-space: pre-line;
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .option-item {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            padding: 12px 16px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+
+        .option-item:hover {
+            background: var(--glass-hover);
+            border-color: var(--glass-border-light);
+        }
+
+        .option-item.correct {
+            background: rgba(16, 185, 129, 0.2) !important;
+            border-color: var(--success) !important;
+            color: var(--success-text) !important;
+        }
+
+        .option-item.wrong {
+            background: rgba(239, 68, 68, 0.2) !important;
+            border-color: var(--error) !important;
+            color: var(--error-text) !important;
+        }
+
+        .option-item.disabled {
+            pointer-events: none;
+        }
+
+        .quiz-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            gap: 10px;
+        }
+
+        .custom-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(9, 13, 22, 0.8);
+            backdrop-filter: blur(8px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeIn 0.2s forwards;
+        }
+
+        .custom-modal {
+            background: #15162c;
+            border: 1px solid var(--glass-border);
+            border-radius: 18px;
+            padding: 20px;
+            width: 90%;
+            max-width: 360px;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            animation: scaleUp 0.2s forwards;
+        }
+
+        .custom-modal p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .custom-modal input {
+            width: 100%;
+            padding: 10px;
+            background: var(--glass-overlay);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            text-align: center;
+            margin-bottom: 15px;
+            outline: none;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes scaleUp { from { transform: scale(0.9); } to { transform: scale(1); } }
+
+        body.light-mode {
+            --bg-gradient: linear-gradient(135deg, #f1f5f9 0%, #cbd5e1 100%);
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(0, 0, 0, 0.1);
+            --glass-hover: rgba(255, 255, 255, 0.98);
+            --card-bg: rgba(255, 255, 255, 0.75);
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --accent-primary: #4f46e5;
+            --accent-hover: #4338ca;
+            --glass-overlay: rgba(0, 0, 0, 0.06);
+            --glass-border-light: rgba(0, 0, 0, 0.15);
+            --success-text: #059669;
+            --error-text: #dc2626;
+        }
+
+        body.light-mode .custom-modal {
+            background: #ffffff;
+            color: #0f172a;
+        }
+
+        body.light-mode .badge {
+            color: var(--text-secondary);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            letter-spacing: 1px;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- هدر بالا -->
+        <div class="top-controls">
+            <div class="top-left-group">
+                <button id="theme-toggle" class="icon-btn" title="تغییر تم"></button>
+                <button id="home-btn" class="icon-btn" title="بازگشت به منوی اصلی" onclick="location.href='index.html'">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                </button>
+                <button id="logout-btn" class="icon-btn" title="پاک کردن اطلاعات این درس" onclick="logoutSubject()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                        <polyline points="16 17 21 12 16 7"></polyline>
+                        <line x1="21" y1="12" x2="9" y2="12"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="mode-toggle-switch">
+                <button class="mode-option active" id="mode-classic">کلاسیک</button>
+                <button class="mode-option" id="mode-modern" style="opacity:0.5; cursor:not-allowed;" title="غیرفعال شده است">مدرن</button>
+            </div>
+        </div>
+
+        <div id="modal-container"></div>
+
+        <!-- داشبورد اصلی -->
+        <div id="dashboard-screen" class="screen active">
+            <div class="hero-card">
+                <div class="hero-info">
+                    <h2 id="greeting">سلام!</h2>
+                    <p id="dashboard-subtitle">سیستم هوشمند مرور و آزمون زبان تخصصی</p>
+                </div>
+                <div class="mastery-container" onclick="showMasteryDetails()" title="مشاهده درصد تسلط">
+                    <div class="flask-wrapper">
+                        <div class="flask-shape">
+                            <div class="liquid" id="flask-liquid">
+                                <div class="wave"></div>
+                                <div class="wave"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mastery-label" id="mastery-percentage">0%</div>
+                </div>
+            </div>
+
+            <div id="main-content-area"></div>
+
+            <div class="section-title">مرور و آزمون هوشمند</div>
+            <div class="grid-menu" style="grid-template-columns: repeat(3, 1fr) !important; gap: 6px; margin-bottom: 0;">
+                <button class="btn" style="flex-direction: column; align-items: center; text-align: center; padding: 8px 6px; border-color: rgba(239, 68, 68, 0.3); color: #ef4444;" onclick="startChallengeQuiz()">
+                    <span style="font-weight: 600; font-size: 0.78rem;">🎯 چالش</span>
+                    <span class="badge" id="challenge-count" style="background: rgba(239, 68, 68, 0.1); color: #ef4444; margin-top: 2px;">۰ سوال</span>
+                </button>
+                <button class="btn" style="flex-direction: column; align-items: center; text-align: center; padding: 8px 6px; border-color: rgba(234, 179, 8, 0.3); color: #f59e0b;" onclick="startBookmarkQuiz()">
+                    <span style="font-weight: 600; font-size: 0.78rem;">⭐ نشان‌دار</span>
+                    <span class="badge" id="bookmark-count" style="background: rgba(234, 179, 8, 0.1); color: #f59e0b; margin-top: 2px;">۰ سوال</span>
+                </button>
+                <button class="btn btn-accent" style="flex-direction: column; align-items: center; text-align: center; padding: 8px 6px;" onclick="startRandomComprehensiveQuiz()">
+                    <span style="font-weight: 600; font-size: 0.78rem;">🎲 جامع رندوم</span>
+                    <span class="badge badge-accent" id="total-q-badge" style="margin-top: 2px;">۱۰۹ سوال</span>
+                </button>
+            </div>
+        </div>
+
+        <div id="section-options-screen" class="screen">
+            <div class="quiz-header">
+                <span class="quiz-title" id="section-option-title">بخش</span>
+                <button class="btn btn-nav btn-accent" onclick="goHome()">بازگشت</button>
+            </div>
+            <div class="grid-menu">
+                <button class="btn btn-accent" style="padding: 18px;" onclick="startSectionMemorize()">
+                    <div class="btn-content">
+                        <span style="font-size: 1rem; font-weight: bold;">🧠 حفظ سوالات</span>
+                        <span style="font-size: 0.78rem; opacity: 0.8;">مشاهده تمام سوالات با پاسخ صحیح (اسکرول)</span>
+                    </div>
+                </button>
+                <button class="btn" style="padding: 18px;" onclick="startSectionQuiz()">
+                    <div class="btn-content">
+                        <span style="font-size: 1rem; font-weight: bold;">⏱️ تمرین (رندوم سوال و گزینه)</span>
+                        <span style="font-size: 0.78rem; color: var(--text-secondary);">آزمون و تمرین تعاملی</span>
+                    </div>
+                </button>
+            </div>
+        </div>
+
+        <!-- صفحه حفظ سوالات -->
+        <div id="memorize-screen" class="screen">
+            <div class="quiz-header">
+                <span class="quiz-title" id="memo-header-title">حفظ سوالات</span>
+                <button class="btn btn-nav btn-accent" onclick="backToPreviousFromMemorize()">بازگشت</button>
+            </div>
+            <div class="memorize-container" id="memorize-container"></div>
+        </div>
+
+        <!-- صفحه آزمون / تمرین -->
+        <div id="quiz-screen" class="screen">
+            <div class="quiz-header">
+                <span class="quiz-title" id="quiz-type-title">آزمون</span>
+                <span class="badge" id="progress-text">سوال ۱ از ۱۰</span>
+                <div style="display: flex; gap: 8px;">
+                    <button class="btn btn-nav" id="btn-bookmark" onclick="toggleBookmark()">☆ نشان</button>
+                    <button class="btn btn-nav btn-accent" onclick="goHome()">خانه</button>
+                </div>
+            </div>
+
+            <div class="question-box">
+                <div class="question-text" id="question-text">متن سوال...</div>
+                <div class="options-list" id="options-container"></div>
+            </div>
+
+            <div class="quiz-footer">
+                <button class="btn btn-nav" id="btn-prev" onclick="navigateQuestion(-1)">سوال قبلی</button>
+                <button class="btn btn-nav btn-accent" id="btn-next" onclick="navigateQuestion(1)">سوال بعدی</button>
+            </div>
+        </div>
+
+        <!-- فوتر -->
+        <div class="footer">
+            By: sommet_s
+        </div>
+    </div>
+
+    <script>
+        const allQuestions = [
+            { id: 1, q: "Which one is different?", o: ["anal canal", "digestive tract", "alimentary canal", "gastrointestinal tract"], c: 0 },
+            { id: 2, q: "Which one is different?", o: ["incisor", "molar", "canine", "mastication"], c: 3 },
+            { id: 3, q: "In the stomach, food is further broken down as it is .......... and mixed with secretions containing pepsin and powerful hydrochloric acid.", o: ["liquefied", "churned", "digested", "crushed"], c: 1 },
+            { id: 4, q: "Which one is different?", o: ["cecum", "duodenum", "Jejunum", "ileum"], c: 0 },
+            { id: 5, q: "Which one is different?", o: ["cecum", "colon", "lacteal", "rectum"], c: 2 },
+            { id: 6, q: "The term \"buccoversion\" refers to----", o: ["excision of gum tissue", "turning toward the cheek", "having a projecting jaw", "downward displacement of the cecum"], c: 1 },
+            { id: 7, q: "The term \"prognathous\" refers to ----------.", o: ["irrigation of the colon", "a liver cell", "turning toward the cheek", "having a projecting jaw"], c: 3 },
+            { id: 8, q: "The stoppage of bile flow is referred to as ----------", o: ["cholestasis", "rectocele", "cecoptosis", "prognathous"], c: 0 },
+            { id: 9, q: "The scientific name for urination is----------", o: ["mastication", "diuresis", "micturition", "clearance"], c: 2 },
+            { id: 10, q: "The major calices unite to form the upper funnel-shaped portion of the ureter called renal -------", o: ["cortex", "pelvis", "pyramid", "medulla"], c: 1 },
+            { id: 11, q: "These drugs are used in treating hypertension and heart failure to decrease fluid volume and reduce the heart's workload: -- drugs.", o: ["antihypertensive", "anticoagulant", "antiemetic", "diuretic"], c: 3 },
+            { id: 12, q: "The term \"juxtaglomerular\" means ---------- glomerulus.", o: ["near", "in front of", "behind", "away from"], c: 0 },
+            { id: 13, q: "The term \"pyelectasis\" refers to dilatation of the ----------.", o: ["calyx", "pylorus", "renal pelvis", "pleura"], c: 2 },
+            { id: 14, q: "Presence of urinary waste products in the blood is called.", o: ["hematuria", "uremia", "pyuria", "anuria"], c: 1 },
+            { id: 15, q: "The term \"uropoiesis\" refers to the ---------- of urine.", o: ["discharge", "reduction", "inhibition", "formation"], c: 3 },
+            { id: 16, q: "An inability to retain urine is termed urinary ----------.", o: ["incontinence", "stasis", "diuresis", "retention"], c: 0 },
+            { id: 17, q: "The male gametes are called ----------.", o: ["semen", "testes", "ova", "spermatozoa"], c: 3 },
+            { id: 18, q: "Orchitis is the inflammation of ----------.", o: ["ovary", "penis", "testis", "bladder"], c: 2 },
+            { id: 19, q: "The function of ----- in both males and females is to produce reproductive cells and to produce hormones.", o: ["testes", "gonads", "ovaries", "gametes"], c: 1 },
+            { id: 20, q: "Once an egg is ---------- by the sperm, it becomes an embryo.", o: ["ovulated", "coagulated", "fertilized", "inseminated"], c: 2 },
+            { id: 21, q: "The male germ cells are ----- outside the body in the scrotum.", o: ["suspended", "restored", "produced", "destroyed"], c: 0 },
+            { id: 22, q: "One type of ----- is the male orgasm, when semen is propelled from the penis into a series of ducts.", o: ["lactation", "erection", "insemination", "ejaculation"], c: 3 },
+            { id: 23, q: "The term \"anorchism\" refers to absence of ----------.", o: ["uvula", "testis", "semen", "clitoris"], c: 1 },
+            { id: 24, q: "The term \"oscheal\" means pertaining to.", o: ["testis", "amnion", "scrotum", "breast"], c: 2 },
+            { id: 25, q: "Which one is different?", o: ["orchi/o", "osche/o", "vas/o", "colp/o"], c: 3 },
+            { id: 26, q: "The structure that nourishes the developing fetus is the ----------", o: ["placenta", "uterus", "vagina", "cervix"], c: 0 },
+            { id: 27, q: "At the time of ovulation, usually only one ovum is released from an ovary, and the remainder of the ripening ova ----------.", o: ["fertilize", "degenerate", "suspend", "proliferate"], c: 1 },
+            { id: 28, q: "The -----, anterior to the urethral opening, is similar in developmental origin to the penis and responds to sexual stimulation.", o: ["labia minora", "perineum", "clitoris", "prepuce"], c: 2 },
+            { id: 29, q: "Menopause is the ---------- of monthly menstrual cycles.", o: ["degeneration", "beginning", "length", "cessation"], c: 3 },
+            { id: 30, q: "Surgical --------- provides the most effective and usually permanent contraception.", o: ["abortion", "implantation", "incubation", "sterilization"], c: 3 },
+            { id: 31, q: "The term \"salpingoplasty\" refers to plastic repair of ----------.", o: ["uterine tube", "labia majora", "breast", "vagina"], c: 0 },
+            { id: 32, q: "Fertilization can be best defined as .....of an egg cell by a spermatozoon.", o: ["ovulation", "implantation", "penetration", "adaptation"], c: 2 },
+            { id: 33, q: "Which of the following indicates the period of fetal development?", o: ["lactation", "expulsion", "gestation", "parturition"], c: 2 },
+            { id: 34, q: "The root \"episi\" as in \"episiotomy\" refers to the", o: ["perineum", "vulva", "vagina", "oviduct"], c: 1 },
+            { id: 35, q: "Which of the following terms does NOT mean uterus?", o: ["uter", "colp", "metr", "hyster"], c: 1 },
+            { id: 36, q: "In order to form a zygote, the nuclei of the sperm and egg cells", o: ["cushion", "restore", "divide", "fuse"], c: 3 },
+            { id: 37, q: "Agalactia\" is a term that indicates", o: ["disease - tongue", "swelling - buccal mucosa", "suppression - sweat", "lack - milk"], c: 3 },
+            { id: 38, q: "Which term indicates loss of fetus or embryo before 20 weeks or 500 grams?", o: ["abortion", "ligation", "amastia", "fetectomy"], c: 0 },
+            { id: 39, q: "Which of the following best describes \"eutocia\"?", o: ["normal fallopian tube", "easy uterine contraction", "normal labor", "easy pregnancy"], c: 2 },
+            { id: 40, q: "A .agent is one that gives rise to female characteristics.", o: ["metrostatic", "gynecogenic", "menostatic", "adrenogenic"], c: 1 },
+            { id: 41, q: "Ejaculation is the process which ......sperm cells to a serious of ducts leading out of the body.", o: ["suspends", "ascends", "propels", "coils"], c: 2 },
+            { id: 42, q: "Failure to initiate or maintain an erection is a situation described as", o: ["malfunction", "lesion", "impotence", "precipitation"], c: 2 },
+            { id: 43, q: "The kidney is supported and .........to the body wall by an outermost layer of tissue.", o: ["anchored", "overlaid", "encased", "merged"], c: 0 },
+            { id: 44, q: "The voiding of urine is a process technically called .......", o: ["convolution", "reabsorption", "filtration", "micturition"], c: 3 },
+            { id: 45, q: "The term \" pyelectasis\" refers to ..........of the renal pelvis.", o: ["constriction", "dilatation", "inhibition", "stimulation"], c: 1 },
+            { id: 46, q: "The root \"vesic\" as in \"supravesical\" refers to", o: ["ureter", "urinary tract", "urinary bladder"], c: 2 },
+            { id: 47, q: "The passage of small amounts of urine is a condition described as", o: ["oliguria", "pyuria", "dysuria", "polyuria"], c: 0 },
+            { id: 48, q: "Different parts of the mouth help in the process of ......... to break up the food.", o: ["salvation", "mastication", "digestion", "projection"], c: 1 },
+            { id: 49, q: "Large amounts of bicarbonate are secreted in the pancreas to.....the strong stomach acid.", o: ["reverse", "churn", "emulsify", "neutralize"], c: 3 },
+            { id: 50, q: "The root \"gnath\" as in \" prognathous\" pertains to a ..........", o: ["jaw", "tongue", "cheek", "gum"], c: 0 },
+            { id: 51, q: "The root \"cholang\" as in \"cholangioma\" refers to the", o: ["bile duct", "gallbladder", "jejunum", "cecum"], c: 0 },
+            { id: 52, q: "The term 'oscheoplasty' refers to plastic repair of the..", o: ["sicle", "gallbladder", "scrotum", "ovary"], c: 2 },
+            { id: 53, q: "The physician has planned some tests since under-secretion was ...", o: ["associated", "released", "administered", "indicated"], c: 3 },
+            { id: 54, q: "Which of the following best describes \"circumcision\"?", o: ["surgical removal of the glans penis", "surgical removal of the foreskin", "excretion of too much body discharge", "excretion of excessive menstrual flow"], c: 1 },
+            { id: 55, q: "The testes ..through the inguinal canal shortly before birth.", o: ["extend", "transport", "decrease", "descend"], c: 3 },
+            { id: 56, q: "Which of the following indicates penile stiffening?", o: ["Erection", "Ejaculation", "Coitus", "Insemination"], c: 0 },
+            { id: 57, q: "Which of the following terms indicates the presence of pus in the semen?", o: ["spermopyorrhagia", "pyoseminorrhea", "pyospermia", "pyroseminia"], c: 2 },
+            { id: 58, q: "The kidneys are ........in a capsule of fibrous connective tissue.", o: ["overlaid", "suspended", "anchored", "encased"], c: 3 },
+            { id: 59, q: "Which ending indicates a hormone that acts on another gland?", o: ["-physis", "-tropin", "-diuresis", "-tocin"], c: 1 },
+            { id: 60, q: "To increase the levels of fat and carbohydrates in the blood, cortisole .......their reserves.", o: ["endures", "conserves", "eliminates", "mobilizes"], c: 3 },
+            { id: 61, q: "It is a fact that many more chemicals can be ...........by smell than by taste.", o: ["concentrated", "discriminated", "projected", "enhanced"], c: 1 },
+            { id: 62, q: "\"Somnambulism\" is a condition characterized by ...", o: ["Body movement", "Irregular sleeping patterns", "Emergency care", "Walking during sleep"], c: 3 },
+            { id: 63, q: "Which of the following is the name of a slightly movable joint?", o: ["suture", "Synovial joint", "symphysis", "diarthrosis"], c: 2 },
+            { id: 64, q: "Which of the following is another term for the blind spot?", o: ["Optic disc", "macula", "Vitreous body", "fovea"], c: 0 },
+            { id: 65, q: "The root \"insul\" as in \"insular\" pertains to", o: ["parathyroid gland", "adrenal cortex", "pancreatic islet", "hypophysis"], c: 2 },
+            { id: 66, q: "The term \"rachischisis\" indicates the fissure of the .................", o: ["cartilage", "spine", "coccyx", "vertebra"], c: 1 },
+            { id: 67, q: "Where is the \"buccal mucosa\" located?", o: ["nostril, medial side", "mouth, inside cheeks", "gastric curvature", "base of the tongue"], c: 1 },
+            { id: 68, q: "\"Fascia is a ...........of connective tissue that covers each muscle.", o: ["junction", "bundle", "sheath", "filament"], c: 2 },
+            { id: 69, q: "The term \"hemianopia\" refers to .......... in half of the visual field.", o: ["protrusion", "Unequal vision", "blindness", "Lack of color"], c: 2 },
+            { id: 70, q: "Which protective layer of the brain is the \"tender one\"?", o: ["pia", "mater", "dura", "weblike"], c: 0 },
+            { id: 71, q: "There was \"purulent\" drainage from the tissue. \"purulent\" means:", o: ["tissue tenderness", "pus containing", "swelling", "septic"], c: 1 },
+            { id: 72, q: "The root \"gen\" as in carcinogenesis refers to a cancer's ................", o: ["treatment", "origin", "severity", "location"], c: 1 },
+            { id: 73, q: "Some bones of the skeleton such as the shoulder girdle are .......to the axial skeleton.", o: ["designated", "appended", "enclosed", "composed"], c: 1 },
+            { id: 74, q: "Extracorporeal blood circulation is the one that occurs ............", o: ["within the brain", "through the pericardium", "outside the body", "in the legs"], c: 2 },
+            { id: 75, q: "In order to attain ........, internal bleeding in patients with sustained visceral rupture must be stopped.", o: ["cell salvage", "transfusion", "segments", "hemostasis"], c: 3 },
+            { id: 76, q: "The adjective \"trichoid” describes any structure that resembles a .........", o: ["nail", "thread", "fiber", "hair"], c: 3 },
+            { id: 77, q: "\"Intestinal motility\" is a term that indicates ...................", o: ["absorption", "chewing", "peristalsis", "ascites"], c: 2 },
+            { id: 78, q: "Sensory signals are sent from the various receptors to the central nervous system for .........", o: ["detection", "interpretation", "distribution", "transmission"], c: 1 },
+            { id: 79, q: "When a patient is unable to abduct an injured arm, it means that he can't move it .......", o: ["toward the midline", "with palms up", "away from the midline", "circumferentially"], c: 2 },
+            { id: 80, q: "Which of the following does NOT refer to the eye?", o: ["Ocul/o", "Ophthalm/o", "Palpebr/o", "Opt/o"], c: 2 },
+            { id: 81, q: "The heart valve was tested by .........the ventricle with NSS.", o: ["elongating", "inflating", "resuming", "interrupting"], c: 1 },
+            { id: 82, q: "Which term indicates the protective layers of the brain?", o: ["pons", "medulla", "diencephalon", "meninges"], c: 3 },
+            { id: 83, q: "Before making any incisions, anesthesia needs to be first", o: ["retracted", "approached", "anchored", "induced"], c: 3 },
+            { id: 84, q: "The term \"salpingoscopy\" refers to the endoscopic examination of the ....", o: ["Inner ear", "Eustachian tube", "Tympanic membrane", "Vestibular apparatus"], c: 1 },
+            { id: 85, q: "Which one is the name of a thin membrane that lines the eyelids and covers the anterior portion of the eye?", o: ["conjunctiva", "choroid", "sclera", "uvea"], c: 0 },
+            { id: 86, q: "Any disorder present at birth is described as ..............", o: ["Genetic", "Familial", "Congenital", "Hereditary"], c: 2 },
+            { id: 87, q: "Which of the following is a waxy material that protects the ear and helps to prevent infection?", o: ["cerumen", "incus", "malleus", "cochlea"], c: 0 },
+            { id: 88, q: "The spinal cord ............to an end between the first and second lumber vertebrae.", o: ["tapers", "projests", "enlarges", "ascends"], c: 0 },
+            { id: 89, q: "The treatment \"fibrinolytic therapy is directed toward .........", o: ["separating blood cells", "dissolving a blood clot", "destroying RBCs", "triggering clotting"], c: 1 },
+            { id: 90, q: "Further manufacture of a hormone is controlled by the hormone itself. This mechanism is called....", o: ["Chemical categorization", "Potent amounts", "Negative feedback", "endocrinization"], c: 2 },
+            { id: 91, q: "Which direction does an \"oblique incision\" follow?", o: ["angled", "circumferential", "superior to inferior", "lateral"], c: 0 },
+            { id: 92, q: "Which item best describes \"impotence\"?", o: ["inability to identify vas deferens", "inability to maintain penile erection", "vasectomy", "vagotomy"], c: 1 },
+            { id: 93, q: "Tendons are formed when supporting tissues ........to attach the muscle to bones.", o: ["propel", "reverse", "prompt", "merge"], c: 3 },
+            { id: 94, q: "Which of the following senses helps to judge body position and coordinate muscle activity?", o: ["gustation", "proprioception", "olfaction", "tactile"], c: 1 },
+            { id: 95, q: "A renal flow scan showed normal \"perfusion\" and no obstruction. Perfusion means.......", o: ["blood supply", "overload", "abundance", "passage of fluid"], c: 0 },
+            { id: 96, q: "An \"intermittent\" pain is one that", o: ["gets progressive", "is chronic", "starts and stops repeatedly", "starts abruptly"], c: 2 },
+            { id: 97, q: "The disease has been in remission for 9 years, but now it is worse. This is called \"disease ......\".", o: ["exacerbation", "alteration", "suppression", "recreation"], c: 0 },
+            { id: 98, q: "\"noctiphobia indicates irrational fear of", o: ["darkness", "stupor", "seizure", "height"], c: 0 },
+            { id: 99, q: "Use of artificial methods to prevent fertilization is termed ........................................", o: ["Parturition", "Gestation", "Antiception", "Contraception"], c: 3 },
+            { id: 100, q: "Which of the following is term that indicates \"raised areas on the brain\"?", o: ["cortices", "sulci", "gyri", "grooves"], c: 2 },
+            { id: 101, q: "Which one best describes the process in which calcium and phosphorus salts are gradually added to cartilage?", o: ["ossification", "elongating", "remodeling", "resorption"], c: 0 },
+            { id: 102, q: "My myelin is a whitish, fatty material that .........and protects the neuron fibers.", o: ["extends", "transmits", "conducts", "insulates"], c: 3 },
+            { id: 103, q: "In the case of disease exacerbation, the conditions of the patient ...................... ....", o: ["presume", "worsen", "are evaluated", "are in remission"], c: 1 },
+            { id: 104, q: "The term \"polymastia\" refers to the presence of more than one pair of .......", o: ["ovaries", "fetuses", "zygotes", "breasts"], c: 3 },
+            { id: 105, q: "Hormones are a group of substances with ....... ...functions.", o: ["regulatory", "distributing", "circulating", "target"], c: 0 },
+            { id: 106, q: "The respiratory status of a person with a history of asthma might be ... for surgery.", o: ["oxygenated", "compromised", "intervened", "obstructed"], c: 1 },
+            { id: 107, q: "Cells in the nervous system that support and protect nervous tissue are called ........", o: ["neuroglia", "dendrite", "axon", "ganglion"], c: 0 },
+            { id: 108, q: "A general term for any disorder or alteration of brain tissue is .......................", o: ["encephalopathy", "sychosomatism", "dysencephaloma", "neurocytoma"], c: 0 },
+            { id: 109, q: "One effect of an excess of adrenal cortical hormones can be fluid ......", o: ["retention", "excretion", "elemination", "preparation"], c: 0 }
+        ];
+
+        let currentSectionNum = null;
+        let currentQuestionsList = [];
+        let currentIndex = 0;
+        let userAnswers = {};
+        let isChallengeMode = false;
+        let isBookmarkMode = false;
+
+        let stats = JSON.parse(localStorage.getItem('medical_eng_stats')) || {};
+        let bookmarks = JSON.parse(localStorage.getItem('medical_eng_bookmarks')) || {};
+
+        const CustomUI = {
+            alert: function(text, callback) {
+                const container = document.getElementById('modal-container');
+                container.innerHTML = `
+                    <div class="custom-modal-overlay">
+                        <div class="custom-modal">
+                            <p>${text}</p>
+                            <div style="margin-top: 15px;">
+                                <button class="btn btn-accent" id="modal-ok" style="width: 100%; justify-content: center;">تایید</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                document.getElementById('modal-ok').onclick = function() {
+                    container.innerHTML = '';
+                    if(callback) callback();
+                };
+            },
+            confirm: function(text, onConfirm) {
+                const container = document.getElementById('modal-container');
+                container.innerHTML = `
+                    <div class="custom-modal-overlay">
+                        <div class="custom-modal">
+                            <p>${text}</p>
+                            <div style="display: flex; gap: 10px; margin-top: 15px;">
+                                <button class="btn btn-accent" id="modal-yes" style="flex:1; justify-content: center;">بله</button>
+                                <button class="btn" id="modal-no" style="flex:1; justify-content: center;">لغو</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                document.getElementById('modal-yes').onclick = function() {
+                    container.innerHTML = '';
+                    onConfirm();
+                };
+                document.getElementById('modal-no').onclick = function() {
+                    container.innerHTML = '';
+                };
+            }
+        };
+
+        function logoutSubject() {
+            CustomUI.confirm('آیا مطمئن هستید؟ فقط اطلاعات و آمارهای مربوط به درس زبان تخصصی پاک خواهد شد و نام شما تغییر نخواهد کرد.', function() {
+                localStorage.removeItem('medical_eng_stats');
+                localStorage.removeItem('medical_eng_bookmarks');
+                location.reload();
+            });
+        }
+
+        function checkUser() {
+            let username = localStorage.getItem('global_username');
+            if (!username) {
+                username = 'دانشجو';
+            }
+            document.getElementById('greeting').innerText = `سلام ${username}!`;
+            initApp();
+        }
+
+        function initApp() {
+            renderDashboard();
+        }
+
+        function renderDashboard() {
+            const containerArea = document.getElementById('main-content-area');
+            containerArea.innerHTML = '';
+            
+            const notesContainer = document.createElement('div');
+            notesContainer.style.marginBottom = '8px';
+            notesContainer.innerHTML = `
+                <button class="btn full-width btn-accent" disabled style="padding: 10px 14px; opacity: 0.5; cursor: not-allowed;" title="بخش درسنامه غیرفعال شده است">
+                    <div class="btn-content">
+                        <span style="font-size: 0.9rem; font-weight: bold;">📖 مطالعه درسنامه‌های جامع (تفکیک‌شده) - غیرفعال</span>
+                    </div>
+                    <span class="badge badge-accent">جزوه</span>
+                </button>
+            `;
+            containerArea.appendChild(notesContainer);
+
+            const titleEl = document.createElement('div');
+            titleEl.className = 'section-title';
+            titleEl.innerText = 'بخش‌های ۴ گانه بانک سوالات';
+            containerArea.appendChild(titleEl);
+
+            const grid = document.createElement('div');
+            grid.className = 'grid-menu';
+
+            for (let i = 1; i <= 4; i++) {
+                let qRange = i === 1 ? "سوالات ۱ تا ۲۷" : 
+                             i === 2 ? "سوالات ۲۸ تا ۵۴" : 
+                             i === 3 ? "سوالات ۵۵ تا ۸۱" : 
+                             "سوالات ۸۲ تا ۱۰۹";
+                             
+                const btn = document.createElement('button');
+                btn.className = 'btn';
+                btn.style.padding = '8px 12px';
+                btn.innerHTML = `
+                    <div class="btn-content">
+                        <span style="font-weight: 600; font-size: 0.82rem;">بخش ${i} سوالات</span>
+                        <span style="font-size: 0.72rem; color: var(--text-secondary);">${qRange}</span>
+                    </div>
+                    <span class="badge">بخش ${i}</span>
+                `;
+                btn.onclick = () => openSectionOptions(i);
+                grid.appendChild(btn);
+            }
+            containerArea.appendChild(grid);
+
+            updateBadges();
+            updateMasteryBar();
+        }
+
+        function openSectionOptions(sectionNum) {
+            currentSectionNum = sectionNum;
+            document.getElementById('section-option-title').innerText = `بخش ${sectionNum}`;
+            showScreen('section-options-screen');
+        }
+
+        function startSectionMemorize() {
+            document.getElementById('memo-header-title').innerText = `حفظ سوالات: بخش ${currentSectionNum}`;
+            let startIdx = (currentSectionNum - 1) * 27;
+            let endIdx = currentSectionNum === 4 ? allQuestions.length : startIdx + 27;
+            let questions = allQuestions.slice(startIdx, endIdx);
+            renderMemorizeCards(questions);
+        }
+
+        function startSectionQuiz() {
+            userAnswers = {};
+            document.getElementById('quiz-type-title').innerText = `تمرین بخش ${currentSectionNum}`;
+            let startIdx = (currentSectionNum - 1) * 27;
+            let endIdx = currentSectionNum === 4 ? allQuestions.length : startIdx + 27;
+            let questions = allQuestions.slice(startIdx, endIdx);
+
+            currentQuestionsList = prepareQuestions(questions);
+            currentIndex = 0;
+            showScreen('quiz-screen');
+            renderQuestion();
+        }
+
+        function renderMemorizeCards(questions) {
+            const container = document.getElementById('memorize-container');
+            container.innerHTML = '';
+
+            questions.forEach((qObj, idx) => {
+                const card = document.createElement('div');
+                card.className = 'memo-card';
+                
+                let optsHtml = '';
+                qObj.o.forEach((optText, optIdx) => {
+                    const isCorrect = (optIdx === qObj.c);
+                    optsHtml += `<div class="memo-opt ${isCorrect ? 'correct-ans' : ''}">${optIdx + 1}) ${optText} ${isCorrect ? '✓ (Correct)' : ''}</div>`;
+                });
+
+                card.innerHTML = `<div class="memo-q">Q ${idx + 1}: ${qObj.q}</div><div class="memo-opts">${optsHtml}</div>`;
+                container.appendChild(card);
+            });
+
+            showScreen('memorize-screen');
+        }
+
+        function startChallengeQuiz() {
+            isChallengeMode = true;
+            isBookmarkMode = false;
+            userAnswers = {};
+            document.getElementById('quiz-type-title').innerText = `🎯 ایستگاه چالش`;
+
+            let filtered = allQuestions.filter(q => stats[q.id] && stats[q.id].wrongCount >= 2);
+            if (filtered.length === 0) {
+                CustomUI.alert('هنوز سوالی با تکرار اشتباه بالا ندارید. عالیه! 🥸');
+                return;
+            }
+
+            currentQuestionsList = prepareQuestions(filtered);
+            currentIndex = 0;
+            showScreen('quiz-screen');
+            renderQuestion();
+        }
+
+        function startBookmarkQuiz() {
+            isChallengeMode = false;
+            isBookmarkMode = true;
+            userAnswers = {};
+            document.getElementById('quiz-type-title').innerText = `⭐ سوالات نشان‌دار`;
+
+            let filtered = allQuestions.filter(q => bookmarks[q.id]);
+            if (filtered.length === 0) {
+                CustomUI.alert('شما هنوز هیچ سوالی را نشان‌دار نکرده‌اید!');
+                return;
+            }
+
+            currentQuestionsList = prepareQuestions(filtered);
+            currentIndex = 0;
+            showScreen('quiz-screen');
+            renderQuestion();
+        }
+
+        function startRandomComprehensiveQuiz() {
+            isChallengeMode = false;
+            isBookmarkMode = false;
+            userAnswers = {};
+            document.getElementById('quiz-type-title').innerText = `🎲 آزمون جامع رندوم`;
+
+            currentQuestionsList = prepareQuestions([...allQuestions]);
+            currentIndex = 0;
+            showScreen('quiz-screen');
+            renderQuestion();
+        }
+
+        function prepareQuestions(questionsList) {
+            let shuffledQuestions = shuffle(questionsList);
+            return shuffledQuestions.map(item => {
+                let mappedOptions = item.o.map((txt, index) => ({ text: txt, originalIndex: index }));
+                return {
+                    id: item.id,
+                    q: item.q,
+                    c: item.c,
+                    shuffledOptions: shuffle(mappedOptions)
+                };
+            });
+        }
+
+        function renderQuestion() {
+            if (currentQuestionsList.length === 0) return;
+
+            const currentQ = currentQuestionsList[currentIndex];
+            if (!stats[currentQ.id]) stats[currentQ.id] = { wrongCount: 0, consecutiveCorrect: 0 };
+
+            document.getElementById('progress-text').innerText = `سوال ${currentIndex + 1} از ${currentQuestionsList.length}`;
+            document.getElementById('question-text').innerText = currentQ.q;
+
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
+
+            currentQ.shuffledOptions.forEach(opt => {
+                const div = document.createElement('div');
+                div.className = 'option-item';
+                div.innerText = opt.text;
+                div.setAttribute('data-original-index', opt.originalIndex);
+                div.onclick = () => selectOption(div, opt.originalIndex, currentQ.c, currentQ.id);
+
+                if (userAnswers[currentQ.id] !== undefined) {
+                    div.classList.add('disabled');
+                    if (opt.originalIndex === currentQ.c) div.classList.add('correct');
+                    if (opt.originalIndex === userAnswers[currentQ.id] && userAnswers[currentQ.id] !== currentQ.c) div.classList.add('wrong');
+                }
+                container.appendChild(div);
+            });
+
+            document.getElementById('btn-prev').style.visibility = (currentIndex === 0) ? 'hidden' : 'visible';
+            document.getElementById('btn-next').innerText = (currentIndex === currentQuestionsList.length - 1) ? 'پایان' : 'سوال بعدی';
+            updateBookmarkBtnUI();
+        }
+
+        function selectOption(element, selectedIdx, correctIdx, qId) {
+            const items = document.querySelectorAll('.option-item');
+            items.forEach(item => item.classList.add('disabled'));
+            userAnswers[qId] = selectedIdx;
+
+            if (selectedIdx === correctIdx) {
+                element.classList.add('correct');
+                stats[qId].consecutiveCorrect++;
+                if (stats[qId].consecutiveCorrect >= 3) stats[qId].wrongCount = 0;
+            } else {
+                element.classList.add('wrong');
+                stats[qId].wrongCount++;
+                stats[qId].consecutiveCorrect = 0;
+                items.forEach(item => {
+                    if (parseInt(item.getAttribute('data-original-index')) === correctIdx) item.classList.add('correct');
+                });
+            }
+            saveStats();
+        }
+
+        function navigateQuestion(step) {
+            currentIndex += step;
+            if (currentIndex >= currentQuestionsList.length) {
+                CustomUI.alert('آزمون به پایان رسید. خسته نباشید!', () => goHome());
+            } else if (currentIndex < 0) {
+                currentIndex = 0;
+            } else {
+                renderQuestion();
+            }
+        }
+
+        function toggleBookmark() {
+            if (currentQuestionsList.length === 0) return;
+            const qId = currentQuestionsList[currentIndex].id;
+            bookmarks[qId] = !bookmarks[qId];
+            saveBookmarks();
+            updateBookmarkBtnUI();
+        }
+
+        function updateBookmarkBtnUI() {
+            if (currentQuestionsList.length === 0) return;
+            const qId = currentQuestionsList[currentIndex].id;
+            const btn = document.getElementById('btn-bookmark');
+            if (bookmarks[qId]) {
+                btn.innerText = '⭐ نشان شده';
+                btn.style.background = 'rgba(234, 179, 8, 0.2)';
+            } else {
+                btn.innerText = '☆ نشان';
+                btn.style.background = '';
+            }
+        }
+
+        function saveStats() {
+            localStorage.setItem('medical_eng_stats', JSON.stringify(stats));
+            updateBadges();
+            updateMasteryBar();
+        }
+
+        function saveBookmarks() {
+            localStorage.setItem('medical_eng_bookmarks', JSON.stringify(bookmarks));
+            updateBadges();
+        }
+
+        function updateBadges() {
+            let chCount = 0;
+            for (let qId in stats) {
+                if (stats[qId].wrongCount >= 2) chCount++;
+            }
+            const chEl = document.getElementById('challenge-count');
+            if (chEl) chEl.innerText = `${chCount} سوال`;
+
+            let bmCount = Object.keys(bookmarks).filter(k => bookmarks[k]).length;
+            const bmEl = document.getElementById('bookmark-count');
+            if (bmEl) bmEl.innerText = `${bmCount} سوال`;
+        }
+
+        function updateMasteryBar() {
+            const total = allQuestions.length;
+            let score = 0;
+            for (let qId in stats) {
+                const st = stats[qId];
+                if (st.consecutiveCorrect >= 3) score += 1;
+                else if (st.consecutiveCorrect === 2) score += 0.6;
+                else if (st.consecutiveCorrect === 1 || st.wrongCount > 0) score += 0.25;
+            }
+            const pct = total > 0 ? Math.round((score / total) * 100) : 0;
+            document.getElementById('mastery-percentage').innerText = `${pct}%`;
+
+            const liquid = document.getElementById('flask-liquid');
+            liquid.style.height = `${pct}%`;
+            liquid.className = 'liquid';
+
+            if (pct < 30) {
+                liquid.classList.add('color-low');
+                document.documentElement.style.setProperty('--wave-color-1', 'rgba(190, 18, 60, 0.8)');
+                document.documentElement.style.setProperty('--wave-color-2', 'rgba(225, 29, 72, 0.5)');
+            } else if (pct < 60) {
+                liquid.classList.add('color-mid');
+                document.documentElement.style.setProperty('--wave-color-1', 'rgba(217, 119, 6, 0.8)');
+                document.documentElement.style.setProperty('--wave-color-2', 'rgba(245, 158, 11, 0.5)');
+            } else if (pct < 85) {
+                liquid.classList.add('color-high');
+                document.documentElement.style.setProperty('--wave-color-1', 'rgba(29, 78, 216, 0.8)');
+                document.documentElement.style.setProperty('--wave-color-2', 'rgba(59, 130, 246, 0.5)');
+            } else {
+                liquid.classList.add('color-max');
+                document.documentElement.style.setProperty('--wave-color-1', 'rgba(4, 120, 87, 0.8)');
+                document.documentElement.style.setProperty('--wave-color-2', 'rgba(16, 185, 129, 0.5)');
+            }
+        }
+
+        function showMasteryDetails() {
+            const pct = parseInt(document.getElementById('mastery-percentage').innerText);
+            let msg = pct < 30 ? "ابتدای راه هستید، مطالعه را دقیق‌تر پیش ببرید!" : pct < 70 ? "پیشرفت خوبی داشتید، به تمرین ادامه دهید." : "تسلط فوق‌العاده‌ای روی مباحث پیدا کرده‌اید! عالیه 🌸";
+            CustomUI.alert(`درصد تسلط کل شما: ${pct}%<br><br>${msg}`);
+        }
+
+        function shuffle(arr) {
+            let a = [...arr];
+            for (let i = a.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [a[i], a[j]] = [a[j], a[i]];
+            }
+            return a;
+        }
+
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+        }
+
+        function goHome() {
+            showScreen('dashboard-screen');
+            renderDashboard();
+        }
+
+        function backToPreviousFromMemorize() {
+            showScreen('section-options-screen');
+        }
+
+        // SVG Icons definitions
+        const sunIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>`;
+
+        const moonIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>`;
+
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        
+        if (localStorage.getItem('global_theme') === 'light') {
+            document.body.classList.add('light-mode');
+            themeToggleBtn.innerHTML = moonIcon;
+        } else {
+            themeToggleBtn.innerHTML = sunIcon;
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            document.body.classList.toggle('light-mode');
+            if (document.body.classList.contains('light-mode')) {
+                localStorage.setItem('global_theme', 'light');
+                themeToggleBtn.innerHTML = moonIcon;
+            } else {
+                localStorage.setItem('global_theme', 'dark');
+                themeToggleBtn.innerHTML = sunIcon;
+            }
+        });
+
+        window.onload = () => {
+            checkUser();
+        };
+    </script>
+</body>
+</html>
