@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بانک سوالات زبان تخصصی پزشکی</title>
+    <title>بانک سوالات بیوشیمی هورمون</title>
     <style>
         :root {
             --bg-gradient: linear-gradient(135deg, #090d16 0%, #15162c 50%, #1e1b4b 100%);
@@ -622,7 +622,7 @@
             <div class="hero-card">
                 <div class="hero-info">
                     <h2 id="greeting">سلام!</h2>
-                    <p id="dashboard-subtitle">سیستم هوشمند مرور و آزمون زبان تخصصی</p>
+                    <p id="dashboard-subtitle">سیستم هوشمند مرور و آزمون بیوشیمی هورمون</p>
                 </div>
                 <div class="mastery-container" id="mastery-container-el" onclick="handleFlaskClick()" title="مشاهده درصد تسلط">
                     <div id="secret-tooltip" class="secret-tooltip">✨ چالش مخفی! کلیک کن ✨</div>
@@ -804,7 +804,7 @@
             { id: 84, q: "کدام درست است؟", o: ["گلوکاگون ترشح انسولین را افزایش نمی دهد", "سوماتوستاتین ترشح انسولین را افزایش می دهد", "دیازوکسید ترشح انسولین را تحریک می کند", "کاهش K+ باعث افزایش ترشح انسولین می شود", "گلوکاگون ترشح سوماتوستاتین را افزایش می دهد"], c: 4 },
             { id: 85, q: "کدامیک از نظر ترشح انسولین درست است؟", o: ["وابسته به ورود گلوکز به سلولهای β پانکراس است", "Ca2+ دخیل نیست", "خروج K+ برای ترشح انسولین ضروری است", "متفورمین باعث افزایش ترشح انسولین از سلول های β می شود", "cAMP ترشح آن را مهار می کند"], c: 4 },
             { id: 86, q: "کدام یک از موارد زیر باعث افزایش جذب Ca2 می شود؟", o: ["اگزاالت", "فسفات ها", "مواد قلیایی", "مصرف باالی Ca2+", "رژیم غذایی با پروتئین باال"], c: 4 },
-            { id: 87, q: "کدام یک صحیح است؟", o: ["هورمون پاراتیروئید جذب Ca2+ از PCT را افزایش می دهد (لوله های پیچیده پروگزیمال)", "PTH جذب فسفات از لوله های پیچیده پروگزیمال را مهار می کند", "کلسی تونین استئوکالست ها را تحریک می کند", "استروژن ها استئوکالست ها را تحریک می کنند", "PTH روی استئوبالست ها تأثیری ندارد"], c: 1 },
+            { id: 87, q: "کدامیک صحیح است؟", o: ["هورمون پاراتیروئید جذب Ca2+ از PCT را افزایش می دهد (لوله های پیچیده پروگزیمال)", "PTH جذب فسفات از لوله های پیچیده پروگزیمال را مهار می کند", "کلسی تونین استئوکالست ها را تحریک می کند", "استروژن ها استئوکالست ها را تحریک می کنند", "PTH روی استئوبالست ها تأثیری ندارد"], c: 1 },
             { id: 88, q: "کدامیک در مورد کلسی تونین درست است؟", o: ["با کاهش گاسترین تحریک می شود", "دفع Ca2+ از طریق کلیه را افزایش می دهد", "Ca2+ را در خون کاهش می دهد اما فسفات را افزایش می دهد", "تحلیل رفتن استخوان را افزایش می دهد", "با ترشح CCK2 کاهش می یابد"], c: 1 },
             { id: 89, q: "سوماتوستاتین از کدام سلول جزایر ترشح می شود؟", o: ["یک سلول", "سلول B", "سلول C", "سلول D", "سلول F"], c: 3 },
             { id: 90, q: "ترشح انسولین توسط ...مهار می شود:", o: ["CCK", "اسیدهای آمینه", "گلوکاگون", "سوماتوستاتین", "گلوکز"], c: 3 },
@@ -954,8 +954,8 @@
         let secretTimer = null;
         let timeLeft = 180;
 
-        let stats = JSON.parse(localStorage.getItem('medical_eng_stats')) || {};
-        let bookmarks = JSON.parse(localStorage.getItem('medical_eng_bookmarks')) || {};
+        let stats = JSON.parse(localStorage.getItem('hormone_biochem_stats')) || {};
+        let bookmarks = JSON.parse(localStorage.getItem('hormone_biochem_bookmarks')) || {};
 
         const CustomUI = {
             alert: function(text, callback) {
@@ -1007,9 +1007,9 @@
         }
 
         function logoutSubject() {
-            CustomUI.confirm('آیا مطمئن هستید؟ فقط اطلاعات و آمارهای مربوط به درس زبان تخصصی پاک خواهد شد و نام شما تغییر نخواهد کرد.', function() {
-                localStorage.removeItem('medical_eng_stats');
-                localStorage.removeItem('medical_eng_bookmarks');
+            CustomUI.confirm('آیا مطمئن هستید؟ فقط اطلاعات و آمارهای مربوط به درس بیوشیمی هورمون پاک خواهد شد و نام شما تغییر نخواهد کرد.', function() {
+                localStorage.removeItem('hormone_biochem_stats');
+                localStorage.removeItem('hormone_biochem_bookmarks');
                 location.reload();
             });
         }
@@ -1423,13 +1423,13 @@
         }
 
         function saveStats() {
-            localStorage.setItem('medical_eng_stats', JSON.stringify(stats));
+            localStorage.setItem('hormone_biochem_stats', JSON.stringify(stats));
             updateBadges();
             updateMasteryBar();
         }
 
         function saveBookmarks() {
-            localStorage.setItem('medical_eng_bookmarks', JSON.stringify(bookmarks));
+            localStorage.setItem('hormone_biochem_bookmarks', JSON.stringify(bookmarks));
             updateBadges();
         }
 
