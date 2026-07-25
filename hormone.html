@@ -1,0 +1,1562 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بانک سوالات زبان تخصصی پزشکی</title>
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #090d16 0%, #15162c 50%, #1e1b4b 100%);
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-hover: rgba(255, 255, 255, 0.07);
+            --card-bg: rgba(255, 255, 255, 0.04);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent-primary: #6366f1;
+            --accent-hover: #4f46e5;
+            --success: #10b981;
+            --error: #ef4444;
+            --warning: #f59e0b;
+            --wave-color-1: rgba(255, 75, 114, 0.8);
+            --wave-color-2: rgba(255, 75, 114, 0.5);
+            --glass-overlay: rgba(255, 255, 255, 0.06);
+            --glass-border-light: rgba(255, 255, 255, 0.2);
+            --accent-overlay: rgba(255, 255, 255, 0.2);
+            --success-text: #a7f3d0;
+            --error-text: #fca5a5;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            transition: background 0.5s ease, color 0.5s ease;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 780px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 20px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+            transition: all 0.5s ease;
+            position: relative;
+        }
+
+        .screen {
+            display: none;
+        }
+
+        .screen.active {
+            display: block;
+            animation: fadeInScreen 0.3s ease forwards;
+        }
+
+        @keyframes fadeInScreen {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .top-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .top-left-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .mode-toggle-switch {
+            display: flex;
+            background: var(--glass-overlay);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            padding: 2px;
+        }
+
+        .mode-option {
+            padding: 5px 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-secondary);
+            border: none;
+            background: transparent;
+        }
+
+        .mode-option.active {
+            background: var(--accent-primary);
+            color: #ffffff;
+            box-shadow: 0 2px 8px rgba(99, 102, 241, 0.4);
+        }
+
+        .icon-btn {
+            padding: 0;
+            border-radius: 12px;
+            width: 38px;
+            height: 38px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            background: var(--glass-overlay);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .icon-btn:hover {
+            background: var(--glass-hover);
+            transform: translateY(-2px);
+            border-color: var(--glass-border-light);
+            color: var(--accent-primary);
+        }
+        
+        .icon-btn:active {
+            transform: translateY(0);
+        }
+
+        .icon-btn svg {
+            width: 18px;
+            height: 18px;
+            stroke-width: 2.2;
+            transition: all 0.3s ease;
+        }
+
+        .hero-card {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .hero-info h2 {
+            font-size: 1.1rem;
+            color: var(--accent-primary);
+            margin-bottom: 2px;
+        }
+
+        .hero-info p {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+        }
+
+        .mastery-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+        }
+
+        .mastery-container:hover {
+            transform: scale(1.05);
+        }
+
+        .secret-tooltip {
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #f59e0b, #ef4444);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 10px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+            z-index: 10;
+        }
+        .secret-tooltip::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 50%;
+            transform: translateX(-50%) rotate(45deg);
+            width: 8px;
+            height: 8px;
+            background: #ef4444;
+        }
+        .mastery-container.glow-active .secret-tooltip {
+            opacity: 1;
+            visibility: visible;
+            animation: float-tooltip 1.8s ease-in-out infinite alternate;
+        }
+        .mastery-container.glow-active .flask-shape {
+            border-color: #f59e0b;
+            animation: pulse-flask 1.5s infinite alternate;
+        }
+        @keyframes float-tooltip {
+            0% { transform: translate(-50%, 0); }
+            100% { transform: translate(-50%, -6px); }
+        }
+        @keyframes pulse-flask {
+            0% { box-shadow: 0 0 10px rgba(245, 158, 11, 0.3); }
+            100% { box-shadow: 0 0 25px rgba(239, 68, 68, 0.8); }
+        }
+
+        .flask-wrapper {
+            position: relative;
+            width: 40px;
+            height: 52px;
+            margin-bottom: 4px;
+        }
+
+        .flask-shape {
+            width: 100%;
+            height: 100%;
+            background: var(--glass-overlay);
+            clip-path: polygon(32% 0%, 68% 0%, 68% 8%, 64% 8%, 64% 35%, 100% 90%, 100% 100%, 0% 100%, 0% 90%, 36% 35%, 36% 8%, 32% 8%);
+            position: relative;
+            overflow: hidden;
+            border: 2px solid var(--glass-border-light);
+            transition: all 0.3s ease;
+        }
+
+        .liquid {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 0%;
+            transition: height 1.2s cubic-bezier(0.4, 0, 0.2, 1), background 0.8s ease;
+        }
+
+        .wave {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            width: 100px;
+            height: 100px;
+            background: var(--wave-color-1);
+            border-radius: 40%;
+            transform: translateX(-50%);
+            animation: rotateWave 3.5s linear infinite;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .wave:nth-child(2) {
+            top: -12px;
+            background: var(--wave-color-2);
+            border-radius: 38%;
+            animation: rotateWave 5.5s linear infinite;
+            z-index: 1;
+        }
+
+        .liquid.color-low { background: #be123c; }
+        .liquid.color-mid { background: #d97706; }
+        .liquid.color-high { background: #1d4ed8; }
+        .liquid.color-max { background: #047857; }
+
+        @keyframes rotateWave {
+            0% { transform: translateX(-50%) rotate(0deg); }
+            100% { transform: translateX(-50%) rotate(360deg); }
+        }
+
+        .mastery-label {
+            font-size: 0.7rem;
+            color: var(--text-primary);
+            font-weight: 600;
+            background: var(--glass-overlay);
+            padding: 1px 6px;
+            border-radius: 10px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .section-title {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--glass-border);
+        }
+
+        .grid-menu {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        @media (min-width: 540px) {
+            .grid-menu {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .full-width {
+                grid-column: span 2;
+            }
+        }
+
+        .btn {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+            padding: 10px 14px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 0.82rem;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            text-align: right;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .btn:not([disabled]):hover {
+            background: var(--glass-hover);
+            border-color: var(--accent-primary);
+            transform: translateY(-1px);
+        }
+
+        .btn-content {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .btn-accent {
+            background: var(--accent-primary);
+            border: none;
+            color: #ffffff;
+        }
+
+        .btn-accent:not([disabled]):hover {
+            background: var(--accent-hover);
+        }
+
+        .btn-nav {
+            padding: 8px 14px;
+            font-size: 0.8rem;
+            justify-content: center;
+            flex-direction: row;
+        }
+
+        .badge {
+            font-size: 0.65rem;
+            background: var(--glass-overlay);
+            padding: 2px 6px;
+            border-radius: 16px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .badge-accent {
+            background: var(--accent-overlay);
+            color: #ffffff;
+        }
+
+        .memorize-container {
+            max-height: 65vh;
+            overflow-y: auto;
+            padding-left: 5px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .memo-card {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            padding: 16px;
+            direction: rtl;
+            text-align: right;
+        }
+
+        .memo-q {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            line-height: 1.5;
+            white-space: pre-line;
+        }
+
+        .memo-opts {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .memo-opt {
+            padding: 8px 12px;
+            border-radius: 8px;
+            background: var(--glass-overlay);
+            border: 1px solid var(--glass-border);
+            font-size: 0.9rem;
+            direction: rtl;
+            text-align: right;
+        }
+
+        .memo-opt.correct-ans {
+            background: rgba(16, 185, 129, 0.15);
+            border-color: var(--success);
+            color: var(--success-text);
+            font-weight: 600;
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 10px;
+        }
+
+        .quiz-title {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .question-box {
+            direction: rtl;
+            text-align: right;
+        }
+
+        .question-text {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            font-weight: 500;
+            white-space: pre-line;
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .option-item {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            padding: 12px 16px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.95rem;
+            line-height: 1.4;
+            direction: rtl;
+            text-align: right;
+        }
+
+        .option-item:hover {
+            background: var(--glass-hover);
+            border-color: var(--glass-border-light);
+        }
+
+        .option-item.correct {
+            background: rgba(16, 185, 129, 0.2) !important;
+            border-color: var(--success) !important;
+            color: var(--success-text) !important;
+        }
+
+        .option-item.wrong {
+            background: rgba(239, 68, 68, 0.2) !important;
+            border-color: var(--error) !important;
+            color: var(--error-text) !important;
+        }
+
+        .option-item.disabled {
+            pointer-events: none;
+        }
+
+        .quiz-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            gap: 10px;
+        }
+
+        .custom-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(9, 13, 22, 0.8);
+            backdrop-filter: blur(8px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeIn 0.2s forwards;
+        }
+
+        .custom-modal {
+            background: #15162c;
+            border: 1px solid var(--glass-border);
+            border-radius: 18px;
+            padding: 20px;
+            width: 90%;
+            max-width: 360px;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            animation: scaleUp 0.2s forwards;
+        }
+
+        .custom-modal p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes scaleUp { from { transform: scale(0.9); } to { transform: scale(1); } }
+
+        body.light-mode {
+            --bg-gradient: linear-gradient(135deg, #f1f5f9 0%, #cbd5e1 100%);
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(0, 0, 0, 0.1);
+            --glass-hover: rgba(255, 255, 255, 0.98);
+            --card-bg: rgba(255, 255, 255, 0.75);
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --accent-primary: #4f46e5;
+            --accent-hover: #4338ca;
+            --glass-overlay: rgba(0, 0, 0, 0.06);
+            --glass-border-light: rgba(0, 0, 0, 0.15);
+            --success-text: #059669;
+            --error-text: #dc2626;
+        }
+
+        body.light-mode .custom-modal {
+            background: #ffffff;
+            color: #0f172a;
+        }
+
+        body.light-mode .badge {
+            color: var(--text-secondary);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            letter-spacing: 1px;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- هدر بالا -->
+        <div class="top-controls">
+            <div class="top-left-group">
+                <button id="theme-toggle" class="icon-btn" title="تغییر تم"></button>
+                <button id="home-btn" class="icon-btn" title="بازگشت به منوی اصلی" onclick="goHome()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                </button>
+                <button id="logout-btn" class="icon-btn" title="پاک کردن اطلاعات این درس" onclick="logoutSubject()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                        <polyline points="16 17 21 12 16 7"></polyline>
+                        <line x1="21" y1="12" x2="9" y2="12"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="mode-toggle-switch">
+                <button class="mode-option active" id="mode-classic">کلاسیک</button>
+                <button class="mode-option" id="mode-modern" style="opacity:0.5; cursor:not-allowed;" title="غیرفعال شده است">مدرن</button>
+            </div>
+        </div>
+
+        <div id="modal-container"></div>
+
+        <!-- داشبورد اصلی -->
+        <div id="dashboard-screen" class="screen active">
+            <div class="hero-card">
+                <div class="hero-info">
+                    <h2 id="greeting">سلام!</h2>
+                    <p id="dashboard-subtitle">سیستم هوشمند مرور و آزمون زبان تخصصی</p>
+                </div>
+                <div class="mastery-container" id="mastery-container-el" onclick="handleFlaskClick()" title="مشاهده درصد تسلط">
+                    <div id="secret-tooltip" class="secret-tooltip">✨ چالش مخفی! کلیک کن ✨</div>
+                    <div class="flask-wrapper">
+                        <div class="flask-shape">
+                            <div class="liquid" id="flask-liquid">
+                                <div class="wave"></div>
+                                <div class="wave"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mastery-label" id="mastery-percentage">0%</div>
+                </div>
+            </div>
+
+            <div id="main-content-area"></div>
+
+            <div class="section-title">مرور و آزمون هوشمند</div>
+            <div class="grid-menu" style="grid-template-columns: repeat(3, 1fr) !important; gap: 6px; margin-bottom: 0;">
+                <button class="btn" style="flex-direction: column; align-items: center; text-align: center; padding: 8px 6px; border-color: rgba(239, 68, 68, 0.3); color: #ef4444;" onclick="startChallengeQuiz()">
+                    <span style="font-weight: 600; font-size: 0.78rem;">🎯 چالش</span>
+                    <span class="badge" id="challenge-count" style="background: rgba(239, 68, 68, 0.1); color: #ef4444; margin-top: 2px;">۰ سوال</span>
+                </button>
+                <button class="btn" style="flex-direction: column; align-items: center; text-align: center; padding: 8px 6px; border-color: rgba(234, 179, 8, 0.3); color: #f59e0b;" onclick="startBookmarkQuiz()">
+                    <span style="font-weight: 600; font-size: 0.78rem;">⭐ نشان‌دار</span>
+                    <span class="badge" id="bookmark-count" style="background: rgba(234, 179, 8, 0.1); color: #f59e0b; margin-top: 2px;">۰ سوال</span>
+                </button>
+                <button class="btn btn-accent" style="flex-direction: column; align-items: center; text-align: center; padding: 8px 6px;" onclick="promptRandomQuizConfig()">
+                    <span style="font-weight: 600; font-size: 0.78rem;">🎲 جامع رندوم</span>
+                    <span class="badge badge-accent" id="total-q-badge" style="margin-top: 2px;">۲۱۱ سوال</span>
+                </button>
+            </div>
+        </div>
+
+        <div id="section-options-screen" class="screen">
+            <div class="quiz-header">
+                <span class="quiz-title" id="section-option-title">بخش</span>
+                <button class="btn btn-nav btn-accent" onclick="goHome()">بازگشت</button>
+            </div>
+            <div class="grid-menu">
+                <button class="btn btn-accent" style="padding: 18px;" onclick="startSectionMemorize()">
+                    <div class="btn-content">
+                        <span style="font-size: 1rem; font-weight: bold;">🧠 حفظ سوالات</span>
+                        <span style="font-size: 0.78rem; opacity: 0.8;">مشاهده تمام سوالات با پاسخ صحیح (اسکرول)</span>
+                    </div>
+                </button>
+                <button class="btn" style="padding: 18px;" onclick="startSectionQuiz()">
+                    <div class="btn-content">
+                        <span style="font-size: 1rem; font-weight: bold;">⏱️ تمرین (رندوم سوال و گزینه)</span>
+                        <span style="font-size: 0.78rem; color: var(--text-secondary);">آزمون و تمرین تعاملی</span>
+                    </div>
+                </button>
+            </div>
+        </div>
+
+        <!-- صفحه حفظ سوالات -->
+        <div id="memorize-screen" class="screen">
+            <div class="quiz-header">
+                <span class="quiz-title" id="memo-header-title">حفظ سوالات</span>
+                <button class="btn btn-nav btn-accent" onclick="backToPreviousFromMemorize()">بازگشت</button>
+            </div>
+            <div class="memorize-container" id="memorize-container"></div>
+        </div>
+
+        <!-- صفحه آزمون / تمرین -->
+        <div id="quiz-screen" class="screen">
+            <div class="quiz-header">
+                <span class="quiz-title" id="quiz-type-title">آزمون</span>
+                <span class="badge" id="timer-display" style="display:none; background: rgba(239, 68, 68, 0.15); color: #ef4444; font-size: 0.8rem; font-weight: bold; border: 1px solid rgba(239,68,68,0.3);">⏱ 3:00</span>
+                <span class="badge" id="progress-text">سوال ۱ از ۱۰</span>
+                <div style="display: flex; gap: 8px;">
+                    <button class="btn btn-nav" id="btn-bookmark" onclick="toggleBookmark()">☆ نشان</button>
+                    <button class="btn btn-nav btn-accent" onclick="goHome()">خانه</button>
+                </div>
+            </div>
+
+            <div class="question-box">
+                <div class="question-text" id="question-text">متن سوال...</div>
+                <div class="options-list" id="options-container"></div>
+            </div>
+
+            <div class="quiz-footer">
+                <button class="btn btn-nav" id="btn-prev" onclick="navigateQuestion(-1)">سوال قبلی</button>
+                <button class="btn btn-nav btn-accent" id="btn-next" onclick="navigateQuestion(1)">سوال بعدی</button>
+            </div>
+        </div>
+
+        <!-- فوتر -->
+        <div class="footer">
+            By: sommet_s
+        </div>
+    </div>
+
+    <script>
+        const allQuestions = [
+            { id: 1, q: "به عنوان اولین پیام آور عمل می کند:", o: ["C-AMP", "C-GMP", "کالمودولین", "کلسیم", "کلسی تونین"], c: 4 },
+            { id: 2, q: "آنزیم مورد نیاز برای سنتز C-AMP عبارت است از:", o: ["تیروزین کیناز", "فسفولیپاز C", "آدنیالت سیکالز", "G پروتئین", "ATPase"], c: 2 },
+            { id: 3, q: "عدم تطابق را پیدا کنید:", o: ["پانکراس: سوماتوستاتین", "غده تیروئید: کلسی تونین", "هیپوفیز قدامی: هورمون آزاد کننده تیروتروپین", "بخش مرکزی آدرنال: کاتکول آمین ها", "قشر آدرنال: مینرالوکورتیکوئید"], c: 2 },
+            { id: 4, q: "در سیتوپالسم گیرنده دارد:", o: ["انسولین", "گلوکاگون", "کورتیزول", "هورمون رشد", "اکسی توسین"], c: 2 },
+            { id: 5, q: "مناسب ترین گزینه که نشان دهنده غده برون ریز است:", o: ["مجرا", "خون", "هورمون", "وزیکول ترشحی"], c: 0 },
+            { id: 6, q: "ممکن است غده اصلی نامیده شود:", o: ["هیپوتاالموس", "غده هیپوفیز", "غده تیروئید", "پانکراس", "غده فوق کلیوی"], c: 1 },
+            { id: 7, q: "دارای گیرنده در هسته است:", o: ["FSH", "TSH", "کلسی تونین", "تیروکسین"], c: 3 },
+            { id: 8, q: "هورمون تیروئید و کاتکول آمین ها از.... مشتق می شوند:", o: ["الکل", "کلسترول", "تریپتوفان", "تیروزین", "گلیسین"], c: 3 },
+            { id: 9, q: "هورمون رشد:", o: ["یک پلی پپتید مضاعف است", "گلیکوپروتئین است", "برای عملکرد محرک رشد خود به انسولین نیاز دارد", "برای افزایش رشد به IGF نیاز دارد", "گلوکونئوژنز را کاهش می دهد"], c: 3 },
+            { id: 10, q: "هورمون های لیپیدی که از کلسترول سنتز می شوند:", o: ["پروتئین", "مشتق اسید آمینه", "پلی پپتید", "استروئیدها", "ایکوزانوئیدها"], c: 3 },
+            { id: 11, q: "این نوع هورمون باید به گیرنده پروتئینی در غشا پالسمایی سلول متصل شود:", o: ["محلول در آب", "محلول در چربی", "استروئید", "پلی پپتید", "الف و د", "ب و ج"], c: 4 },
+            { id: 12, q: "غدد درون ریز در پاسخ به ... هورمون ترشح می کنند:", o: ["هورمون های سایر غدد درون ریز", "خصوصیات شیمیایی خون", "تحریک عصبی", "همه موارد فوق"], c: 3 },
+            { id: 13, q: "اکسی توسین توسط ....ترشح می شود:", o: ["هسته های سوپرااپتیک", "هسته های پارااپتیک", "هسته های پارا بطنی", "هیپوفیز خلفی", "رحم"], c: 2 },
+            { id: 14, q: "خروج شیر در هنگام شیردهی ناشی از موارد زیر است:", o: ["پروالکتین", "LH", "اکسی توسین", "پروژسترون", "سوماتوتروف"], c: 2 },
+            { id: 15, q: "برای انجام تخمک گذاری ضروری است:", o: ["FSH", "LH", "پروالکتین", "استروژن", "پروسترون"], c: 1 },
+            { id: 16, q: "ADH و اکسی توسین برای انتقال از هیپوتاالموس به هیپوفیز خلفی نیاز به...دارند:", o: ["آلبومین", "گلوبولین", "پروتئین های پالسما", "نوروفیزین", "محلول در آب هستند"], c: 3 },
+            { id: 17, q: "همه هورمون ها به بازخورد یا فیدبک منفی واکنش نشان می دهند به جز:", o: ["پروژسترون", "استروژن", "پروالکتین", "اکسی توسین", "هیچ کدام از اینها"], c: 3 },
+            { id: 18, q: "هیپوفیز قدامی ... را ترشح می کند:", o: ["اکسی توسین", "اندورفین", "ADH (هورمون ضد ادرار)", "TSH (هورمون تیروتروپین)"], c: 3 },
+            { id: 19, q: "کدام یک از موارد زیر در مورد اثر کوتاه مدت هورمون رشد، GH اشتباه است:", o: ["↑ گسیل FFA ها از ذخایر بافت چربی", "↑ میزان استفاده از گلوکز در سراسر بدن", "↓ کاتابولیسم پروتئین", "↑ مقاومت به انسولین (↑ FFA)"], c: 1 },
+            { id: 20, q: "تأثیر گرلین بر هورمون رشد چیست:", o: ["تاثیری ندارد", "↓ ترشح GH", "↑ ترشح هورمون رشد، GH"], c: 2 },
+            { id: 21, q: "علت غول پیکری:", o: ["کاهش GH در دوران کودکی", "افزایش پروالکتین در دوران کودکی", "کاهش GH در دوران بزرگسالی", "افزایش GH در دوران کودکی"], c: 3 },
+            { id: 22, q: "بیمار با دست و بینی بزرگ شده، سوپرااوربیتال پهن برآمدگی و بیرون زدگی فک پایین و قد طبیعی به بیمارستان مراجعه کرد. بیمار به احتمال زیاد دارای:", o: ["غول آسایی", "پروالکتینوما", "آکرومگالی", "کوشینگ"], c: 2 },
+            { id: 23, q: "کدام یک از موارد زیر عملکرد هورمون پروالکتین نیست:", o: ["ترشح دوپامین را تحریک می کند", "افزایش اثرات گنادوتروپین ها", "تولید کازئین و الکتالبومین را افزایش می دهد"], c: 1 },
+            { id: 24, q: "مردی با گاالکتوره، ژنیکوماستی مراجعه کرده و نابارور بود. به احتمال زیاد وی دارای... است:", o: ["غول آسایی", "پروالکتینوما", "آکرومگالی", "کوشینگ"], c: 1 },
+            { id: 25, q: "کدام یک از موارد زیر یک عامل بازدارنده برای هورمون ضدادرار یا آنتی دیورتیک است؟", o: ["افزایش اسموالریته سرم", "حالت تهوع", "اتانول", "کاهش حجم مایع خارج سلولی (ECF)"], c: 2 },
+            { id: 26, q: "یکی از محرک های اکسی توسین ...است:", o: ["پاسخ شرطی", "انقباض دهانه رحم", "کاهش سطح استروژن"], c: 0 },
+            { id: 27, q: "هم اکسی توسین و هم هورمون ضدادرار (ADH) در... نظر گرفته می شوند:", o: ["انتقال دهنده عصبی", "هورمون های نوروپپتید", "پاراکرین ها"], c: 1 },
+            { id: 28, q: "میزان بیش از حد ADH منجر به ... می شود:", o: ["افزایش اسموالریته سرم", "رقیق شدن ادرار", "هیپوناترمی"], c: 2 },
+            { id: 29, q: "هیپوولمی یا کاهش حجم خون توسط .... حس شده و سبب تحریک ترشح ADH می شود:", o: ["گیرنده های اسمزی", "بارورسپتورها", "گیرنده های شیمیایی"], c: 1 },
+            { id: 30, q: "ADH بر روی گیرنده... در ... از طریق پیام بر ثانویه... عمل می کند؟", o: ["2V، لوله پیچیده دیستال و مجرای جمع کننده، cAMP", "a1V، لوله پیچیده و مجرای جمع کننده پروگزیمال، cAMP", "2V، لوله پیچیده و مجرای جمع کننده دیستال، IP3", "b1V، لوله های پیچیده و مجرای جمع آوری، IP3"], c: 0 },
+            { id: 31, q: "ویژگی سندرم ترشح نامناسب SIADH (ADH)...است:", o: ["افزایش دفع آب", "آزادسازی فیزیولوژیک ADH", "آزاد شدن غیر فیزیولوژیک ADH"], c: 2 },
+            { id: 32, q: "در دیابت بی مزه مرکزی (نقص در ترشح هورمون ضد ادرار از هیپوفیز پسین):", o: ["ADH اضافی وجود دارد", "توبول های کلیه به ADH در گردش پاسخ نمی دهند", "مجاری جمع کننده به آب غیر قابل نفوذ هستند"], c: 2 },
+            { id: 33, q: "کدام یک از موارد زیر در مورد دیابت بی مزه کلیوی درست است؟", o: ["ادرار رقیق شده با حجم زیاد، سدیم سرم باال، ADH باال", "ادرار غلیظ، سدیم سرم باال، ADH کم", "ادرار رقیق شده با حجم زیاد، سدیم سرم کم، ADH باال"], c: 0 },
+            { id: 34, q: "کدام گیرنده ممکن است در مورد دیابت نفروژنیک به ADH پاسخ ندهد:", o: ["1Va", "1Vb", "2V"], c: 2 },
+            { id: 35, q: "درمان دیابت بی مزه (DI) مرکزی..است:", o: ["آنتاگونیست ADH", "آنالوگ ADH", "دیورتیک های تیازیدی"], c: 1 },
+            { id: 36, q: "سندرم ترشح نامناسب ADH (SIADH) ناشی از...است:", o: ["میزان پایین ADH", "هیپراسموالریته سرم و ادرار رقیق شده", "می تواند ناشی از سرطان سلول کوچک ریه (oat cell carcinoma) باشد"], c: 2 },
+            { id: 37, q: "سندرم ترشح نامناسب SIADH (ADH) توسط ... درمان می شود:", o: ["آنتاگونیست ADH", "آنالوگ ADH", "دیورتیک های تیازیدی"], c: 0 },
+            { id: 38, q: "عالئم معمول دیابت بی مزه چیست؟", o: ["هیپرگلیسمی و پلی اوری", "اکیموز دور چشم و تاری دید", "پلی اوری و پلی دیپسی", "الیگوری و هیپوگلیسمی"], c: 2 },
+            { id: 39, q: "بیماری مشکوک به دیابت بی مزه است. کدام مورد زیر موثرترین ارزیابی است؟", o: ["گرفتن عالئم حیاتی هر 4 ساعت", "پایش گلوکز خون", "اندازه گیری برون ده ادرار بصورت ساعتی"], c: 2 },
+            { id: 40, q: "بهترین راه برای تشخیص کمبود هورمون رشد، GH است اندازه گیری کدام مورد است؟", o: ["میزان GH", "میزان IGF-1", "میزان انسولین"], c: 1 },
+            { id: 41, q: "بیمار با شکم آویزان و استریاهای قرمز (ترک های پوستی ضایعاتی قرمز) در معاینه مراجعه کرده است، پزشک متوجه کبودی قوز بوفالو (پد چربی) شده است بیمار به احتمال زیاد دارای ... است:", o: ["پروالکتینوما", "سندرم کوشینگ", "آکرومگالی", "آدنوم تولید کننده هورمون محرک تیروتروپین (TSH)"], c: 1 },
+            { id: 42, q: "تمام آدنوم های زیر را رزکسیون جراحی (برداشتن ناحیه ای از بافت توسط جراحی) انجام می دهیم به جز:", o: ["سندرم کوشینگ", "آدنوم تولید کننده TSH", "پروالکتینوما", "کم کاری مرکزی تیروئید"], c: 3 },
+            { id: 43, q: "کدام یک از موارد زیر در مورد کم کاری مرکزی تیروئید صحیح است:", o: ["TSH & free T4 و T3 پایین خواهند بود", "TSH پایین و T4 و T3 آزاد باال", "TSH باال و T4 و T3 آزاد کم", "هر دو نرمال هستند"], c: 0 },
+            { id: 44, q: "هورمونی که به گیرنده سطح سلولی متصل می شود و نیاز به پیامبر ثانویه cAMP دارد.....است:", o: ["هورمون ضد ادرار", "کوله سیستوکینین", "کلسیتریول", "گاسترین"], c: 0 },
+            { id: 45, q: "کدام یک از هورمون های زیر مرتبط با پیامبر ثانویه cGMP هستند؟", o: ["اکسید نیتریک، پپتید ناتریورتیک دهلیزی", "انسولین، اریتروپویتین", "هورمون رشد و پروالکتین", "آنژیوتانسین II"], c: 0 },
+            { id: 46, q: "همه هورمون های زیر دارای پیامبر ثانویه cAMP هستند به جز؟", o: ["2α- آدرنرژیک و β- آدرنرژیک", "TSH، LH، FSH، ACTH", "گیرنده 2V ADH در کلیه", "کلسی تونین، PTH و گلوکاگون", "گیرنده آلفا-1 آدرنرژیک و گیرنده 1V خارج کلیوی"], c: 0 },
+            { id: 47, q: "چگونه cAMP غیرفعال می شود؟", o: ["بادادن GTPase برای تبدیل GDP به GTP و جلوگیری از فعال شدن آدنیلیل سیکالز", "اتصال زیرواحد α به زیرواحدهای βγ", "تجزیه cAMP به AMP توسط فسفاتاز", "دفسفوریالسیون سوبسترای پروتئینی توسط فسفاتاز"], c: 1 },
+            { id: 48, q: "پروتئین های G به عنوان ...عمل می کنند:", o: ["حامل هایا ناقلین هورمون", "گیرنده های هورمون", "پیام بر دوم", "مبدل های سیگنال"], c: 3 },
+            { id: 49, q: "تمام عبارات زیر در مورد هورمون های استروئیدی درست است به جز؟", o: ["آبگریز هستند", "آنها نیاز به ناقل دارند تا آنها را در گردش خون حمل کنند", "گیرنده های آنها درون سلولی هستند", "آنها به cGMP حلقوی به عنوان پیام رسان دوم نیاز دارند"], c: 3 },
+            { id: 50, q: "تمام عبارات زیر در مورد هورمون های کاتکول آمین درست است به جز؟", o: ["آب دوست هستند", "آنها به cAMP حلقوی به عنوان پیام رسان دوم نیاز دارند", "نیمه عمر پالسمایی آنها کوتاه است", "گیرنده های آنها داخل سلولی است"], c: 3 },
+            { id: 51, q: "کدام یک از عبارات زیر در مورد هورمون های هیپوفیز نادرست است؟", o: ["هیپوتاالموس اکسی توسین و هورمون آنتی دیورتیک را تولید می کند که برای ذخیره سازی به هیپوفیز خلفی منتقل می شوند.", "هورمون آنتی دیورتیک که توسط هیپوفیز خلفی ترشح می شود، باعث افزایش حجم ادرار و کاهش حجم خون می شود", "هورمون لوتئینیزه کننده، یک هورمون هیپوفیز قدامی، باعث تخمک گذاری تخمک از تخمدان می شود و باعث می شود فولیکول پاره شده پروژسترون و مقداری استروژن تولید کند.", "ترشح کم هورمون محرک فولیکول یا هورمون لوتئینیزه منجر به عقیمی در مردان و زنان می شود.", "(ب) و (ج)"], c: 1 },
+            { id: 52, q: "آندروژن ها توسط _______ تولید می شوند:", o: ["تخمدان ها", "بیضه ها", "هیپوتاالموس", "جزایر النگرهانس"], c: 1 },
+            { id: 53, q: "یکی از دو هورمون ساخته شده توسط هیپوفیز که به تنظیم سلول های تولید مثل کمک می کند، هورمون لوتئینیزه است. هورمون دیگر _______ است:", o: ["آندروژن ها", "هورمون محرک فولیکول", "اپی نفرین", "نوراپی نفرین"], c: 1 },
+            { id: 54, q: "میزان کلسیم خون توسط موارد زیر تنظیم می شود:", o: ["پاراتیروئید و تیروئید", "مدوالی آدرنال و پانکراس", "بیضه ها", "پاراتیروئید و تیموس"], c: 0 },
+            { id: 55, q: "کدام یک از موارد زیر دارای تغییرات مشخص پس از اتصال هورمون به سلول های هدف آن نیست:", o: ["نفوذپذیری غشای پالسمایی تغییر می کند", "ایجاد جهش در سلول", "آنزیم ها فعال یا غیرفعال می شوند", "میتوز تحریک می شود"], c: 1 },
+            { id: 56, q: "استروئیدها به دلیل حاللیت در چربی می توانند تمام موارد زیر را انجام دهند به جز:", o: ["کاتالیز cAMP حلقوی", "از طریق غشای پالسمایی سلول های هدف منتشر می شوند", "وارد هسته شوند", "فعال کردن ژن ها برای رونویسی mRNA جهت سنتز پروتئین"], c: 0 },
+            { id: 57, q: "استروژن و پروژسترون توسط....تولید می شوند:", o: ["بیضه ها", "تخمدان ها", "غدد فوق کلیوی", "هیپوتاالموس"], c: 1 },
+            { id: 58, q: "عدم توانایی هیپوفیز در توقف تولید هورمون رشد پس از تکمیل رشد بدن منجر به _______ می شود:", o: ["غولپیکری", "تتانی", "نارسایی کلیه", "آکرومگالی"], c: 3 },
+            { id: 59, q: "بیشتر اندام های غدد درون ریز توسط هورمون های دیگر تحریک می شوند. این نوع محرک .... نامیده می شود:", o: ["محرک هورمونی", "محرک هومورال", "محرک عصبی", "محرک با واسطه گیرنده"], c: 0 },
+            { id: 60, q: "هورمون های تروپیک (افزاینده رشد):", o: ["غده صنوبری را برای ترشح هورمونها تحریک می کند", "تحریک غده تیموس برای ترشح هورمونها", "سایر غدد درون ریز را برای ترشح هورمون تحریک می کنند", "بافت عصبی را تحریک می کنند"], c: 2 },
+            { id: 61, q: "هورمون متابولیک اصلی بدن از .... ترشح می شود:", o: ["هیپوفیز", "تیروئید", "تیموس", "هیپوتاالموس"], c: 1 },
+            { id: 62, q: "بیشتر سیستم غدد درون ریز توسط .... تنظیم می شود:", o: ["مکانیسم های بازخورد منفی", "مکانیسم های بازخورد مثبت", "کمپلکس های گیرنده-هورمون", "کمپلکس های هورمون-ژن"], c: 0 },
+            { id: 63, q: "عصبی بودن، افزایش دمای بدن و افزایش فشار خون نشانه های _______ هستند:", o: ["دیابت قندی", "هیپوگلیسمی", "کم کاری تیروئید", "پرکاری تیروئید"], c: 3 },
+            { id: 64, q: "سلول های آلفای پانکراس _______ را ترشح می کنند که _______ را هدف قرار می دهد:", o: ["گلوکاگون؛ کبد", "مالتونین؛ کبد", "گلوکاگون؛ کلیه", "کلسی تونین; تیروئید"], c: 0 },
+            { id: 65, q: "هورمون رشد تولید شده توسط غده هیپوفیز به نام _______ شناخته می شود:", o: ["سوماتوتروپین", "پروالکتین", "هورمون لوتئینیزه کننده", "هورمون محرک فولیکول"], c: 0 },
+            { id: 66, q: "سرعت متابولیسم تمام سلول های بدن توسط _______ تنظیم می شود:", o: ["هورمون پاراتیروئید", "آلدوسترون", "کلسی تونین", "هورمون تیروئید"], c: 3 },
+            { id: 67, q: "محیط داخلی نسبتاً ثابت بدن توسط _______ حفظ می شود:", o: ["بازخورد منفی", "بازخورد مثبت", "هموستاز", "متابولیسم"], c: 2 },
+            { id: 68, q: "ترشحات کدام یک از این غدد در زنان و مردان متفاوت است؟", o: ["آدرنال", "پاراتیروئید", "گناد", "پانکراس"], c: 2 },
+            { id: 69, q: "دو سیستم تنظیم کننده بدن، سیستم غدد درون ریز و _______ هستند:", o: ["سیستم عصبی", "سیستم ایمنی بدن", "سیستم گردش خون", "سیستم تنفسی", "سیستم اسکلتی"], c: 0 },
+            { id: 70, q: "چرا یک هورمون ترشح شده توسط غدد درون ریز می تواند انتشار گسترده تری از پاسخ ها را در قسمت های بیشتری از بدن نسبت به یک سلول عصبی ایجاد کند؟", o: ["یک هورمون منفرد می تواند بسیاری از پاسخ های مختلف را هدف قرار دهد، در حالی که یک عصب فقط یک پاسخ را هدف قرار می دهد.", "خون می تواند همه هورمون های مشابه را به طور همزمان در سراسر بدن حمل کند و پاسخ هایی را در سراسر بدن ایجاد کند. سلول های عصبی تنها می توانند تعداد کمی از سلول ها را هدف قرار دهند.", "سلول های عصبی و خون با هم کار می کنند. غدد درون ریز هیچ ارتباطی با سیستم عصبی ندارد.", "هورمون های غدد درون ریز فقط تعداد بسیار کمی از پاسخ های دقیق را هدف قرار می دهند."], c: 1 },
+            { id: 71, q: "کدام یک از موارد زیر دارای عملکرد غدد درون ریز و برون ریز است؟", o: ["هیپوفیز قدامی", "تیروئید", "بخش مرکزی آدرنال", "پانکراس"], c: 3 },
+            { id: 72, q: "کدام یک از موارد زیر نتایج متضاد ایجاد می کنند؟", o: ["کلسی تونین و هورمون پاراتیروئید", "FSH و LH", "ADH و وازوپرسین", "اکسی توسین و پروالکتین"], c: 0 },
+            { id: 73, q: "اگر خیلی سریع یک لیتر آب بخورید، نتیجه اش ...", o: ["افزایش ترشح اکسی توسین", "کاهش ترشح هورمون آنتی دیورتیک", "کاهش ترشح اکسی توسین", "افزایش ترشح هورمون ضد ادرار"], c: 1 },
+            { id: 74, q: "ترشح هورمون چگونه تنظیم می شود؟", o: ["توسط سیستم عصبی", "توسط سایر هورمون ها", "با تغییر در ترکیب خون", "همه موارد فوق"], c: 3 },
+            { id: 75, q: "سلول های هدف برای هورمون های آزاد کننده هیپوتاالموس در....قرار دارند:", o: ["تیروئید", "هیپوتاالموس", "هیپوفیز قدامی", "هیپوفیز خلفی"], c: 2 },
+            { id: 76, q: "غده هیپوفیز خلفی ذخیره و ترشح می کند:", o: ["اکسی توسین و هورمون آنتی دیورتیک", "هورمون رشد انسانی و هورمون محرک تیروئید", "پروالکتین و هورمون محرک فولیکول", "گلوکوکورتیکوئیدها و آندروژن ها"], c: 0 },
+            { id: 77, q: "چه عاملی باعث ترشح PTH از غده پاراتیروئید می شود؟", o: ["TSH از غده هیپوفیز خلفی", "سطح باالی کلسیم در خون", "کلسی تونین از غده هیپوفیز قدامی", "سطوح پایین کلسیم در خون"], c: 3 },
+            { id: 78, q: "ترشح کورتیزول توسط تحریک می شود:", o: ["آلدوسترون", "آنژیوتانسین", "هورمون ضد ادرار (ADH)", "هورمون آدرنوکورتیکوتروپیک (ACTH)"], c: 3 },
+            { id: 79, q: "کدام گزینه درست است؟", o: ["غده تیروئید برای زندگی ضروری است", "T3 قوی تر از T4 است", "RT3 فعالتر از T4 است", "T3 هورمون غالبی است که از تیروئید ترشح می شود", "بیشتر T3 در بافت محیطی به T4 تبدیل می شود"], c: 1 },
+            { id: 80, q: "کدام یک از پروتئین های زیر بیشترین ظرفیت اتصال با تیروکسین را دارد؟", o: ["آلبومین", "گلوبولین", "TBG (تیروکسین متصل شونده به گلوبولین)", "ترانسفرین", "فریتین"], c: 0 },
+            { id: 81, q: "کدام در مورد انسولین صحیح است:", o: ["جذب آمینو اسید از عضله را کاهش می دهد", "کتوژنز را افزایش می دهد", "برداشت کتون توسط عضالت را افزایش می دهد", "باعث کاهش سنتز پروتئین در کبد می شود", "کاتابولیسم پروتئین را در عضله افزایش می دهد"], c: 2 },
+            { id: 82, q: "تمام بافت های زیر برای ورود گلوکز به انسولین وابسته هستند به جز:", o: ["بافت چربی", "عضله اسکلتی", "عضله صاف", "عضله قلب", "سلولهای β پانکراس"], c: 4 },
+            { id: 83, q: "همه موارد زیر باعث افزایش ترشح انسولین می شوند به جز:", o: ["تحریک β آدرنرژیک", "استیل کولین", "گلوکاگون", "تحریک α آدرنرژیک", "آرژنین"], c: 0 },
+            { id: 84, q: "کدام درست است؟", o: ["گلوکاگون ترشح انسولین را افزایش نمی دهد", "سوماتوستاتین ترشح انسولین را افزایش می دهد", "دیازوکسید ترشح انسولین را تحریک می کند", "کاهش K+ باعث افزایش ترشح انسولین می شود", "گلوکاگون ترشح سوماتوستاتین را افزایش می دهد"], c: 4 },
+            { id: 85, q: "کدامیک از نظر ترشح انسولین درست است؟", o: ["وابسته به ورود گلوکز به سلولهای β پانکراس است", "Ca2+ دخیل نیست", "خروج K+ برای ترشح انسولین ضروری است", "متفورمین باعث افزایش ترشح انسولین از سلول های β می شود", "cAMP ترشح آن را مهار می کند"], c: 4 },
+            { id: 86, q: "کدام یک از موارد زیر باعث افزایش جذب Ca2 می شود؟", o: ["اگزاالت", "فسفات ها", "مواد قلیایی", "مصرف باالی Ca2+", "رژیم غذایی با پروتئین باال"], c: 4 },
+            { id: 87, q: "کدام یک صحیح است؟", o: ["هورمون پاراتیروئید جذب Ca2+ از PCT را افزایش می دهد (لوله های پیچیده پروگزیمال)", "PTH جذب فسفات از لوله های پیچیده پروگزیمال را مهار می کند", "کلسی تونین استئوکالست ها را تحریک می کند", "استروژن ها استئوکالست ها را تحریک می کنند", "PTH روی استئوبالست ها تأثیری ندارد"], c: 1 },
+            { id: 88, q: "کدامیک در مورد کلسی تونین درست است؟", o: ["با کاهش گاسترین تحریک می شود", "دفع Ca2+ از طریق کلیه را افزایش می دهد", "Ca2+ را در خون کاهش می دهد اما فسفات را افزایش می دهد", "تحلیل رفتن استخوان را افزایش می دهد", "با ترشح CCK2 کاهش می یابد"], c: 1 },
+            { id: 89, q: "سوماتوستاتین از کدام سلول جزایر ترشح می شود؟", o: ["یک سلول", "سلول B", "سلول C", "سلول D", "سلول F"], c: 3 },
+            { id: 90, q: "ترشح انسولین توسط ...مهار می شود:", o: ["CCK", "اسیدهای آمینه", "گلوکاگون", "سوماتوستاتین", "گلوکز"], c: 3 },
+            { id: 91, q: "ترشح گلوکاگون توسط... تحریک می شود:", o: ["سوماتوستاتین", "گلوکز", "انسولین", "کتون ها", "ورزش"], c: 4 },
+            { id: 92, q: "در مورد غدد فوق کلیوی:", o: ["بخش مرکزی آدرنال برای زندگی ضروری است", "قشر آدرنال یک سوم غده را تشکیل می دهد", "زونا گلومرولوزا حاوی 17 α هیدروکسیالز است", "کاهش شدید K+ در سندرم کان (هیپرآلدوسترونیسم اولیه) وجود دارد"], c: 1 },
+            { id: 93, q: "در مورد متابولیسم کلسیم:", o: ["سطوح باالی کلسیم منجر به کزاز می شود", "85-90 درصد در اسکلت است", "سطوح باالی کلسیم PTH را فعال می کند", "سوخت وساز استخوان در نوزادان 80 درصد در سال است", "کلسیم مزمن پایین منجر به هیپرپاراتیروئیدسیم ثانویه می شود"], c: 4 },
+            { id: 94, q: "بیشترین بازجذب کلسیم در کلیه ها در ... انجام می گیرد:", o: ["لوله پیچیده پروگزیمال", "حلقه نزولی هنله", "حلقه صعودی هنله", "لوله پیچیده دیستال", "مجرای جمع کننده"], c: 0 },
+            { id: 95, q: "تولید خالص ATP به ازای هر مول گلوکز متابولیزه شده به صورت هوازی ... است:", o: ["8", "18", "36", "38", "42"], c: 3 },
+            { id: 96, q: "ارزش کالری پروتئین عبارت است از:", o: ["4.1 کیلو کالری در گرم", "5.3 کیلو کالری در گرم", "6.7 کیلو کالری در گرم", "9.3 کیلو کالری در گرم", "10.1 کیلو کالری در گرم"], c: 1 },
+            { id: 97, q: "ترشح TSH توسط... تحریک میشود:", o: ["دوپامین", "سوماتوستاتین", "دمای سرد", "استرس", "گلوکوکورتیکوئیدها"], c: 2 },
+            { id: 98, q: "تیروکسین (T4) تمایل زیادی به ... دارد:", o: ["گلوبولین متصل شونده به تیروکسین", "ترانس تیرتین", "پره آلبومین متصل شونده به تیروکسین", "آلبومین", "تری یدوتیرونین"], c: 0 },
+            { id: 99, q: "GLUT (ترانسپورتر ناقل گلوکز) نمونه ای از ... است:", o: ["انتشار ساده", "انتشار تسهیل شده", "انتقال فعال اولیه", "انتقال فعال ثانویه", "اندوسیتوز"], c: 1 },
+            { id: 100, q: "فراوانترین ترین نوع سلول دربخش درون ریز پانکراس عبارت است از:", o: ["سلول های A", "سلول های B", "سلول های C", "سلول های D", "سلول های F"], c: 1 },
+            { id: 101, q: "هم انسولین و هم سوماتوستاتین:", o: ["خارج از پانکراس آزاد می شوند", "گیرنده ها با پروتئین های G مرتبط هستند", "آزادسازی گلوکاگون را مهار می کنند", "باعث جذب K+ توسط سلول ها میشوند", "پلی پپتیدهایی هستند که حاوی دو زنجیره هستند که با پیوندهای دی سولفید به هم متصل شده اند"], c: 1 },
+            { id: 102, q: "آلدوسترون توسط...ترشح می شود:", o: ["زونا رتیکوالریس", "زونا فاسیکوالتا", "زونا گلومرولوزا", "زونا فاسیکوالتا و رتیکوالریس", "زونا گلومرولوزا و فاسیکوالت"], c: 2 },
+            { id: 103, q: "تنظیم ترشح آلدوسترون ...:", o: ["در پاسخ به هیپوکالمی آزاد می شود", "عملکرد گلوکوکورتیکوئیدی دارد", "از طریق پروتئین های G برای افزایش بازجذب Na+ کار می کند", "آزاد شدن آن باعث قلیایی شدن ادرار می شود", "به مقدار زیاد به پروتئین متصل است"], c: 1 },
+            { id: 104, q: "ترشح کلسی تونین با موارد زیر افزایش می یابد:", o: ["گاسترین", "CCK", "سکرتین", "گلوکاگون", "تمام موارد فوق"], c: 4 },
+            { id: 105, q: "همه موارد زیر به گیرنده های داخل سلولی متصل می شوند به جز:", o: ["کورتیزول", "آلدوسترون", "1,25 دی هیدروکسی کوله کلسیفرول (DHCC)", "هورمون پاراتیروئید"], c: 3 },
+            { id: 106, q: "هیپوفیز قدامی چند هورمون تروفیک تولید می کند؟", o: ["2", "3", "5", "6", "8"], c: 2 },
+            { id: 107, q: "همه موارد زیر ترکیبات فسفاته پر انرژی هستند به جز:", o: ["آدنوزین تری فسفات", "گلوکز-6 فسفات", "کراتین فسفات", "آدنوزین دی فسفات", "گوانوزین تری فسفات"], c: 1 },
+            { id: 108, q: "در شرایط هوازی، 1 مول گلوکز تشکیل .... می دهد:", o: ["2 مول ATP", "8 مول ATP", "16 مول ATP", "38 مول ATP", "42 مول ATP"], c: 3 },
+            { id: 109, q: "نسبت تقریبی ذخایرانرژی چربی: کربوهیدرات برابر است با:", o: ["1:2", "1:4", "1:10", "1:20", "1:40"], c: 3 },
+            { id: 110, q: "آمینو اسیدهای ضروری از نظر تغذیه عبارتند از:", o: ["گلیسین", "سرین", "لیزین", "گلوتامین", "تیروزین"], c: 2 },
+            { id: 111, q: "اسید اوریک از تجزیه موارد زیر تشکیل می شود:", o: ["پورین ها", "پیریمیدین ها", "گلوتامین", "اوره", "تمام موارد فوق"], c: 0 },
+            { id: 112, q: "کدام آنزبم در مسیر بیوسنتز هورمونهای بخش قشری فوق کلیه نقش ندارد؟", o: ["ترانسفرازها", "ایزومرازها", "دهیدروژناز", "هیدروکسیلاز"], c: 0 },
+            { id: 113, q: "کدامیک جز اعمال کورتیزول می باشد؟", o: ["افزایش فشارخون", "کاهش تجزیه گلیکوژن در کبد", "کاهش سنتز چربی", "کاهش مصرف گلوکز"], c: 0 },
+            { id: 114, q: "کدام نقص آنزیمی علت فراوانترهیپرپلازی مادرزادی قشر فوق کلیه است؟", o: ["کمبود 21- هیدروکسیلاز", "کمبود 11- هیدروکسیلاز", "کمبود 17- هیدروکسیلاز", "18 کمبود –هیدروکسیلاز"], c: 0 },
+            { id: 115, q: "در فردی ترشح کورتیزول افزایش یافته است، کدام یک از عوارض زیر ناشی از این افزایش می باشد؟", o: ["استئوپورز", "استئومالاسیا", "تحلیل رفتن عضلات", "الف و ج"], c: 1 },
+            { id: 116, q: "کدام گزینه صحیح است؟", o: ["استرادیول از تستوسترون ساخته می شوند.", "در تخمدان و بیضه تبدیل کلسترول به پرگننولون تحت کنترل FSH است.", "پروتئین اصلی ناقل هورمونهای استروئیدی آلبومین است.", "اینهیبین فقط ترشح LHرا افزایش می دهد"], c: 0 },
+            { id: 117, q: "کدام مورد مرتبط با بیماری آدیسون است؟", o: ["افزایش پتاسیم خون", "افزایش رنگدانه های پوستی", "دهیدراتاسیون", "تمام موارد"], c: 3 },
+            { id: 118, q: "هرگاه در فردی تعداد سلولهای لیدیگ کاهش یابد.", o: ["اینهیبین و FSH افزایش می یابند.", "اینهیبین و FSH کاهش می یابند.", "FSH کاهش می یابد.", "LH افزایش می یابد."], c: 3 },
+            { id: 119, q: "ناقل اصلی پروژسترون در خون کدام است؟", o: ["گلوبولین متصل شونده به هورمون جنسی (SHBG)", "گلوبولین متصل شونده به کورتیکواستروئید (ترانس کورتین)", "گلوبولین متصل شونده به تیروکسین (TBG)", "آلبومین"], c: 1 },
+            { id: 120, q: "در سندرم کوشینگ...... وجود دارد.", o: ["افزایش میزان گلوکورتیکوئیدهای خون", "کاهش میزان گلوکورتیکوئیدهای خون", "افزایش عضله سازی", "افزایش سنتز پروتئین"], c: 0 },
+            { id: 121, q: "درمان سندرم آدرنوژنیتال (هیپرپلازی مادرزادی آدرنال) چیست؟", o: ["مهار ترشح گلوکوکورتیکوئیدها", "تجویز گلوکوکورتیکوئیدها", "تجویز پروژسترون", "تحریک ترشح آلدوسترون"], c: 1 },
+            { id: 122, q: "گیرنده FSH در روی....واقع شده است.", o: ["سلولهای سرتولی", "سلولهای لیدیگ", "اسپرماتوگونیها", "اسپرماتوسیتها"], c: 0 },
+            { id: 123, q: "در کدام لایه بخش قشری آدرنال آلدوسترون سنتز می شود؟", o: ["گلومرولوزا", "فاسیکولاتا", "رتیکولاریس", "سلولهای کرومافین"], c: 0 },
+            { id: 124, q: "گیرنده کدام هورمون فعالیت تیروزین کینازی دارد؟", o: ["هورمون رشد", "کورتیزول", "T3", "هورمون آنتی دیورتیک (ضد ادرار)"], c: 0 },
+            { id: 125, q: "کدام هورمون دارای گیرنده داخل سلولی است؟", o: ["هورمونهای تیروئیدی", "هورمون رشد", "گلوکاگن", "انسولین"], c: 0 },
+            { id: 126, q: "ترشح پرولاکتین از هیپوفیز توسط کدام ترکیب مهار می شود؟", o: ["دوپا", "هورمون آزاد کننده تیروتروپین", "دوپامین", "اپی نفرین"], c: 2 },
+            { id: 127, q: "کدام گزینه صحیح نیست؟", o: ["کورتیزول و آلدوسترون از کلسترول سنتز می شوند.", "گیرنده انسولین فعالیت تیروزین کیناز دارد.", "استئومالاسیا بعلت کمبود ویتامین D است.", "بیماری گریوز یک بیماری کم کاری تیروئید است."], c: 3 },
+            { id: 128, q: "کدامیک از علائم هیپرآلدوسترونیسم اولیه نیست؟", o: ["افزایش پتاسیم خون", "افزایش سدیم خون", "کاهش رنین خون", "ب و ج"], c: 0 },
+            { id: 129, q: "در تشخیص بیماری تیروئید ارزش تشخیصی کدام تست بیشتر است؟", o: ["اندازه گیری T3", "اندازه گیری T4", "اندازه گیری TSH", "اندازه گیری rT3"], c: 2 },
+            { id: 130, q: "هورمون آنتی دیورتیک سبب افزایش:", o: ["بازجدب آب از کلیه", "دفع آب از کلیه", "افزایش فشار خون در دوز فارماکولوژیک", "الف و ج"], c: 3 },
+            { id: 131, q: "کدامیک از موارد زیر مرتبط یا کم کاری تیروئید است؟", o: ["بیماری گریوز", "گواتر مولتی ندولار", "تیروتوکسیکوز", "تیروئیدیت هاشیموتو"], c: 3 },
+            { id: 132, q: "در هیپوپاراتیروئیدیسم کاذب .......", o: ["میزان هورمون پاراتورمون افزایش می یابد", "میزان هورمون پاراتورمون کاهش می یابد", "نقص در گیرنده هورمون پاراتورمون وجود دارد.", "میزان کلسیم افزایش می یابد"], c: 2 },
+            { id: 133, q: "در بیماری هاشیموتو ....", o: ["آنتی بادیهای آنتی میکروزومال در خون بیمار وجود دارد.", "آنتی بادیهای آنتی پراکسیداز در خون بیمار وجود دارد.", "ایمنوگلوبولین محرک تیروئید در خون بیمار وجود دارد.", "الف و ب"], c: 3 },
+            { id: 134, q: "کدام آنزبم در مسیر بیوسنتز هورمونهای بخش قشری فوق کلیه نقش دارد؟", o: ["ترانسفرازها", "ایزومرازها", "فسفریلازها", "کینازها"], c: 1 },
+            { id: 135, q: "در کدام لایه بخش قشری آدرنال آندروژنها سنتز می شود؟", o: ["گلومرولوزا", "فاسیکولاتا", "رتیکولاریس", "سلولهای کرومافین"], c: 2 },
+            { id: 136, q: "در کدام لایه بخش قشری آدرنال کورتیزول سنتز می شود؟", o: ["گلومرولوزا", "فاسیکولاتا", "رتیکولاریس", "سلولهای کرومافین"], c: 1 },
+            { id: 137, q: "در بیماری گریوز ....", o: ["آنتی بادیهای آنتی میکروزومال در خون بیمار وجود دارد.", "آنتی بادیهای آنتی پراکسیداز در خون بیمار وجود دارد.", "ایمنوگلوبولین محرک تیروئید در خون بیمار وجود دارد.", "الف و ب"], c: 2 },
+            { id: 138, q: "گیرنده LH در روی....واقع شده است.", o: ["سلولهای سرتولی", "سلولهای لیدیگ", "اسپرماتوگونیها", "اسپرماتوسیتها"], c: 1 },
+            { id: 139, q: "گیرنده کدام هورمون فعالیت تیروزین کینازی ندارد؟", o: ["هورمون رشد", "انسولین", "فاکتور رشد اپیدرمی", "هورمون پاراتورمون"], c: 3 },
+            { id: 140, q: "کدام هورمون دارای گیرنده بر روی غشا سلول است؟", o: ["هورمونهای تیروئیدی", "هورمون پروژسترون", "تستوسترون", "انسولین"], c: 3 },
+            { id: 141, q: "کدام مورد مرتبط با بیماری آدیسون نیست؟", o: ["افزایش پتاسیم خون", "افزایش رنگدانه های پوستی", "دهیدراتاسیون", "کاهش پتاسیم خون"], c: 3 },
+            { id: 142, q: "از زیر واحدهای ..... تشکیل شده اند. G-proteins", o: ["α, β, γ", "α, β", "β, γ", "α, γ"], c: 0 },
+            { id: 143, q: "فاکتور رشد شبه انسولینی شماره 1 در....سنتز می شود. IGF-I", o: ["کبد", "هیپوفیز", "هیپوتالاموس", "پاراتیروئید"], c: 0 },
+            { id: 144, q: "کدام عامل سبب کاهش ترشح هورمون پاراتیروئید می شود", o: ["کاهش کلسیم یونیزه", "افزایش کلسیم یونیزه", "کاهش ویتامین دی", "الف و ج"], c: 1 },
+            { id: 145, q: "کدام عامل سبب افزایش ترشح هورمون پاراتیروئید می شود", o: ["کاهش کلسیم یونیزه", "افزایش کلسیم یونیزه", "افزایش ویتامین دی", "ب و ج"], c: 0 },
+            { id: 146, q: "هورمونهای تیروئید از کدام اسید آمینه سنتز می شوند؟", o: ["تیروزین", "تریپتوفان", "لوسین", "گلیسین"], c: 0 },
+            { id: 147, q: "در کلیه، هورمون پاراتیروئید سبب افزایش بازجذب ...... و کاهش بازجذب.... می شود.", o: ["کلسیم-فسفات", "فسفات-کلسیم", "کلسیم-منیزیم", "منیزیم-کلسیم"], c: 0 },
+            { id: 148, q: "کدام گزینه فرم فعال و متابولیک هورمون تیروئید است؟", o: ["T3", "T4", "rT3", "rT4"], c: 0 },
+            { id: 149, q: "ناقل اصلی هورمونهای تیروئید در خون کدام است؟", o: ["گلوبولین متصل شونده به هورمون جنسی", "گلوبولین متصل شونده به تیروکسین", "گلوبولین متصل شونده به کورتیکواستروئید", "آلبومین"], c: 1 },
+            { id: 150, q: "مکانیسم اصلی ورود یون یدید به غده تیروئید کدام است؟", o: ["انتقال فعال", "انتشار", "انتشار تسهیل شده", "انتشار ساده و تسهیل شده"], c: 0 },
+            { id: 151, q: "کدام هورمون زیر پس از اتصال به گیرنده خود سبب فعال شدن خاصیت تیروزین کینازی گیرنده می شود؟", o: ["کورتیزول", "فاکتور رشد اپیدرمی", "آلدوسترون", "گلوکاگن"], c: 1 },
+            { id: 152, q: "کدام یک از موارد زیر یک هورمون پپتیدی محسوب نمی شود؟", o: ["انسولین", "گلوکاگون", "کورتیزول", "وازوپرسین"], c: 2 },
+            { id: 153, q: "در سلول های هدف، گیرندههای هورمون تیروئید معمولاً در کدام ناحیه قرار دارند؟", o: ["غشای پلاسمایی", "هسته", "سیتوپلاسم", "میتوکندری"], c: 1 },
+            { id: 154, q: "مسیر پیام رسان دوم cAMP معمولاً در پاسخ به کدام نوع گیرنده فعال می شود؟", o: ["گیرنده تیروزین کینازی", "گیرنده GPCR", "گیرنده سیتوپلاسمی", "گیرنده یونی"], c: 1 },
+            { id: 155, q: "کدام یک از هورمون های زیر از مشتقات کلسترول است؟", o: ["آدرنالین", "تستوسترون", "انسولین", "گلوکاگون"], c: 1 },
+            { id: 156, q: "افزایش سطح هورمون آنتی‌دیورتیک (ADH) چه اثری دارد؟", o: ["افزایش حجم ادرار", "کاهش بازجذب آب در کلیه", "افزایش بازجذب آب", "افزایش غلظت سدیم در پلاسما"], c: 2 },
+            { id: 157, q: "در پاسخ به استرس، ترشح ACTH از غده هیپوفیز باعث افزایش ترشح کدام هورمون می‌شود؟", o: ["آدرنالین", "کورتیزول", "انسولین", "آلدوسترون"], c: 1 },
+            { id: 158, q: "گیرنده های انسولین از چه نوعی هستند؟", o: ["GPCR", "یونوتروپیک", "تیروزین کینازی", "سیتوپلاسمی"], c: 2 },
+            { id: 159, q: "کدام یک از موارد زیر در مهار ترشح پرولاکتین نقش دارد؟", o: ["استروژن", "دوپامین", "TRH", "اکسی‌توسین"], c: 1 },
+            { id: 160, q: "در بیماری آدیسون، کدام اختلال هورمونی دیده می‌شود؟", o: ["افزایش کورتیزول", "کاهش کورتیزول", "افزایش آدرنالین", "افزایش آلدوسترون"], c: 1 },
+            { id: 161, q: "هورمون پاراتیروئید باعث چه تغییری در بدن می شود؟", o: ["کاهش سطح کلسیم خون", "افزایش سطح فسفات خون", "افزایش سطح کلسیم خون", "افزایش جذب فسفات در کلیه"], c: 2 },
+            { id: 162, q: "محل سنتز هورمون رشد (GH) در کجاست؟", o: ["هیپوتالاموس", "هیپوفیز قدامی", "غده تیروئید", "غده فوق کلیوی"], c: 1 },
+            { id: 163, q: "افزایش بیش از حد GH در بزرگسالان سبب چه بیماری می شود؟", o: ["ژیگانتیسم", "آکرومگالی", "کوتولگی", "سندرم کوشینگ"], c: 1 },
+            { id: 164, q: "کدام یک از هورمون های زیر نیمه عمر بسیار کوتاهی دارد؟", o: ["کورتیزول", "انسولین", "تیروکسین", "تستوسترون"], c: 1 },
+            { id: 165, q: "در چرخه منوپوز، کدام هورمون کاهش می‌یابد؟", o: ["FSH", "استروژن", "LH", "پرولاکتین"], c: 1 },
+            { id: 166, q: "مهار بازخوردی منفی هورمون تیروئید بر کدام ساختار اعمال می‌شود؟", o: ["فقط هیپوفیز", "فقط هیپوتالاموس", "هر دو هیپوفیز و هیپوتالاموس", "هیچ کدام"], c: 2 },
+            { id: 167, q: "اصلی ترین عامل محرک ترشح انسولین چیست؟", o: ["افزایش گلوکز خون", "کاهش اسیدهای چرب", "افزایش گلوکاگون", "افزایش آدرنالین"], c: 0 },
+            { id: 168, q: "در پاسخ به افت قند خون، کدام هورمون افزایش می یابد؟", o: ["انسولین", "گلوکاگون", "تستوسترون", "T3"], c: 1 },
+            { id: 169, q: "ترشح هورمون ملاتونین در پاسخ به:", o: ["نور زیاد", "تاریکی", "گرما", "افزایش کورتیزول"], c: 1 },
+            { id: 170, q: "عملکرد اصلی آلدوسترون چیست؟", o: ["افزایش جذب پتاسیم", "افزایش دفع سدیم", "افزایش بازجذب سدیم", "افزایش دفع آب"], c: 2 },
+            { id: 171, q: "کدام هورمون در تنظیم ریتم شبانه روزی نقش دارد؟", o: ["اکسی‌توسین", "ملاتونین", "انسولین", "پرولاکتین"], c: 1 },
+            { id: 172, q: "در پاسخ به افزایش حجم خون، کدام هورمون ترشح می‌شود؟", o: ["ADH", "ANP", "آلدوسترون", "کورتیزول"], c: 1 },
+            { id: 173, q: "در بیماران مبتلا به دیابت نوع ۱، علت اصلی افزایش گلوکز خون چیست؟", o: ["افزایش ترشح انسولین", "مقاومت به انسولین", "تخریب سلول های بتا", "افزایش جذب گلوکز در کلیه"], c: 2 },
+            { id: 174, q: "کدام هورمون در ذخیره چربی در بافت چربی نقش دارد؟", o: ["انسولین", "گلوکاگون", "آدرنالین", "کورتیزول"], c: 0 },
+            { id: 175, q: "افزایش مزمن کورتیزول باعث:", o: ["کاهش گلوکز خون", "افزایش گلوکز خون", "افزایش سنتز پروتئین", "کاهش لیپولیز"], c: 1 },
+            { id: 176, q: "گیرنده های هورمون استروژن از نوع:", o: ["غشایی", "ایهسته", "GPCR", "تیروزین کینازی"], c: 1 },
+            { id: 177, q: "در پاسخ به هیپوکلسیمی، ترشح کدام هورمون افزایش می‌یابد؟", o: ["کلسیتونین", "پاراتورمون", "انسولین", "کورتیزول"], c: 1 },
+            { id: 178, q: "ترشح GnRH به صورت:", o: ["مداوم", "ضربانی", "تصادفی", "وابسته به نور"], c: 1 },
+            { id: 179, q: "در فاز لوتئال چرخه قاعدگی، کدام هورمون بیشترین مقدار را دارد؟", o: ["FSH", "LH", "پروژسترون", "استروژن"], c: 2 },
+            { id: 180, q: "غده پاراتیروئید در پاسخ به چه عاملی فعال می شود؟", o: ["افزایش کلسیم", "کاهش کلسیم", "افزایش فسفات", "افزایش منیزیم"], c: 1 },
+            { id: 181, q: "در پاسخ به استرس مزمن، افزایش طولانی کورتیزول چه اثری دارد؟", o: ["افزایش ایمنی بدن", "تضعیف ایمنی", "افزایش سنتز پروتئین", "افزایش رشد بافتی"], c: 1 },
+            { id: 182, q: "در بیماران مبتلا به بیماری آدیسون، علت اصلی کاهش فشار خون چیست؟", o: ["کاهش ترشح آلدوسترون", "کاهش ترشح کورتیزول", "کاهش ترشح آدرنالین", "افزایش ترشح ACTH"], c: 0 },
+            { id: 183, q: "در سندرم کوشینگ ناشی از تومور هیپوفیز، سطح کدام هورمون افزایش می یابد؟", o: ["ACTH", "CRH", "آلدوسترون", "رنین"], c: 0 },
+            { id: 184, q: "مهم‌ترین مکانیسم تنظیم ترشح انسولین چیست؟", o: ["غلظت اسیدهای چرب", "غلظت گلوکز پلاسما", "فعالیت سمپاتیک", "سطح گلوکاگون"], c: 1 },
+            { id: 185, q: "در بیماران مبتلا به هیپوتیروئیدی اولیه، کدام تغییر مشاهده می‌شود؟", o: ["TSH پایین، T3 و T4 بالا", "TSH بالا، T3 و T4 پایین", "TSH بالا، T3 و T4 بالا", "TSH پایین، T3 و T4 پایین"], c: 1 },
+            { id: 186, q: "کدام مورد از علائم افزایش پرولاکتین است؟", o: ["پرمویی", "گالاکتوره", "افزایش اشتها", "پرخاشگری"], c: 1 },
+            { id: 187, q: "در سندرم نلسون، پس از برداشتن غدد آدرنال چه اتفاقی می افتد؟", o: ["کاهش ACTH", "افزایش شدید ACTH", "کاهش کورتیزول و ACTH", "افزایش آلدوسترون"], c: 1 },
+            { id: 188, q: "کدام هورمون توسط سلول های δ پانکراس ترشح می شود؟", o: ["انسولین", "گلوکاگون", "سوماتواستاتین", "پپتید C"], c: 2 },
+            { id: 189, q: "در بیماری گریوز، علت افزایش متابولیسم پایه چیست؟", o: ["افزایش ترشح TSH", "تحریک گیرنده TSH توسط آنتی ی باد ها", "افزایش ترشح TRH", "کاهش متابولیسم کبدی"], c: 1 },
+            { id: 190, q: "در هایپرپاراتیروئیدیسم اولیه، سطح فسفر خون چگونه است؟", o: ["بالا", "پایین", "طبیعی", "متغیر"], c: 1 },
+            { id: 191, q: "اثر اصلی کورتیزول بر متابولیسم قند چیست؟", o: ["کاهش گلوکونئوژنز", "افزایش گلیکوژنولیز", "افزایش گلوکونئوژنز", "افزایش برداشت گلوکز توسط عضله"], c: 2 },
+            { id: 192, q: "کدام هورمون باعث افزایش بازجذب آب در کلیه می شود؟", o: ["ADH", "آلدوسترون", "کورتیزول", "متغیر"], c: 0 },
+            { id: 193, q: "در بیماری آکرومگالی، شایع‌ترین علت چیست؟", o: ["مصرف زیاد هورمون رشد", "آدنوم هیپوفیز", "تومور آدرنال", "مقاومت به GH"], c: 1 },
+            { id: 194, q: "افزایش سطح کدام هورمون در فئوکروموسیتوما مشاهده می‌شود؟", o: ["بالا", "پایین", "طبیعی", "متغیر ترین علت چیست؟ A) مصرف زیاد هورمون رشد B) آدنوم هیپوفیز C) تومور آدرنال"], c: 1 },
+            { id: 195, q: "در دیابت نوع I، مکانیسم اصلی بیماری چیست؟", o: ["مقاومت به انسولین", "تخریب خودایمنی سلول‌های بتا", "کاهش ترشح گلوکاگون", "افزایش ترشح کورتیزول"], c: 1 },
+            { id: 196, q: "در دیابت نوع Iمکانیسم اصلی بیماری چیست؟ ،", o: ["مقاومت به انسولین تخریب خودایمنی سلول", "های بتا", "کاهش ترشح گلوکاگون", "افزایش ترشح کورتیزول"], c: 1 },
+            { id: 197, q: "کدام هورمون بیشترین اثر بر افزایش بازجذب سدیم در کلیه دارد؟", o: ["آلدوسترون", "ADH", "کورتیزول", "ANP"], c: 0 },
+            { id: 198, q: "در تست سرکوب دگزامتازون، اگر کورتیزول سرکوب نشود، احتمالاً بیمار مبتلا به:", o: ["اکسی‌توسین", "کوشینگ", "آدیسون", "کاری تیروئید"], c: 1 },
+            { id: 199, q: "کدام هورمون از هسته سوپرااپتیک هیپوتالاموس ترشح می د؟ شو", o: ["اکسی ن توسی", "ADH", "TRH", "CRH"], c: 1 },
+            { id: 200, q: "در سندرم ترنر، سطح FSH و LH چگونه است؟", o: ["پایین", "اپی‌نفرین", "طبیعی", "متغیر"], c: 1 },
+            { id: 201, q: "کدام هورمون باعث افزایش قند خون نمی شود؟", o: ["گلوکاگون", "اپی ن نفری", "کورتیزول", "انسولین"], c: 3 },
+            { id: 202, q: "کدام یک از موارد زیر باعث افزایش ترشح GH می شود؟", o: ["هیپرگلیسمی", "خواب عمیق", "استرس مزمن", "افزایش IGF-1"], c: 1 },
+            { id: 203, q: "در هایپرآلدوسترونیسم اولیه (سندرم کان)، چه تغییری در رنین رخ می‌دهد؟", o: ["تحریک پاسخ التهابی", "سرکوب ایمنی", "افزایش آنتی بادی", "افزایش لنفوسیت ها"], c: 1 },
+            { id: 204, q: "در بیماران با دیابت بی‌مزه (Diabetes Insipidus) چه اتفاقی می‌افتد؟", o: ["افزایش", "کاهش", "طبیعی", "متناوب"], c: 1 },
+            { id: 205, q: "در تست تحریک ACTH در نارسایی اولیه آدرنال چه مشاهده می‌شود؟", o: ["افزایش ADH", "کاهش حساسیت به ADH", "افزایش جذب آب", "کاهش ادرار"], c: 1 },
+            { id: 206, q: "در تست تحریک ACTH در نارسایی اولیه آدرنال چه مشاهده می ، شود؟", o: ["افزایش کورتیزول", "عدم پاسخ کورتیزول", "کاهش ACTH", "افزایش آدرنالین"], c: 1 },
+            { id: 207, q: "اثر اصلی PTH بر استخوان چیست؟", o: ["افزایش ساخت استخوان", "افزایش جذب استخوان", "کاهش جذب استخوان", "مهار استئوکلاست ها"], c: 1 },
+            { id: 208, q: "در بیماران با سندرم SIADH، وضعیت سدیم سرم چگونه است؟", o: ["TRH", "دوپامین", "استروژن", "استرس"], c: 1 },
+            { id: 209, q: "در بیماران با سندرم SIADHوضعیت سدیم سرم چگونه است؟ ،", o: ["هیپوناترمی", "هایپرناترمی", "طبیعی", "متغیر"], c: 0 },
+            { id: 210, q: "در فاز لوتئال چرخه قاعدگی، کدام هورمون غالب است؟", o: ["استروژن", "پروژسترون", "FSH", "LH"], c: 1 },
+            { id: 211, q: "در بیماران با تومور ترشح‌کننده ACTH اکتوپیک، سطح CRH چگونه است؟", o: ["بالا", "پایین", "طبیعی", "متناوب"], c: 1 }
+        ];
+
+
+        const sectionsConfig = [
+            { name: "بخش ۱ سوالات", label: "بخش ۱", start: 1, end: 31 },
+            { name: "بخش ۲ سوالات", label: "بخش ۲", start: 32, end: 61 },
+            { name: "بخش ۳ سوالات", label: "بخش ۳", start: 62, end: 91 },
+            { name: "بخش ۴ سوالات", label: "بخش ۴", start: 92, end: 121 },
+            { name: "بخش ۵ سوالات", label: "بخش ۵", start: 122, end: 151 },
+            { name: "بخش ۶ (نامطمئن) سوالات", label: "بخش ۶ (نامطمئن)", start: 152, end: 211 }
+        ];
+
+
+        let currentSectionNum = null;
+        let currentQuestionsList = [];
+        let currentIndex = 0;
+        let userAnswers = {};
+        
+        let isChallengeMode = false;
+        let isBookmarkMode = false;
+        let isSecretChallenge = false;
+        let secretPhase = 0;
+        let secretTimer = null;
+        let timeLeft = 180;
+
+        let stats = JSON.parse(localStorage.getItem('medical_eng_stats')) || {};
+        let bookmarks = JSON.parse(localStorage.getItem('medical_eng_bookmarks')) || {};
+
+        const CustomUI = {
+            alert: function(text, callback) {
+                const container = document.getElementById('modal-container');
+                container.innerHTML = `
+                    <div class="custom-modal-overlay">
+                        <div class="custom-modal">
+                            <p>${text}</p>
+                            <div style="margin-top: 15px;">
+                                <button class="btn btn-accent" id="modal-ok" style="width: 100%; justify-content: center;">تایید</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                document.getElementById('modal-ok').onclick = function() {
+                    container.innerHTML = '';
+                    if(callback) callback();
+                };
+            },
+            confirm: function(text, onConfirm, onCancel) {
+                const container = document.getElementById('modal-container');
+                container.innerHTML = `
+                    <div class="custom-modal-overlay">
+                        <div class="custom-modal">
+                            <p>${text}</p>
+                            <div style="display: flex; gap: 10px; margin-top: 15px;">
+                                <button class="btn btn-accent" id="modal-yes" style="flex:1; justify-content: center;">بله</button>
+                                <button class="btn" id="modal-no" style="flex:1; justify-content: center;">خیر</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                document.getElementById('modal-yes').onclick = function() {
+                    container.innerHTML = '';
+                    onConfirm();
+                };
+                document.getElementById('modal-no').onclick = function() {
+                    container.innerHTML = '';
+                    if(onCancel) onCancel();
+                };
+            }
+        };
+
+        function resetChallengeState() {
+            clearInterval(secretTimer);
+            isSecretChallenge = false;
+            secretPhase = 0;
+            document.getElementById('timer-display').style.display = 'none';
+        }
+
+        function logoutSubject() {
+            CustomUI.confirm('آیا مطمئن هستید؟ فقط اطلاعات و آمارهای مربوط به درس زبان تخصصی پاک خواهد شد و نام شما تغییر نخواهد کرد.', function() {
+                localStorage.removeItem('medical_eng_stats');
+                localStorage.removeItem('medical_eng_bookmarks');
+                location.reload();
+            });
+        }
+
+        function checkUser() {
+            let username = localStorage.getItem('global_username');
+            if (!username) {
+                username = 'دانشجو';
+            }
+            document.getElementById('greeting').innerText = `سلام ${username}!`;
+            initApp();
+        }
+
+        function initApp() {
+            renderDashboard();
+        }
+
+        function renderDashboard() {
+            const containerArea = document.getElementById('main-content-area');
+            containerArea.innerHTML = '';
+            
+            const notesContainer = document.createElement('div');
+            notesContainer.style.marginBottom = '8px';
+            notesContainer.innerHTML = `
+                <button class="btn full-width btn-accent" disabled style="padding: 10px 14px; opacity: 0.5; cursor: not-allowed;" title="بخش درسنامه غیرفعال شده است">
+                    <div class="btn-content">
+                        <span style="font-size: 0.9rem; font-weight: bold;">📖 مطالعه درسنامه‌های جامع (تفکیک‌شده) - غیرفعال</span>
+                    </div>
+                    <span class="badge badge-accent">جزوه</span>
+                </button>
+            `;
+            containerArea.appendChild(notesContainer);
+
+            const titleEl = document.createElement('div');
+            titleEl.className = 'section-title';
+            titleEl.innerText = 'بخش‌های بانک سوالات';
+            containerArea.appendChild(titleEl);
+
+            const grid = document.createElement('div');
+            grid.className = 'grid-menu';
+
+            sectionsConfig.forEach((sec, idx) => {
+                const secNum = idx + 1;
+                const qRange = `سوالات ${sec.start} تا ${sec.end}`;
+                const btn = document.createElement('button');
+                btn.className = 'btn';
+                if (secNum === 6) {
+                    btn.classList.add('full-width');
+                }
+                btn.style.padding = '8px 12px';
+                btn.innerHTML = `
+                    <div class="btn-content">
+                        <span style="font-weight: 600; font-size: 0.82rem;">${sec.name}</span>
+                        <span style="font-size: 0.72rem; color: var(--text-secondary);">${qRange}</span>
+                    </div>
+                    <span class="badge ${secNum === 6 ? 'badge-accent' : ''}">${sec.label}</span>
+                `;
+                btn.onclick = () => openSectionOptions(secNum);
+                grid.appendChild(btn);
+            });
+            containerArea.appendChild(grid);
+
+            updateBadges();
+            updateMasteryBar();
+        }
+
+        function openSectionOptions(sectionNum) {
+            currentSectionNum = sectionNum;
+            const sec = sectionsConfig[sectionNum - 1];
+            document.getElementById('section-option-title').innerText = sec.name;
+            showScreen('section-options-screen');
+        }
+
+        function startSectionMemorize() {
+            const sec = sectionsConfig[currentSectionNum - 1];
+            document.getElementById('memo-header-title').innerText = `حفظ سوالات: ${sec.name}`;
+            let questions = allQuestions.slice(sec.start - 1, sec.end);
+            renderMemorizeCards(questions);
+        }
+
+        function startSectionQuiz() {
+            resetChallengeState();
+            userAnswers = {};
+            const sec = sectionsConfig[currentSectionNum - 1];
+            document.getElementById('quiz-type-title').innerText = `تمرین ${sec.name}`;
+            let questions = allQuestions.slice(sec.start - 1, sec.end);
+
+            currentQuestionsList = prepareQuestions(questions);
+            currentIndex = 0;
+            showScreen('quiz-screen');
+            renderQuestion();
+        }
+
+        function renderMemorizeCards(questions) {
+            const container = document.getElementById('memorize-container');
+            container.innerHTML = '';
+
+            questions.forEach((qObj, idx) => {
+                const card = document.createElement('div');
+                card.className = 'memo-card';
+                
+                let optsHtml = '';
+                qObj.o.forEach((optText, optIdx) => {
+                    const isCorrect = (optIdx === qObj.c);
+                    optsHtml += `<div class="memo-opt ${isCorrect ? 'correct-ans' : ''}">${optIdx + 1}) ${optText} ${isCorrect ? '✓ (پاسخ صحیح)' : ''}</div>`;
+                });
+
+                card.innerHTML = `<div class="memo-q">سوال ${idx + 1}: ${qObj.q}</div><div class="memo-opts">${optsHtml}</div>`;
+                container.appendChild(card);
+            });
+
+            showScreen('memorize-screen');
+        }
+
+        function startChallengeQuiz() {
+            resetChallengeState();
+            isChallengeMode = true;
+            isBookmarkMode = false;
+            userAnswers = {};
+            document.getElementById('quiz-type-title').innerText = `🎯 ایستگاه چالش`;
+
+            let filtered = allQuestions.filter(q => stats[q.id] && stats[q.id].wrongCount >= 2);
+            if (filtered.length === 0) {
+                CustomUI.alert('هنوز سوالی با تکرار اشتباه بالا ندارید. عالیه! 🥸');
+                return;
+            }
+
+            currentQuestionsList = prepareQuestions(filtered);
+            currentIndex = 0;
+            showScreen('quiz-screen');
+            renderQuestion();
+        }
+
+        function startBookmarkQuiz() {
+            resetChallengeState();
+            isChallengeMode = false;
+            isBookmarkMode = true;
+            userAnswers = {};
+            document.getElementById('quiz-type-title').innerText = `⭐ سوالات نشان‌دار`;
+
+            let filtered = allQuestions.filter(q => bookmarks[q.id]);
+            if (filtered.length === 0) {
+                CustomUI.alert('شما هنوز هیچ سوالی را نشان‌دار نکرده‌اید!');
+                return;
+            }
+
+            currentQuestionsList = prepareQuestions(filtered);
+            currentIndex = 0;
+            showScreen('quiz-screen');
+            renderQuestion();
+        }
+
+        function promptRandomQuizConfig() {
+            CustomUI.confirm('آیا بخش ۶ (نامطمئن) هم در آزمون رندوم جامع استفاده شود؟', 
+                () => startRandomComprehensiveQuiz(true), 
+                () => startRandomComprehensiveQuiz(false)
+            );
+        }
+
+        function startRandomComprehensiveQuiz(includeSection6) {
+            resetChallengeState();
+            isChallengeMode = false;
+            isBookmarkMode = false;
+            userAnswers = {};
+            document.getElementById('quiz-type-title').innerText = `🎲 آزمون جامع رندوم`;
+
+            let questionsPool = includeSection6 ? [...allQuestions] : allQuestions.filter(q => q.id < 152);
+
+            currentQuestionsList = prepareQuestions(questionsPool);
+            currentIndex = 0;
+            showScreen('quiz-screen');
+            renderQuestion();
+        }
+
+        function handleFlaskClick() {
+            const pct = parseInt(document.getElementById('mastery-percentage').innerText);
+            if (pct >= 90) {
+                CustomUI.confirm('🔥 شما به سطح تسلط ۹۰٪ رسیدید! این یک بخش مخفیست. آیا برای چالش مرگبار ۳ دقیقه‌ای آماده‌اید؟ یک اشتباه = شروع مجدد!', startSecretChallenge);
+            } else {
+                showMasteryDetails();
+            }
+        }
+
+        function startSecretChallenge() {
+            resetChallengeState();
+            isSecretChallenge = true;
+            secretPhase = 1;
+            userAnswers = {};
+            
+            let weakQs = [...allQuestions].sort((a, b) => {
+                let aW = stats[a.id] ? stats[a.id].wrongCount : 0;
+                let bW = stats[b.id] ? stats[b.id].wrongCount : 0;
+                return bW - aW;
+            }).filter(q => stats[q.id] && stats[q.id].wrongCount > 0);
+
+            if (weakQs.length < 15) {
+                let unmastered = shuffle(allQuestions.filter(q => !weakQs.includes(q) && (!stats[q.id] || stats[q.id].consecutiveCorrect < 3)));
+                weakQs = weakQs.concat(unmastered).slice(0, 15);
+            }
+            if (weakQs.length < 15) {
+                let randomPad = shuffle(allQuestions.filter(q => !weakQs.includes(q)));
+                weakQs = weakQs.concat(randomPad).slice(0, 15);
+            }
+
+            currentQuestionsList = prepareQuestions(weakQs.slice(0, 15));
+            currentIndex = 0;
+            
+            document.getElementById('quiz-type-title').innerText = `💀 چالش مخفی: فاز اول`;
+            
+            timeLeft = 180;
+            startSecretTimer();
+
+            showScreen('quiz-screen');
+            renderQuestion();
+        }
+
+        function startSecretTimer() {
+            const display = document.getElementById('timer-display');
+            display.style.display = 'block';
+            clearInterval(secretTimer);
+            
+            secretTimer = setInterval(() => {
+                timeLeft--;
+                let m = Math.floor(timeLeft / 60);
+                let s = timeLeft % 60;
+                display.innerText = `⏱ ${m}:${s < 10 ? '0' + s : s}`;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(secretTimer);
+                    CustomUI.alert('⏳ زمان تمام شد! چالش متوقف شد، باید دوباره تلاش کنی...', startSecretChallenge);
+                }
+            }, 1000);
+        }
+
+        function startSecretPhase2() {
+            let phase2Qs = allQuestions.filter(q => !stats[q.id] || stats[q.id].consecutiveCorrect < 3);
+            
+            if (phase2Qs.length > 20) {
+                phase2Qs = shuffle(phase2Qs).slice(0, 20);
+            }
+
+            if (phase2Qs.length === 0) {
+                maxOutStats();
+                CustomUI.alert('شما در حال حاضر ۱۰۰٪ هستید و نیازی به این فاز ندارید!', goHome);
+                return;
+            }
+
+            resetChallengeState();
+            isSecretChallenge = true;
+            secretPhase = 2;
+            userAnswers = {};
+            currentQuestionsList = prepareQuestions(phase2Qs);
+            currentIndex = 0;
+
+            document.getElementById('quiz-type-title').innerText = `🚀 فاز دوم: مسیر ۱۰۰٪`;
+            document.getElementById('timer-display').style.display = 'none';
+
+            showScreen('quiz-screen');
+            renderQuestion();
+        }
+
+        function maxOutStats() {
+            allQuestions.forEach(q => {
+                if (!stats[q.id]) {
+                    stats[q.id] = { wrongCount: 0, consecutiveCorrect: 3 };
+                } else {
+                    stats[q.id].consecutiveCorrect = 3;
+                    stats[q.id].wrongCount = 0;
+                }
+            });
+            saveStats();
+        }
+
+        function prepareQuestions(questionsList) {
+            let shuffledQuestions = shuffle(questionsList);
+            return shuffledQuestions.map(item => {
+                let mappedOptions = item.o.map((txt, index) => ({ text: txt, originalIndex: index }));
+                return {
+                    id: item.id,
+                    q: item.q,
+                    c: item.c,
+                    shuffledOptions: shuffle(mappedOptions)
+                };
+            });
+        }
+
+        function renderQuestion() {
+            if (currentQuestionsList.length === 0) return;
+
+            const currentQ = currentQuestionsList[currentIndex];
+            if (!stats[currentQ.id]) stats[currentQ.id] = { wrongCount: 0, consecutiveCorrect: 0 };
+
+            document.getElementById('progress-text').innerText = `سوال ${currentIndex + 1} از ${currentQuestionsList.length}`;
+            document.getElementById('question-text').innerText = currentQ.q;
+
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
+
+            currentQ.shuffledOptions.forEach(opt => {
+                const div = document.createElement('div');
+                div.className = 'option-item';
+                div.innerText = opt.text;
+                div.setAttribute('data-original-index', opt.originalIndex);
+                div.onclick = () => selectOption(div, opt.originalIndex, currentQ.c, currentQ.id);
+
+                if (userAnswers[currentQ.id] !== undefined) {
+                    div.classList.add('disabled');
+                    if (opt.originalIndex === currentQ.c) div.classList.add('correct');
+                    if (opt.originalIndex === userAnswers[currentQ.id] && userAnswers[currentQ.id] !== currentQ.c) div.classList.add('wrong');
+                }
+                container.appendChild(div);
+            });
+
+            const btnPrev = document.getElementById('btn-prev');
+            const btnNext = document.getElementById('btn-next');
+            
+            if (isSecretChallenge) {
+                btnPrev.style.display = 'none';
+                btnNext.style.display = 'none'; 
+            } else {
+                btnPrev.style.display = 'block';
+                btnNext.style.display = 'block';
+                btnPrev.style.visibility = (currentIndex === 0) ? 'hidden' : 'visible';
+                btnNext.innerText = (currentIndex === currentQuestionsList.length - 1) ? 'پایان' : 'سوال بعدی';
+            }
+            
+            updateBookmarkBtnUI();
+        }
+
+        function selectOption(element, selectedIdx, correctIdx, qId) {
+            if(element.classList.contains('disabled')) return;
+            const items = document.querySelectorAll('.option-item');
+            items.forEach(item => item.classList.add('disabled'));
+            userAnswers[qId] = selectedIdx;
+
+            if (isSecretChallenge) {
+                if (selectedIdx !== correctIdx) {
+                    element.classList.add('wrong');
+                    items.forEach(item => {
+                        if (parseInt(item.getAttribute('data-original-index')) === correctIdx) item.classList.add('correct');
+                    });
+                    clearInterval(secretTimer);
+                    
+                    setTimeout(() => {
+                        CustomUI.alert('❌ اشتباه زدی! چالش از اول شروع می‌شه.', startSecretChallenge);
+                    }, 800);
+                } else {
+                    element.classList.add('correct');
+                    if (currentIndex === currentQuestionsList.length - 1) {
+                        clearInterval(secretTimer);
+                        setTimeout(() => {
+                            if (secretPhase === 1) {
+                                CustomUI.alert('🎉 فاز اول رو ترکوندی! حالا بریم سراغ سوالاتی که نذاشتن ۱۰۰٪ بشی تا پروندش بسته بشه.', startSecretPhase2);
+                            } else {
+                                maxOutStats();
+                                CustomUI.alert('🏆 تبریک! تو تمام چالش‌ها رو با موفقیت رد کردی و درصد تسلطت ۱۰۰٪ کامل شد!', goHome);
+                            }
+                        }, 500);
+                    } else {
+                        setTimeout(() => navigateQuestion(1), 500);
+                    }
+                }
+                return;
+            }
+
+            if (selectedIdx === correctIdx) {
+                element.classList.add('correct');
+                stats[qId].consecutiveCorrect++;
+                if (stats[qId].consecutiveCorrect >= 3) stats[qId].wrongCount = 0;
+            } else {
+                element.classList.add('wrong');
+                stats[qId].wrongCount++;
+                stats[qId].consecutiveCorrect = 0;
+                items.forEach(item => {
+                    if (parseInt(item.getAttribute('data-original-index')) === correctIdx) item.classList.add('correct');
+                });
+            }
+            saveStats();
+        }
+
+        function navigateQuestion(step) {
+            currentIndex += step;
+            if (currentIndex >= currentQuestionsList.length) {
+                CustomUI.alert('آزمون به پایان رسید. خسته نباشید!', () => goHome());
+            } else if (currentIndex < 0) {
+                currentIndex = 0;
+            } else {
+                renderQuestion();
+            }
+        }
+
+        function toggleBookmark() {
+            if (currentQuestionsList.length === 0) return;
+            const qId = currentQuestionsList[currentIndex].id;
+            bookmarks[qId] = !bookmarks[qId];
+            saveBookmarks();
+            updateBookmarkBtnUI();
+        }
+
+        function updateBookmarkBtnUI() {
+            if (currentQuestionsList.length === 0) return;
+            const qId = currentQuestionsList[currentIndex].id;
+            const btn = document.getElementById('btn-bookmark');
+            if (bookmarks[qId]) {
+                btn.innerText = '⭐ نشان شده';
+                btn.style.background = 'rgba(234, 179, 8, 0.2)';
+            } else {
+                btn.innerText = '☆ نشان';
+                btn.style.background = '';
+            }
+        }
+
+        function saveStats() {
+            localStorage.setItem('medical_eng_stats', JSON.stringify(stats));
+            updateBadges();
+            updateMasteryBar();
+        }
+
+        function saveBookmarks() {
+            localStorage.setItem('medical_eng_bookmarks', JSON.stringify(bookmarks));
+            updateBadges();
+        }
+
+        function updateBadges() {
+            let chCount = 0;
+            for (let qId in stats) {
+                if (stats[qId].wrongCount >= 2) chCount++;
+            }
+            const chEl = document.getElementById('challenge-count');
+            if (chEl) chEl.innerText = `${chCount} سوال`;
+
+            let bmCount = Object.keys(bookmarks).filter(k => bookmarks[k]).length;
+            const bmEl = document.getElementById('bookmark-count');
+            if (bmEl) bmEl.innerText = `${bmCount} سوال`;
+        }
+
+        function updateMasteryBar() {
+            const total = allQuestions.length;
+            let score = 0;
+            for (let qId in stats) {
+                const st = stats[qId];
+                if (st.consecutiveCorrect >= 3) score += 1;
+                else if (st.consecutiveCorrect === 2) score += 0.6;
+                else if (st.consecutiveCorrect === 1 || st.wrongCount > 0) score += 0.25;
+            }
+            const pct = total > 0 ? Math.round((score / total) * 100) : 0;
+            document.getElementById('mastery-percentage').innerText = `${pct}%`;
+
+            const liquid = document.getElementById('flask-liquid');
+            liquid.style.height = `${pct}%`;
+            liquid.className = 'liquid';
+
+            if (pct < 30) {
+                liquid.classList.add('color-low');
+                document.documentElement.style.setProperty('--wave-color-1', 'rgba(190, 18, 60, 0.8)');
+                document.documentElement.style.setProperty('--wave-color-2', 'rgba(225, 29, 72, 0.5)');
+            } else if (pct < 60) {
+                liquid.classList.add('color-mid');
+                document.documentElement.style.setProperty('--wave-color-1', 'rgba(217, 119, 6, 0.8)');
+                document.documentElement.style.setProperty('--wave-color-2', 'rgba(245, 158, 11, 0.5)');
+            } else if (pct < 85) {
+                liquid.classList.add('color-high');
+                document.documentElement.style.setProperty('--wave-color-1', 'rgba(29, 78, 216, 0.8)');
+                document.documentElement.style.setProperty('--wave-color-2', 'rgba(59, 130, 246, 0.5)');
+            } else {
+                liquid.classList.add('color-max');
+                document.documentElement.style.setProperty('--wave-color-1', 'rgba(4, 120, 87, 0.8)');
+                document.documentElement.style.setProperty('--wave-color-2', 'rgba(16, 185, 129, 0.5)');
+            }
+
+            const masteryContainer = document.getElementById('mastery-container-el');
+            if (pct >= 90) {
+                masteryContainer.classList.add('glow-active');
+            } else {
+                masteryContainer.classList.remove('glow-active');
+            }
+        }
+
+        function showMasteryDetails() {
+            const pct = parseInt(document.getElementById('mastery-percentage').innerText);
+            let msg = pct < 30 ? "ابتدای راه هستید، مطالعه را دقیق‌تر پیش ببرید!" : pct < 70 ? "پیشرفت خوبی داشتید، به تمرین ادامه دهید." : "تسلط فوق‌العاده‌ای روی مباحث پیدا کرده‌اید! عالیه 🌸";
+            CustomUI.alert(`درصد تسلط کل شما: ${pct}%<br><br>${msg}`);
+        }
+
+        function shuffle(arr) {
+            let a = [...arr];
+            for (let i = a.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [a[i], a[j]] = [a[j], a[i]];
+            }
+            return a;
+        }
+
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+        }
+
+        function goHome() {
+            resetChallengeState();
+            showScreen('dashboard-screen');
+            renderDashboard();
+        }
+
+        function backToPreviousFromMemorize() {
+            showScreen('section-options-screen');
+        }
+
+        const sunIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>`;
+
+        const moonIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>`;
+
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        
+        if (localStorage.getItem('global_theme') === 'light') {
+            document.body.classList.add('light-mode');
+            themeToggleBtn.innerHTML = moonIcon;
+        } else {
+            themeToggleBtn.innerHTML = sunIcon;
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            document.body.classList.toggle('light-mode');
+            if (document.body.classList.contains('light-mode')) {
+                localStorage.setItem('global_theme', 'light');
+                themeToggleBtn.innerHTML = moonIcon;
+            } else {
+                localStorage.setItem('global_theme', 'dark');
+                themeToggleBtn.innerHTML = sunIcon;
+            }
+        });
+
+        window.onload = () => {
+            checkUser();
+        };
+    </script>
+</body>
+</html>
