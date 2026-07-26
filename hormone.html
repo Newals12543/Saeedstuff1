@@ -756,7 +756,7 @@
             { id: 36, q: "سندرم ترشح نامناسب ADH (SIADH) ناشی از...است:", o: ["میزان پایین ADH", "هیپراسموالریته سرم و ادرار رقیق شده", "می تواند ناشی از سرطان سلول کوچک ریه (oat cell carcinoma) باشد"], c: 2 },
             { id: 37, q: "سندرم ترشح نامناسب SIADH (ADH) توسط ... درمان می شود:", o: ["آنتاگونیست ADH", "آنالوگ ADH", "دیورتیک های تیازیدی"], c: 0 },
             { id: 38, q: "عالئم معمول دیابت بی مزه چیست؟", o: ["هیپرگلیسمی و پلی اوری", "اکیموز دور چشم و تاری دید", "پلی اوری و پلی دیپسی", "الیگوری و هیپوگلیسمی"], c: 2 },
-            { id: 39, q: "بیماری مشکوک به دیابت بی مزه است. کدام مورد زیر موثرترین ارزیابی است؟", o: ["گرفتن عالئم حیاتی هر 4 ساعت", "پایش گلوکز خون", "اندازه گیری برون ده ادرار بصورت ساعتی"], c: 2 },
+            { id: 39, q: "بیمار مشکوک به دیابت بی مزه است. کدام مورد زیر موثرترین ارزیابی است؟", o: ["گرفتن عالئم حیاتی هر 4 ساعت", "پایش گلوکز خون", "اندازه گیری برون ده ادرار بصورت ساعتی"], c: 2 },
             { id: 40, q: "بهترین راه برای تشخیص کمبود هورمون رشد، GH است اندازه گیری کدام مورد است؟", o: ["میزان GH", "میزان IGF-1", "میزان انسولین"], c: 1 },
             { id: 41, q: "بیمار با شکم آویزان و استریاهای قرمز (ترک های پوستی ضایعاتی قرمز) در معاینه مراجعه کرده است، پزشک متوجه کبودی قوز بوفالو (پد چربی) شده است بیمار به احتمال زیاد دارای ... است:", o: ["پروالکتینوما", "سندرم کوشینگ", "آکرومگالی", "آدنوم تولید کننده هورمون محرک تیروتروپین (TSH)"], c: 1 },
             { id: 42, q: "تمام آدنوم های زیر را رزکسیون جراحی (برداشتن ناحیه ای از بافت توسط جراحی) انجام می دهیم به جز:", o: ["سندرم کوشینگ", "آدنوم تولید کننده TSH", "پروالکتینوما", "کم کاری مرکزی تیروئید"], c: 3 },
@@ -1131,7 +1131,7 @@
             userAnswers = {};
             document.getElementById('quiz-type-title').innerText = `🎯 ایستگاه چالش`;
 
-            let filtered = allQuestions.filter(q => stats[q.id] && stats[q.id].wrongCount >= 2);
+            let filtered = allQuestions.filter(q => q.id < 152 && stats[q.id] && stats[q.id].wrongCount >= 2);
             if (filtered.length === 0) {
                 CustomUI.alert('هنوز سوالی با تکرار اشتباه بالا ندارید. عالیه! 🥸');
                 return;
@@ -1199,18 +1199,18 @@
             secretPhase = 1;
             userAnswers = {};
             
-            let weakQs = [...allQuestions].sort((a, b) => {
+            let weakQs = allQuestions.filter(q => q.id < 152).sort((a, b) => {
                 let aW = stats[a.id] ? stats[a.id].wrongCount : 0;
                 let bW = stats[b.id] ? stats[b.id].wrongCount : 0;
                 return bW - aW;
             }).filter(q => stats[q.id] && stats[q.id].wrongCount > 0);
 
             if (weakQs.length < 15) {
-                let unmastered = shuffle(allQuestions.filter(q => !weakQs.includes(q) && (!stats[q.id] || stats[q.id].consecutiveCorrect < 3)));
+                let unmastered = shuffle(allQuestions.filter(q => q.id < 152 && !weakQs.includes(q) && (!stats[q.id] || stats[q.id].consecutiveCorrect < 3)));
                 weakQs = weakQs.concat(unmastered).slice(0, 15);
             }
             if (weakQs.length < 15) {
-                let randomPad = shuffle(allQuestions.filter(q => !weakQs.includes(q)));
+                let randomPad = shuffle(allQuestions.filter(q => q.id < 152 && !weakQs.includes(q)));
                 weakQs = weakQs.concat(randomPad).slice(0, 15);
             }
 
@@ -1245,7 +1245,7 @@
         }
 
         function startSecretPhase2() {
-            let phase2Qs = allQuestions.filter(q => !stats[q.id] || stats[q.id].consecutiveCorrect < 3);
+            let phase2Qs = allQuestions.filter(q => q.id < 152 && (!stats[q.id] || stats[q.id].consecutiveCorrect < 3));
             
             if (phase2Qs.length > 20) {
                 phase2Qs = shuffle(phase2Qs).slice(0, 20);
@@ -1272,7 +1272,7 @@
         }
 
         function maxOutStats() {
-            allQuestions.forEach(q => {
+            allQuestions.filter(q => q.id < 152).forEach(q => {
                 if (!stats[q.id]) {
                     stats[q.id] = { wrongCount: 0, consecutiveCorrect: 3 };
                 } else {
@@ -1436,7 +1436,7 @@
         function updateBadges() {
             let chCount = 0;
             for (let qId in stats) {
-                if (stats[qId].wrongCount >= 2) chCount++;
+                if (parseInt(qId) < 152 && stats[qId].wrongCount >= 2) chCount++;
             }
             const chEl = document.getElementById('challenge-count');
             if (chEl) chEl.innerText = `${chCount} سوال`;
@@ -1447,14 +1447,17 @@
         }
 
         function updateMasteryBar() {
-            const total = allQuestions.length;
+            const validQuestions = allQuestions.filter(q => q.id < 152);
+            const total = validQuestions.length;
             let score = 0;
-            for (let qId in stats) {
-                const st = stats[qId];
-                if (st.consecutiveCorrect >= 3) score += 1;
-                else if (st.consecutiveCorrect === 2) score += 0.6;
-                else if (st.consecutiveCorrect === 1 || st.wrongCount > 0) score += 0.25;
-            }
+            validQuestions.forEach(q => {
+                const st = stats[q.id];
+                if (st) {
+                    if (st.consecutiveCorrect >= 3) score += 1;
+                    else if (st.consecutiveCorrect === 2) score += 0.6;
+                    else if (st.consecutiveCorrect === 1 || st.wrongCount > 0) score += 0.25;
+                }
+            });
             const pct = total > 0 ? Math.round((score / total) * 100) : 0;
             document.getElementById('mastery-percentage').innerText = `${pct}%`;
 
