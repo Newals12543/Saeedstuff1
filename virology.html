@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بانک سوالات ویروس‌شناسی</title>
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #090d16 0%, #15162c 50%, #1e1b4b 100%);
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-hover: rgba(255, 255, 255, 0.07);
+            --card-bg: rgba(255, 255, 255, 0.04);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent-primary: #6366f1;
+            --accent-hover: #4f46e5;
+            --success: #10b981;
+            --error: #ef4444;
+            --warning: #f59e0b;
+            --wave-color-1: rgba(255, 75, 114, 0.8);
+            --wave-color-2: rgba(255, 75, 114, 0.5);
+            --glass-overlay: rgba(255, 255, 255, 0.06);
+            --glass-border-light: rgba(255, 255, 255, 0.2);
+            --accent-overlay: rgba(255, 255, 255, 0.2);
+            --success-text: #a7f3d0;
+            --error-text: #fca5a5;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            transition: background 0.5s ease, color 0.5s ease;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 780px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 20px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+            transition: all 0.5s ease;
+            position: relative;
+        }
+
+        .screen {
+            display: none;
+        }
+
+        .screen.active {
+            display: block;
+            animation: fadeInScreen 0.3s ease forwards;
+        }
+
+        @keyframes fadeInScreen {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .top-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .top-left-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .mode-toggle-switch {
+            display: flex;
+            background: var(--glass-overlay);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            padding: 2px;
+        }
+
+        .mode-option {
+            padding: 5px 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-secondary);
+            border: none;
+            background: transparent;
+        }
+
+        .mode-option.active {
+            background: var(--accent-primary);
+            color: #ffffff;
+            box-shadow: 0 2px 8px rgba(99, 102, 241, 0.4);
+        }
+
+        .icon-btn {
+            padding: 0;
+            border-radius: 12px;
+            width: 38px;
+            height: 38px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            background: var(--glass-overlay);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .icon-btn:hover {
+            background: var(--glass-hover);
+            transform: translateY(-2px);
+            border-color: var(--glass-border-light);
+            color: var(--accent-primary);
+        }
+        
+        .icon-btn:active {
+            transform: translateY(0);
+        }
+
+        .icon-btn svg {
+            width: 18px;
+            height: 18px;
+            stroke-width: 2.2;
+            transition: all 0.3s ease;
+        }
+
+        .hero-card {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .hero-info h2 {
+            font-size: 1.1rem;
+            color: var(--accent-primary);
+            margin-bottom: 2px;
+        }
+
+        .hero-info p {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+        }
+
+        .mastery-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .mastery-container:hover {
+            transform: scale(1.05);
+        }
+
+        .flask-wrapper {
+            position: relative;
+            width: 40px;
+            height: 52px;
+            margin-bottom: 4px;
+        }
+
+        .flask-shape {
+            width: 100%;
+            height: 100%;
+            background: var(--glass-overlay);
+            clip-path: polygon(32% 0%, 68% 0%, 68% 8%, 64% 8%, 64% 35%, 100% 90%, 100% 100%, 0% 100%, 0% 90%, 36% 35%, 36% 8%, 32% 8%);
+            position: relative;
+            overflow: hidden;
+            border: 2px solid var(--glass-border-light);
+        }
+
+        .liquid {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 0%;
+            transition: height 1.2s cubic-bezier(0.4, 0, 0.2, 1), background 0.8s ease;
+        }
+
+        .wave {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            width: 100px;
+            height: 100px;
+            background: var(--wave-color-1);
+            border-radius: 40%;
+            transform: translateX(-50%);
+            animation: rotateWave 3.5s linear infinite;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .wave:nth-child(2) {
+            top: -12px;
+            background: var(--wave-color-2);
+            border-radius: 38%;
+            animation: rotateWave 5.5s linear infinite;
+            z-index: 1;
+        }
+
+        .liquid.color-low { background: #be123c; }
+        .liquid.color-mid { background: #d97706; }
+        .liquid.color-high { background: #1d4ed8; }
+        .liquid.color-max { background: #047857; }
+
+        @keyframes rotateWave {
+            0% { transform: translateX(-50%) rotate(0deg); }
+            100% { transform: translateX(-50%) rotate(360deg); }
+        }
+
+        .mastery-label {
+            font-size: 0.7rem;
+            color: var(--text-primary);
+            font-weight: 600;
+            background: var(--glass-overlay);
+            padding: 1px 6px;
+            border-radius: 10px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .section-title {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--glass-border);
+        }
+
+        .grid-menu {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        @media (min-width: 540px) {
+            .grid-menu {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .full-width {
+                grid-column: span 2;
+            }
+        }
+
+        .btn {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+            padding: 10px 14px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 0.82rem;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            text-align: right;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .btn:not([disabled]):hover {
+            background: var(--glass-hover);
+            border-color: var(--accent-primary);
+            transform: translateY(-1px);
+        }
+
+        .btn-content {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .btn-accent {
+            background: var(--accent-primary);
+            border: none;
+            color: #ffffff;
+        }
+
+        .btn-accent:not([disabled]):hover {
+            background: var(--accent-hover);
+        }
+
+        .btn-nav {
+            padding: 8px 14px;
+            font-size: 0.8rem;
+            justify-content: center;
+            flex-direction: row;
+        }
+
+        .badge {
+            font-size: 0.65rem;
+            background: var(--glass-overlay);
+            padding: 2px 6px;
+            border-radius: 16px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .badge-accent {
+            background: var(--accent-overlay);
+            color: #ffffff;
+        }
+
+        .memorize-container {
+            max-height: 65vh;
+            overflow-y: auto;
+            padding-left: 5px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .memo-card {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            padding: 16px;
+            direction: rtl;
+            text-align: right;
+        }
+
+        .memo-q {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            line-height: 1.5;
+            white-space: pre-line;
+        }
+
+        .memo-opts {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .memo-opt {
+            padding: 8px 12px;
+            border-radius: 8px;
+            background: var(--glass-overlay);
+            border: 1px solid var(--glass-border);
+            font-size: 0.9rem;
+        }
+
+        .memo-opt.correct-ans {
+            background: rgba(16, 185, 129, 0.15);
+            border-color: var(--success);
+            color: var(--success-text);
+            font-weight: 600;
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 10px;
+        }
+
+        .quiz-title {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .question-box {
+            direction: rtl;
+            text-align: right;
+        }
+
+        .question-text {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            font-weight: 500;
+            white-space: pre-line;
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .option-item {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            padding: 12px 16px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+
+        .option-item:hover {
+            background: var(--glass-hover);
+            border-color: var(--glass-border-light);
+        }
+
+        .option-item.correct {
+            background: rgba(16, 185, 129, 0.2) !important;
+            border-color: var(--success) !important;
+            color: var(--success-text) !important;
+        }
+
+        .option-item.wrong {
+            background: rgba(239, 68, 68, 0.2) !important;
+            border-color: var(--error) !important;
+            color: var(--error-text) !important;
+        }
+
+        .option-item.disabled {
+            pointer-events: none;
+        }
+
+        .quiz-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            gap: 10px;
+        }
+
+        .custom-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(9, 13, 22, 0.8);
+            backdrop-filter: blur(8px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeIn 0.2s forwards;
+        }
+
+        .custom-modal {
+            background: #15162c;
+            border: 1px solid var(--glass-border);
+            border-radius: 18px;
+            padding: 20px;
+            width: 90%;
+            max-width: 360px;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            animation: scaleUp 0.2s forwards;
+        }
+
+        .custom-modal p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .custom-modal input {
+            width: 100%;
+            padding: 10px;
+            background: var(--glass-overlay);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            text-align: center;
+            margin-bottom: 15px;
+            outline: none;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes scaleUp { from { transform: scale(0.9); } to { transform: scale(1); } }
+
+        body.light-mode {
+            --bg-gradient: linear-gradient(135deg, #f1f5f9 0%, #cbd5e1 100%);
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(0, 0, 0, 0.1);
+            --glass-hover: rgba(255, 255, 255, 0.98);
+            --card-bg: rgba(255, 255, 255, 0.75);
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --accent-primary: #4f46e5;
+            --accent-hover: #4338ca;
+            --glass-overlay: rgba(0, 0, 0, 0.06);
+            --glass-border-light: rgba(0, 0, 0, 0.15);
+            --success-text: #059669;
+            --error-text: #dc2626;
+        }
+
+        body.light-mode .custom-modal {
+            background: #ffffff;
+            color: #0f172a;
+        }
+
+        body.light-mode .badge {
+            color: var(--text-secondary);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- هدر بالا -->
+        <div class="top-controls">
+            <div class="top-left-group">
+                <button id="theme-toggle" class="icon-btn" title="تغییر تم"></button>
+                <button id="logout-btn" class="icon-btn" title="خروج و پاک کردن اطلاعات" onclick="logout()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                        <polyline points="16 17 21 12 16 7"></polyline>
+                        <line x1="21" y1="12" x2="9" y2="12"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="mode-toggle-switch">
+                <button class="mode-option active" id="mode-classic">کلاسیک</button>
+                <button class="mode-option" id="mode-modern" style="opacity:0.5; cursor:not-allowed;" title="غیرفعال شده است">مدرن</button>
+            </div>
+        </div>
+
+        <div id="modal-container"></div>
+
+        <!-- داشبورد اصلی -->
+        <div id="dashboard-screen" class="screen active">
+            <div class="hero-card">
+                <div class="hero-info">
+                    <h2 id="greeting">سلام!</h2>
+                    <p id="dashboard-subtitle">سیستم هوشمند مرور و آزمون ویروس‌شناسی</p>
+                </div>
+                <div class="mastery-container" onclick="showMasteryDetails()" title="مشاهده درصد تسلط">
+                    <div class="flask-wrapper">
+                        <div class="flask-shape">
+                            <div class="liquid" id="flask-liquid">
+                                <div class="wave"></div>
+                                <div class="wave"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mastery-label" id="mastery-percentage">0%</div>
+                </div>
+            </div>
+
+            <div id="main-content-area"></div>
+
+            <div class="section-title">مرور و آزمون هوشمند</div>
+            <div class="grid-menu" style="grid-template-columns: repeat(3, 1fr) !important; gap: 6px; margin-bottom: 0;">
+                <button class="btn" style="flex-direction: column; align-items: center; text-align: center; padding: 8px 6px; border-color: rgba(239, 68, 68, 0.3); color: #ef4444;" onclick="startChallengeQuiz()">
+                    <span style="font-weight: 600; font-size: 0.78rem;">🎯 چالش</span>
+                    <span class="badge" id="challenge-count" style="background: rgba(239, 68, 68, 0.1); color: #ef4444; margin-top: 2px;">۰ سوال</span>
+                </button>
+                <button class="btn" style="flex-direction: column; align-items: center; text-align: center; padding: 8px 6px; border-color: rgba(234, 179, 8, 0.3); color: #f59e0b;" onclick="startBookmarkQuiz()">
+                    <span style="font-weight: 600; font-size: 0.78rem;">⭐ نشان‌دار</span>
+                    <span class="badge" id="bookmark-count" style="background: rgba(234, 179, 8, 0.1); color: #f59e0b; margin-top: 2px;">۰ سوال</span>
+                </button>
+                <button class="btn btn-accent" style="flex-direction: column; align-items: center; text-align: center; padding: 8px 6px;" onclick="startRandomComprehensiveQuiz()">
+                    <span style="font-weight: 600; font-size: 0.78rem;">🎲 جامع رندوم</span>
+                    <span class="badge badge-accent" id="total-q-badge" style="margin-top: 2px;">۷۶ سوال</span>
+                </button>
+            </div>
+        </div>
+
+        <div id="section-options-screen" class="screen">
+            <div class="quiz-header">
+                <span class="quiz-title" id="section-option-title">بخش</span>
+                <button class="btn btn-nav btn-accent" onclick="goHome()">بازگشت</button>
+            </div>
+            <div class="grid-menu">
+                <button class="btn btn-accent" style="padding: 18px;" onclick="startSectionMemorize()">
+                    <div class="btn-content">
+                        <span style="font-size: 1rem; font-weight: bold;">🧠 حفظ سوالات</span>
+                        <span style="font-size: 0.78rem; opacity: 0.8;">مشاهده تمام سوالات با پاسخ صحیح (اسکرول)</span>
+                    </div>
+                </button>
+                <button class="btn" style="padding: 18px;" onclick="startSectionQuiz()">
+                    <div class="btn-content">
+                        <span style="font-size: 1rem; font-weight: bold;">⏱️ تمرین (رندوم سوال و گزینه)</span>
+                        <span style="font-size: 0.78rem; color: var(--text-secondary);">آزمون و تمرین تعاملی</span>
+                    </div>
+                </button>
+            </div>
+        </div>
+
+        <!-- صفحه حفظ سوالات -->
+        <div id="memorize-screen" class="screen">
+            <div class="quiz-header">
+                <span class="quiz-title" id="memo-header-title">حفظ سوالات</span>
+                <button class="btn btn-nav btn-accent" onclick="backToPreviousFromMemorize()">بازگشت</button>
+            </div>
+            <div class="memorize-container" id="memorize-container"></div>
+        </div>
+
+        <!-- صفحه آزمون / تمرین -->
+        <div id="quiz-screen" class="screen">
+            <div class="quiz-header">
+                <span class="quiz-title" id="quiz-type-title">آزمون</span>
+                <span class="badge" id="progress-text">سوال ۱ از ۱۰</span>
+                <div style="display: flex; gap: 8px;">
+                    <button class="btn btn-nav" id="btn-bookmark" onclick="toggleBookmark()">☆ نشان</button>
+                    <button class="btn btn-nav btn-accent" onclick="goHome()">خانه</button>
+                </div>
+            </div>
+
+            <div class="question-box">
+                <div class="question-text" id="question-text">متن سوال...</div>
+                <div class="options-list" id="options-container"></div>
+            </div>
+
+            <div class="quiz-footer">
+                <button class="btn btn-nav" id="btn-prev" onclick="navigateQuestion(-1)">سوال قبلی</button>
+                <button class="btn btn-nav btn-accent" id="btn-next" onclick="navigateQuestion(1)">سوال بعدی</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- بانک سوالات (۷۶ سوال ویروس‌شناسی) ---
+        const allQuestions = [
+            { id: 1, q: "سولفات سدیم باعث پایداری کدام ویروس ها می شود؟", o: ["آدنو ویریده", "پاروویریده", "هرپس ویریده", "پاکس ویریده"], c: 2 },
+            { id: 2, q: "حضور کدام ویروس در سلولهای رید استنبرگ میتواند نقش ویروس را در ایجاد بدخیمی اثبات کند؟", o: ["CMV", "Polyoma", "Papilloma", "EBV"], c: 3 },
+            { id: 3, q: "کدام یک از تفاوتهای آبله مرغان و آبله انسانی نیست؟", o: ["محل تاول ها ضایعات پوستی", "تب", "مرحله تکاملی تاول ها ضایعات پوستی", "التهاب"], c: 3 },
+            { id: 4, q: "لکوانسفالوپاتی چند کانونی پیشرونده یا PML در اثر چه ویروسی ایجاد می شود؟", o: ["B19", "JC", "Orf", "HPV"], c: 1 },
+            { id: 5, q: "رسپتور CR2 توسط چه ویروسی استفاده می شود؟", o: ["B19", "HPV", "HIV", "EBV"], c: 3 },
+            { id: 6, q: "کدام ویروس در خون میتواند توسط گلبولهای قرمز انتقال یابد؟", o: ["توگا ویروس", "تب کنه ای کلرادو", "پاروویروس B19", "الف و ج"], c: 1 },
+            { id: 7, q: "پروتئین ........ آدنو ویروس با برهمکنش با پروتئین ............ در القای سلول میزبان برای ورود به فاز S چرخه سلولی نقش دارد؟", o: ["P53 , E1A", "P53 , E1B", "Rb , E1A", "Rb , E1B"], c: 2 },
+            { id: 8, q: "عامل بیماری ششم یا Roseola Infantum کدام ویروس می باشد؟", o: ["HHV-4 , HHV-8", "HHV-6 , HHV-3", "HHV-7 , HHV-5", "HHV-6 , HHV-7"], c: 3 },
+            { id: 9, q: "کدام خانواده ویروس توانایی ادغام ژنوم خود در ژنوم انسان را دارد؟", o: ["پاروویریده", "آدنو ویریده", "پاکس ویریده", "پیکورنا ویریده"], c: 0 },
+            { id: 10, q: "کدامیک از موارد زیر در مورد ویروسها صحیح می باشد؟", o: ["حساسیت به آنتی بیوتیک", "DNA و RNA دارا بودن", "وابسته به سلول زنده", "تقسیم دوتایی"], c: 2 },
+            { id: 11, q: "کدام خصوصیت مربوط به گروه D آدنو ویروس ها نمی باشد؟", o: ["بیشترین درصد GC", "توانایی تومورزایی بالا", "حاوی بیشترین سروتیپ", "هماگلوتینیشن گروه دو"], c: 1 },
+            { id: 12, q: "دلیل اثر بخشی بیشتر داروی آسیکلوویر بر روی آنزیم فسفاتاز ویروسی کدام گزینه است؟", o: ["فعالیت بالای دارو", "شکل ساختاری ویروس", "نفوذپذیری بیشتر دارو", "تمایل (افینیتی) بیشتر آنزیم"], c: 3 },
+            { id: 13, q: "کدام داروی ضد ویروسی مهار کننده اتصال و ورود ویروس نمی باشد؟", o: ["Rimantadine", "T20 (Fuzeon)", "Maraviroc", "Dextran sulphate"], c: 0 },
+            { id: 14, q: "در ارتباط با EBV کدامیک RNA بوده و تبدیل به پروتئین نمی شود؟", o: ["LMP", "EBER", "VCA", "EBNA"], c: 1 },
+            { id: 15, q: "در کدام ویروس ویریونهای تازه تشکیل شده انولوپ خود را از غشای داخلی هسته می گیرند؟", o: ["HIV", "آبله مرغان", "B19", "واریولا (آبله)"], c: 1 },
+            { id: 16, q: "ویروس مولوسکوم کنتاجیوزوم در کدام خانواده قرار دارد؟", o: ["هرپس", "پاکس", "آدنو", "پاروو"], c: 1 },
+            { id: 17, q: "کدام گلیکو پروتئینهای هرپس سیمپلکس ویروس (HSV) به ترتیب در اتصال به قسمت Fc آنتی بادی و پروتئینهای کمپلمان نقش دارد؟", o: ["gC , gE", "gE , gG", "gG , gD", "gE , gC"], c: 3 },
+            { id: 18, q: "دوره اکلیپس (Eclipse period) کدام گزینه زیر است؟", o: ["از رونویسی تا خروج اولین پارتیکل ویروسی", "از پوشش برداری تا تولید اولین پارتیکل ویروس", "از اتصال ویروس تا تولید پروتئینهای ویروسی", "ورود ویروس تا تولید آنزیم همانندسازی"], c: 1 },
+            { id: 19, q: "در عفونت با ویروس EBV آخرین آنتی بادی بر علیه کدام پروتئین تولید میشود؟", o: ["Heterophile", "EBNA", "EA", "VCA"], c: 1 },
+            { id: 20, q: "اینکه ویروس سلول را وادار به تولید اینترفرون میکند تا مانع تکثیر ویروس دوم شود در کدام نوع از ارتباط ویروسها جای می گیرد؟", o: ["Phenotype mixing", "Recombination", "Interference", "Complementation"], c: 2 },
+            { id: 21, q: "جنس Roseolovirus در هرپس ویروسها شامل کدام گونه ها بوده و در چه بافتی به حالت latent در می آید؟", o: ["هرپس 1 و 2، بافت لنفوئیدی", "هرپس 1 و 2، بافت عصبی", "هرپس 6 و 7، بافت عصبی", "هرپس 6 و 7، بافت لنفوئیدی"], c: 3 },
+            { id: 22, q: "عامل سرطان سرویکس کدام ویروس می باشد؟", o: ["پاکس", "آدنو", "پولیوما", "پاپیلوما"], c: 3 },
+            { id: 23, q: "کدام پروتئین پولیوما ویروس هم به P53 و هم به Rb متصل میشود؟", o: ["E2", "آنتی ژن T کوچک", "آنتی ژن T بزرگ", "E6"], c: 2 },
+            { id: 24, q: "در ارتباط با درمان CMV مقاومت وسیع نسبت به داروها در اثر جهش کدام ژن ویروسی ایجاد می شود؟", o: ["UL41", "UL22", "UL54", "UL97"], c: 2 },
+            { id: 25, q: "سلولهای cytomegalic در پاتولوژی کدام ویروس ها دیده می شود؟", o: ["پاکس ویروس ها", "هرپس ویروس ها", "آدنوویروس ها", "باکتریوفاژها"], c: 1 },
+            { id: 26, q: "Cowdry type A از علایم پاتولوژیک عامل کدام بیماری است؟", o: ["آبله انسانی", "فلج اطفال", "زگیل تناسلی", "تب خال"], c: 3 },
+            { id: 27, q: "کدامیک جزو تفاوتهای عفونت لوکال و سیستمیک نیست؟", o: ["نقش آنتی بادی های ترشحی مانند IgA", "زمان انکوباسیون", "تخریب سلول میزبان", "ویرمی"], c: 2 },
+            { id: 28, q: "اولین واکسن مربوط به کدام ویروس بود؟", o: ["هرپس", "پاکس", "پولیو (فلج اطفال)", "هاری"], c: 1 },
+            { id: 29, q: "کدامیک از تفاوتهای اینترفرون تیپ 1 و 2 نمی باشد؟", o: ["محل ژن آنها روی کروموزوم", "مکانیسم اثر", "تعداد ساب تایپ", "سلول ترشح کننده"], c: 1 },
+            { id: 30, q: "کدام تیپ آدنو ویروس در بیماری Epidemic Keratoconjunctivitis در گیر نیست؟", o: ["37", "19", "4", "8"], c: 2 },
+            { id: 31, q: "عوارض ناشی از کدام عفونت ویروسی زیر در افراد مسن بیشتر است؟", o: ["سرخچه", "رئوویروس", "ویروس انسفالیت سنت لوئیس", "هیچکدام"], c: 2 },
+            { id: 32, q: "ژنوم کدام ویروس زیر DNA دو رشته ای حلقوی می باشد؟", o: ["هرپس ویروس", "پولیوما ویروس", "پاروویروس", "آدنوویروس"], c: 1 },
+            { id: 33, q: "کدام پروتئین پاپیلوما ویروس با اتصال به پروتئین تنظیمی p53 باعث تخریب آن می شود؟", o: ["L1", "E7", "L2", "E6"], c: 3 },
+            { id: 34, q: "بوکاویروس بیشتر در کدام نمونه بالینی شناسایی شده است؟", o: ["تنفسی", "مغز استخوان", "مدفوع", "ادرار"], c: 0 },
+            { id: 35, q: "کدام خصوصیت مربوط به گروه A آدنو ویروس ها میباشد؟", o: ["حاوی بیشترین سروتیپ", "بیشترین درصد GC", "هماگلوتینیشن گروه دو", "توانایی تومورزایی بالا"], c: 3 },
+            { id: 36, q: "آمانتادین و ریمانتادین در آنفلوانزا فعالیت کدام پروتئین را متوقف میکنند؟", o: ["RNP", "NS1", "M2", "هماگلوتینین"], c: 2 },
+            { id: 37, q: "به ورود ویروس به ادرار چه می گویند؟", o: ["virurea", "viremia", "هیچ کدام", "Abrasions"], c: 0 },
+            { id: 38, q: "مربوط به Pure red cell aplasia کدام ویروس می باشد؟", o: ["HSV", "HPV", "B19", "EBV"], c: 2 },
+            { id: 39, q: "سنس مثبت و منفی در کدام ژنوم وجود دارد؟", o: ["DNA دو رشته ای", "RNA تک رشته ای", "هیچ کدام", "DNA تک رشته ای"], c: 1 },
+            { id: 40, q: "کدام ویروس عفونت transforming دارد؟", o: ["HSV", "B19", "Adenovirus", "HPV"], c: 3 },
+            { id: 41, q: "در اثر Hemorrhagic cystitis عفونت چه ویروسی ایجاد میشود؟", o: ["JC", "BK", "B19", "HPV"], c: 1 },
+            { id: 42, q: "عامل Merkel cell carcinomas در کدام خانواده ویروسی وجود دارد؟", o: ["پاپیلوما", "پولیوما", "هرپس", "پاروو"], c: 1 },
+            { id: 43, q: "کدام یک از گزینه های زیر در تمام ویروسها وجود دارد؟", o: ["اسید نوکلئیک ، لیپید و پروتئین", "کربوهیدرات و گلیکوپروتئین", "پروتئین و اسید نوکلئیک", "پروتئین و لیپید"], c: 2 },
+            { id: 44, q: "آدنوویروس با کدام بیماری در انسان مرتبط نیست؟", o: ["سیستیت خونریزی دهنده حاد", "EKC", "سرطان", "ARD"], c: 2 },
+            { id: 45, q: "از کنار هم قرار گرفتن واحدهای ساختاری کدام واحد در کپسید ساخته می شود؟", o: ["زیر واحد پلی پپتیدی", "کپسید", "کپسومر", "Core"], c: 2 },
+            { id: 46, q: "بزرگترین ژنوم در بین ویروسهای دارای RNA تک رشته ای سنس مثبت مربوط به کدام است؟", o: ["رتروویروس", "توگاویروس", "کرونا ویروس", "پیکورنا ویورس"], c: 2 },
+            { id: 47, q: "اثر سایتوپاتیک کدام ویروس روی سلول به صورت چروکیدگی می باشد؟", o: ["Mumps", "Rota", "B19", "HPV"], c: 1 },
+            { id: 48, q: "تقارن مارپیچی کدام ویروس انعطاف پذیر نیست؟", o: ["سرخجه", "سرخک", "رابدو", "آنفلوآنزا"], c: 2 },
+            { id: 49, q: "رسپتور آدنو ویروس کدام است؟", o: ["ICAM-1", "P-Antigen", "CD21", "CAR"], c: 3 },
+            { id: 50, q: "کدام گلیکو پروتئین های هرپس سیمپلکس ویروس (HSV) در فیوژن نقش دارد؟", o: ["C", "E", "G", "B"], c: 3 },
+            { id: 51, q: "کدام یک از ویروسهای زیر ناقص می باشد؟", o: ["HBV", "CMV", "AAV", "HPV"], c: 2 },
+            { id: 52, q: "اینترفرون بتا در درمان کدام بیماری به کار برده میشود؟", o: ["EKC", "HEV", "Ulcerative colitis", "HBV"], c: 2 },
+            { id: 53, q: "کدام ویروس آنزیم رونوشت بردار معکوس یا RT ندارد؟", o: ["Retroviridae", "Hepadnaviridae", "Orthomyxoviridae", "Caulimoviridae"], c: 2 },
+            { id: 54, q: "مهمترین تیپهای پاپیلوماویروس در Laryngeal papilloma کدامند؟", o: ["11 و 6", "16 و 18 و 33", "18 و 33", "16 و 18"], c: 0 },
+            { id: 55, q: "برای درمان عفونت کدام ویروس Podophyllin به کار میرود؟", o: ["Poxvirus", "EBV", "Papilloma", "CMV"], c: 2 },
+            { id: 56, q: "اجسام جانبی Lateral bodies در ساختمان کدام ویروس دیده می شود؟", o: ["آدنو", "هرپس", "آبله انسانی", "آبله مرغان"], c: 2 },
+            { id: 57, q: "کلرید منیزیم باعث پایداری کدام ویروس ها میشود؟", o: ["پاکس ویروس", "آدنو ویروس", "هرپس ویروس", "رئوویروس"], c: 3 },
+            { id: 58, q: "کدام خصوصیت مربوط به گروه F آدنو ویروس ها میباشد؟", o: ["توانایی تومورزایی بالا", "بیشترین درصد GC", "عفونت گوارشی", "هماگلوتینیشن گروه دو"], c: 2 },
+            { id: 59, q: "کدام تیپ آدنو ویروس در بیماری Pharyngoconjunctival fever در گیر است؟", o: ["37 و 19", "7 و 3", "41 و 40", "11 و 12"], c: 1 },
+            { id: 60, q: "اثر فرمالدهید روی کدام قسمت از ویروس است ؟", o: ["ژنوم", "کپسید", "الف و ب", "انولوپ"], c: 0 },
+            { id: 61, q: "در انولوپ کدام ویروس کلسترول بیشتری وجود دارد؟", o: ["آنفلوانزا", "هرپس ویروس", "فلاوی ویروس", "پاپیلوماویروس"], c: 0 },
+            { id: 62, q: "در تراشه های گرفته شده از وزیکول پوستی در اسمیر Tzanck سلول های بزرگ چند هسته ای مشاهده می شود، تشخیص کدام ویروس می تواند باشد؟", o: ["B19", "VZV", "CMV", "EBV"], c: 1 },
+            { id: 63, q: "جنس Rhadino در هرپس ویروس ها شامل کدام گونه بوده و در چه بافتی به حالت latent در می آید؟", o: ["هرپس 8، بافت لنفوئیدی", "هرپس 2، بافت لنفوئیدی", "هرپس 7، بافت عصبی", "هرپس 2، بافت عصبی"], c: 0 },
+            { id: 64, q: "در ساختاری کپسید ویروس ها واحدی که با میکروسکوپ الکترونی دیده می شود کدام است؟", o: ["زیرواحد پلی پپتیدی", "زیرواحد ساختاری", "کپسومر، زیرواحد پلی پپتیدی", "کپسومر"], c: 3 },
+            { id: 65, q: "ورود کدام ویروس به سلول از طریق ادغام غشایی در سطح سلول انجام می شود؟", o: ["رابدوویروس", "هرپس ویروس", "توگاویروس", "آدنوویروس"], c: 1 },
+            { id: 66, q: "محتمل ترین راه انتقال پاروویروس B19 کدام است؟", o: ["تماس با ترشحات تنفسی", "تماس جنسی", "تماس با وسایل شخصی", "تماس با بثورات پوستی"], c: 0 },
+            { id: 67, q: "واکسن سرواریکس از نوع VLP برای کدام ویروس است؟", o: ["HPV", "هاری", "مولوسکوم", "EBV"], c: 0 },
+            { id: 68, q: "کدام خانواده ویروسی دارای آنزیم رونوشت بردار معکوس (reverse transcriptase) می باشد؟", o: ["آدنوویریده", "رئوویریده", "پاکس ویریده", "هپادناویریده"], c: 3 },
+            { id: 69, q: "کدام ویروس از طریق شیر مادر منتقل نمی شود ؟", o: ["HIV", "CMV", "HSV", "Mumps"], c: 2 },
+            { id: 70, q: "واکسن هپاتیت B از کدام یک از انواع واکسن می باشد؟", o: ["DNA vaccines", "زنده ضعیف شده", "زیرواحدی", "کشته شده"], c: 2 },
+            { id: 71, q: "تست Paul Bunnell برای تشخیص کدام ویروس کاربرد دارد؟", o: ["EBV", "CMV", "HPV", "HSV"], c: 0 },
+            { id: 72, q: "پسوند مشخص کننده خانواده در طبقه بندی ویروس ها کدام است؟", o: ["وایرالز", "ویروس", "ویرینه", "ویریده"], c: 3 },
+            { id: 73, q: "کدام ویروس غیرقابل کشت می باشد؟", o: ["Molluscum Contagiosum", "Influenza", "HSV", "Cowpox"], c: 0 },
+            { id: 74, q: "بیشترین کپسومرهای کپسید آدنو ویروس مربوط به کدام پروتئین است؟", o: ["هگزون", "پنتون", "E1", "فیبر"], c: 0 },
+            { id: 75, q: "کدام داروی ضد HIV ممانعت کننده پروتئاز نمی باشد؟", o: ["فوسکارنت", "ریتوناویر", "ساکیناویر", "ایندیناویر"], c: 0 },
+            { id: 76, q: "کدام پروتئین آدنوویروس به عنوان داربست (scaffold) عمل می کند؟", o: ["L3", "L2", "L1", "L4"], c: 3 }
+        ];
+
+        // --- متغیرهای حالت برنامه ---
+        let currentSectionNum = null;
+        let currentQuestionsList = [];
+        let currentIndex = 0;
+        let userAnswers = {};
+        let isChallengeMode = false;
+        let isBookmarkMode = false;
+
+        let stats = JSON.parse(localStorage.getItem('virology_stats')) || {};
+        let bookmarks = JSON.parse(localStorage.getItem('virology_bookmarks')) || {};
+
+        const CustomUI = {
+            alert: function(text, callback) {
+                const container = document.getElementById('modal-container');
+                container.innerHTML = `
+                    <div class="custom-modal-overlay">
+                        <div class="custom-modal">
+                            <p>${text}</p>
+                            <div style="margin-top: 15px;">
+                                <button class="btn btn-accent" id="modal-ok" style="width: 100%; justify-content: center;">تایید</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                document.getElementById('modal-ok').onclick = function() {
+                    container.innerHTML = '';
+                    if(callback) callback();
+                };
+            },
+            confirm: function(text, onConfirm) {
+                const container = document.getElementById('modal-container');
+                container.innerHTML = `
+                    <div class="custom-modal-overlay">
+                        <div class="custom-modal">
+                            <p>${text}</p>
+                            <div style="display: flex; gap: 10px; margin-top: 15px;">
+                                <button class="btn btn-accent" id="modal-yes" style="flex:1; justify-content: center;">بله</button>
+                                <button class="btn" id="modal-no" style="flex:1; justify-content: center;">لغو</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                document.getElementById('modal-yes').onclick = function() {
+                    container.innerHTML = '';
+                    onConfirm();
+                };
+                document.getElementById('modal-no').onclick = function() {
+                    container.innerHTML = '';
+                };
+            },
+            prompt: function(text, onSubmit) {
+                const container = document.getElementById('modal-container');
+                container.innerHTML = `
+                    <div class="custom-modal-overlay">
+                        <div class="custom-modal">
+                            <p>${text}</p>
+                            <input type="text" id="modal-input" placeholder="نام شما..." autofocus />
+                            <button class="btn btn-accent" id="modal-submit" style="width: 100%; justify-content: center;">ثبت نام</button>
+                        </div>
+                    </div>
+                `;
+                const submitAction = function() {
+                    const val = document.getElementById('modal-input').value;
+                    container.innerHTML = '';
+                    onSubmit(val);
+                };
+                document.getElementById('modal-submit').onclick = submitAction;
+                document.getElementById('modal-input').onkeydown = function(e) {
+                    if (e.key === 'Enter') submitAction();
+                };
+            }
+        };
+
+        function logout() {
+            CustomUI.confirm('آیا مطمئن هستید که می‌خواهید خارج شوید؟ تمام اطلاعات و آمارهای شما پاک خواهد شد.', function() {
+                localStorage.clear();
+                location.reload();
+            });
+        }
+
+        function checkUser() {
+            let username = localStorage.getItem('virology_username');
+            if (!username) {
+                CustomUI.prompt('خوش آمدید! لطفا نام خود را وارد کنید:', function(inputName) {
+                    username = (inputName && inputName.trim() !== "") ? inputName.trim() : 'دانشجوی پزشکی';
+                    localStorage.setItem('virology_username', username);
+                    document.getElementById('greeting').innerText = `سلام ${username}!`;
+                    initApp();
+                });
+            } else {
+                document.getElementById('greeting').innerText = `سلام ${username}!`;
+                initApp();
+            }
+        }
+
+        function initApp() {
+            renderDashboard();
+        }
+
+        function renderDashboard() {
+            const containerArea = document.getElementById('main-content-area');
+            containerArea.innerHTML = '';
+
+            const titleEl = document.createElement('div');
+            titleEl.className = 'section-title';
+            titleEl.innerText = 'بخش‌های ۳ گانه بانک سوالات';
+            containerArea.appendChild(titleEl);
+
+            const grid = document.createElement('div');
+            grid.className = 'grid-menu';
+
+            for (let i = 1; i <= 3; i++) {
+                let qRange = i === 1 ? "سوالات ۱ تا ۲۵" : 
+                             i === 2 ? "سوالات ۲۶ تا ۵۰" : 
+                             "سوالات ۵۱ تا ۷۶";
+                             
+                const btn = document.createElement('button');
+                btn.className = 'btn';
+                btn.style.padding = '8px 12px';
+                btn.innerHTML = `
+                    <div class="btn-content">
+                        <span style="font-weight: 600; font-size: 0.82rem;">بخش ${i} سوالات</span>
+                        <span style="font-size: 0.72rem; color: var(--text-secondary);">${qRange}</span>
+                    </div>
+                    <span class="badge">بخش ${i}</span>
+                `;
+                btn.onclick = () => openSectionOptions(i);
+                grid.appendChild(btn);
+            }
+            containerArea.appendChild(grid);
+
+            updateBadges();
+            updateMasteryBar();
+        }
+
+        function openSectionOptions(sectionNum) {
+            currentSectionNum = sectionNum;
+            document.getElementById('section-option-title').innerText = `بخش ${sectionNum}`;
+            showScreen('section-options-screen');
+        }
+
+        function startSectionMemorize() {
+            document.getElementById('memo-header-title').innerText = `حفظ سوالات: بخش ${currentSectionNum}`;
+            let startIdx = (currentSectionNum - 1) * 25;
+            let endIdx = currentSectionNum === 3 ? allQuestions.length : startIdx + 25;
+            let questions = allQuestions.slice(startIdx, endIdx);
+            renderMemorizeCards(questions);
+        }
+
+        function startSectionQuiz() {
+            userAnswers = {};
+            document.getElementById('quiz-type-title').innerText = `تمرین بخش ${currentSectionNum}`;
+            let startIdx = (currentSectionNum - 1) * 25;
+            let endIdx = currentSectionNum === 3 ? allQuestions.length : startIdx + 25;
+            let questions = allQuestions.slice(startIdx, endIdx);
+
+            currentQuestionsList = prepareQuestions(questions);
+            currentIndex = 0;
+            showScreen('quiz-screen');
+            renderQuestion();
+        }
+
+        function renderMemorizeCards(questions) {
+            const container = document.getElementById('memorize-container');
+            container.innerHTML = '';
+
+            questions.forEach((qObj, idx) => {
+                const card = document.createElement('div');
+                card.className = 'memo-card';
+                
+                let optsHtml = '';
+                qObj.o.forEach((optText, optIdx) => {
+                    const isCorrect = (optIdx === qObj.c);
+                    optsHtml += `<div class="memo-opt ${isCorrect ? 'correct-ans' : ''}">${optIdx + 1}) ${optText} ${isCorrect ? '✓ (پاسخ صحیح)' : ''}</div>`;
+                });
+
+                card.innerHTML = `<div class="memo-q">سوال ${qObj.id}: ${qObj.q}</div><div class="memo-opts">${optsHtml}</div>`;
+                container.appendChild(card);
+            });
+
+            showScreen('memorize-screen');
+        }
+
+        function startChallengeQuiz() {
+            isChallengeMode = true;
+            isBookmarkMode = false;
+            userAnswers = {};
+            document.getElementById('quiz-type-title').innerText = `🎯 ایستگاه چالش`;
+
+            let filtered = allQuestions.filter(q => stats[q.id] && stats[q.id].wrongCount >= 2);
+            if (filtered.length === 0) {
+                CustomUI.alert('اینجا هوشمنده! یکم تمرین کن تا ایرادتو پیدا کنم 🥸');
+                return;
+            }
+
+            currentQuestionsList = prepareQuestions(filtered);
+            currentIndex = 0;
+            showScreen('quiz-screen');
+            renderQuestion();
+        }
+
+        function startBookmarkQuiz() {
+            isChallengeMode = false;
+            isBookmarkMode = true;
+            userAnswers = {};
+            document.getElementById('quiz-type-title').innerText = `⭐ سوالات نشان‌دار`;
+
+            let filtered = allQuestions.filter(q => bookmarks[q.id]);
+            if (filtered.length === 0) {
+                CustomUI.alert('شما هنوز هیچ سوالی را نشان‌دار نکرده‌اید!');
+                return;
+            }
+
+            currentQuestionsList = prepareQuestions(filtered);
+            currentIndex = 0;
+            showScreen('quiz-screen');
+            renderQuestion();
+        }
+
+        function startRandomComprehensiveQuiz() {
+            isChallengeMode = false;
+            isBookmarkMode = false;
+            userAnswers = {};
+            document.getElementById('quiz-type-title').innerText = `🎲 آزمون جامع رندوم`;
+
+            currentQuestionsList = prepareQuestions([...allQuestions]);
+            currentIndex = 0;
+            showScreen('quiz-screen');
+            renderQuestion();
+        }
+
+        function prepareQuestions(questionsList) {
+            let shuffledQuestions = shuffle(questionsList);
+            return shuffledQuestions.map(item => {
+                let mappedOptions = item.o.map((txt, index) => ({ text: txt, originalIndex: index }));
+                return {
+                    id: item.id,
+                    q: item.q,
+                    c: item.c,
+                    shuffledOptions: shuffle(mappedOptions)
+                };
+            });
+        }
+
+        function renderQuestion() {
+            if (currentQuestionsList.length === 0) return;
+
+            const currentQ = currentQuestionsList[currentIndex];
+            if (!stats[currentQ.id]) stats[currentQ.id] = { wrongCount: 0, consecutiveCorrect: 0 };
+
+            document.getElementById('progress-text').innerText = `سوال ${currentIndex + 1} از ${currentQuestionsList.length}`;
+            document.getElementById('question-text').innerText = currentQ.q;
+
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
+
+            currentQ.shuffledOptions.forEach(opt => {
+                const div = document.createElement('div');
+                div.className = 'option-item';
+                div.innerText = opt.text;
+                div.setAttribute('data-original-index', opt.originalIndex);
+                div.onclick = () => selectOption(div, opt.originalIndex, currentQ.c, currentQ.id);
+
+                if (userAnswers[currentQ.id] !== undefined) {
+                    div.classList.add('disabled');
+                    if (opt.originalIndex === currentQ.c) div.classList.add('correct');
+                    if (opt.originalIndex === userAnswers[currentQ.id] && userAnswers[currentQ.id] !== currentQ.c) div.classList.add('wrong');
+                }
+                container.appendChild(div);
+            });
+
+            document.getElementById('btn-prev').style.visibility = (currentIndex === 0) ? 'hidden' : 'visible';
+            document.getElementById('btn-next').innerText = (currentIndex === currentQuestionsList.length - 1) ? 'پایان' : 'سوال بعدی';
+            updateBookmarkBtnUI();
+        }
+
+        function selectOption(element, selectedIdx, correctIdx, qId) {
+            const items = document.querySelectorAll('.option-item');
+            items.forEach(item => item.classList.add('disabled'));
+            userAnswers[qId] = selectedIdx;
+
+            if (selectedIdx === correctIdx) {
+                element.classList.add('correct');
+                stats[qId].consecutiveCorrect++;
+                if (stats[qId].consecutiveCorrect >= 3) stats[qId].wrongCount = 0;
+            } else {
+                element.classList.add('wrong');
+                stats[qId].wrongCount++;
+                stats[qId].consecutiveCorrect = 0;
+                items.forEach(item => {
+                    if (parseInt(item.getAttribute('data-original-index')) === correctIdx) item.classList.add('correct');
+                });
+            }
+            saveStats();
+        }
+
+        function navigateQuestion(step) {
+            currentIndex += step;
+            if (currentIndex >= currentQuestionsList.length) {
+                CustomUI.alert('آزمون به پایان رسید. خسته نباشید!', () => goHome());
+            } else if (currentIndex < 0) {
+                currentIndex = 0;
+            } else {
+                renderQuestion();
+            }
+        }
+
+        function toggleBookmark() {
+            if (currentQuestionsList.length === 0) return;
+            const qId = currentQuestionsList[currentIndex].id;
+            bookmarks[qId] = !bookmarks[qId];
+            saveBookmarks();
+            updateBookmarkBtnUI();
+        }
+
+        function updateBookmarkBtnUI() {
+            if (currentQuestionsList.length === 0) return;
+            const qId = currentQuestionsList[currentIndex].id;
+            const btn = document.getElementById('btn-bookmark');
+            if (bookmarks[qId]) {
+                btn.innerText = '⭐ نشان شده';
+                btn.style.background = 'rgba(234, 179, 8, 0.2)';
+            } else {
+                btn.innerText = '☆ نشان';
+                btn.style.background = '';
+            }
+        }
+
+        function saveStats() {
+            localStorage.setItem('virology_stats', JSON.stringify(stats));
+            updateBadges();
+            updateMasteryBar();
+        }
+
+        function saveBookmarks() {
+            localStorage.setItem('virology_bookmarks', JSON.stringify(bookmarks));
+            updateBadges();
+        }
+
+        function updateBadges() {
+            let chCount = 0;
+            for (let qId in stats) {
+                if (stats[qId].wrongCount >= 2) chCount++;
+            }
+            const chEl = document.getElementById('challenge-count');
+            if (chEl) chEl.innerText = `${chCount} سوال`;
+
+            let bmCount = Object.keys(bookmarks).filter(k => bookmarks[k]).length;
+            const bmEl = document.getElementById('bookmark-count');
+            if (bmEl) bmEl.innerText = `${bmCount} سوال`;
+        }
+
+        function updateMasteryBar() {
+            const total = allQuestions.length;
+            let score = 0;
+            for (let qId in stats) {
+                const st = stats[qId];
+                if (st.consecutiveCorrect >= 3) score += 1;
+                else if (st.consecutiveCorrect === 2) score += 0.6;
+                else if (st.consecutiveCorrect === 1 || st.wrongCount > 0) score += 0.25;
+            }
+            const pct = total > 0 ? Math.round((score / total) * 100) : 0;
+            document.getElementById('mastery-percentage').innerText = `${pct}%`;
+
+            const liquid = document.getElementById('flask-liquid');
+            liquid.style.height = `${pct}%`;
+            liquid.className = 'liquid';
+
+            if (pct < 30) {
+                liquid.classList.add('color-low');
+                document.documentElement.style.setProperty('--wave-color-1', 'rgba(190, 18, 60, 0.8)');
+                document.documentElement.style.setProperty('--wave-color-2', 'rgba(225, 29, 72, 0.5)');
+            } else if (pct < 60) {
+                liquid.classList.add('color-mid');
+                document.documentElement.style.setProperty('--wave-color-1', 'rgba(217, 119, 6, 0.8)');
+                document.documentElement.style.setProperty('--wave-color-2', 'rgba(245, 158, 11, 0.5)');
+            } else if (pct < 85) {
+                liquid.classList.add('color-high');
+                document.documentElement.style.setProperty('--wave-color-1', 'rgba(29, 78, 216, 0.8)');
+                document.documentElement.style.setProperty('--wave-color-2', 'rgba(59, 130, 246, 0.5)');
+            } else {
+                liquid.classList.add('color-max');
+                document.documentElement.style.setProperty('--wave-color-1', 'rgba(4, 120, 87, 0.8)');
+                document.documentElement.style.setProperty('--wave-color-2', 'rgba(16, 185, 129, 0.5)');
+            }
+        }
+
+        function showMasteryDetails() {
+            const pct = parseInt(document.getElementById('mastery-percentage').innerText);
+            let quote = "";
+            if (pct < 30) {
+                quote = "زوده فعلا برو یکم تمرین کن";
+            } else if (pct < 80) {
+                quote = "انگار داری یه چیزایی یاد میگیری";
+            } else {
+                quote = "خسته نباشی سوالات امتحان رو فقط حفظ کردی 🙏😂";
+            }
+            CustomUI.alert(`درصد تسلط فعلی شما: ${pct}%<br><br><span style="color:var(--accent-primary);">${quote}</span>`);
+        }
+
+        function shuffle(arr) {
+            let a = [...arr];
+            for (let i = a.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [a[i], a[j]] = [a[j], a[i]];
+            }
+            return a;
+        }
+
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+        }
+
+        function goHome() {
+            showScreen('dashboard-screen');
+            renderDashboard();
+        }
+
+        function backToPreviousFromMemorize() {
+            showScreen('section-options-screen');
+        }
+
+        // SVG Icons definitions
+        const sunIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>`;
+
+        const moonIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>`;
+
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        
+        if (localStorage.getItem('virology_theme') === 'light') {
+            document.body.classList.add('light-mode');
+            themeToggleBtn.innerHTML = moonIcon;
+        } else {
+            themeToggleBtn.innerHTML = sunIcon;
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            document.body.classList.toggle('light-mode');
+            if (document.body.classList.contains('light-mode')) {
+                localStorage.setItem('virology_theme', 'light');
+                themeToggleBtn.innerHTML = moonIcon;
+            } else {
+                localStorage.setItem('virology_theme', 'dark');
+                themeToggleBtn.innerHTML = sunIcon;
+            }
+        });
+
+        window.onload = () => {
+            checkUser();
+        };
+    </script>
+</body>
+</html>
