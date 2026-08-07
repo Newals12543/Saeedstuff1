@@ -510,6 +510,15 @@
             outline: none;
         }
 
+        .footer-credits {
+            text-align: center;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 25px;
+            padding-top: 15px;
+            border-top: 1px solid var(--glass-border);
+        }
+
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes scaleUp { from { transform: scale(0.9); } to { transform: scale(1); } }
 
@@ -546,6 +555,12 @@
         <div class="top-controls">
             <div class="top-left-group">
                 <button id="theme-toggle" class="icon-btn" title="تغییر تم"></button>
+                <button id="home-btn" class="icon-btn" title="بازگشت به صفحه اصلی" onclick="window.location.href='index.html'">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                </button>
                 <button id="logout-btn" class="icon-btn" title="خروج و پاک کردن اطلاعات" onclick="logout()">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
@@ -599,6 +614,7 @@
                     <span class="badge badge-accent" id="total-q-badge" style="margin-top: 2px;">۷۶ سوال</span>
                 </button>
             </div>
+            <div class="footer-credits">Developed by sommet_s</div>
         </div>
 
         <div id="section-options-screen" class="screen">
@@ -620,6 +636,7 @@
                     </div>
                 </button>
             </div>
+            <div class="footer-credits">Developed by sommet_s</div>
         </div>
 
         <!-- صفحه حفظ سوالات -->
@@ -638,7 +655,7 @@
                 <span class="badge" id="progress-text">سوال ۱ از ۱۰</span>
                 <div style="display: flex; gap: 8px;">
                     <button class="btn btn-nav" id="btn-bookmark" onclick="toggleBookmark()">☆ نشان</button>
-                    <button class="btn btn-nav btn-accent" onclick="goHome()">خانه</button>
+                    <button class="btn btn-nav btn-accent" onclick="goHome()">بازگشت به داشبورد</button>
                 </div>
             </div>
 
@@ -784,50 +801,28 @@
                 document.getElementById('modal-no').onclick = function() {
                     container.innerHTML = '';
                 };
-            },
-            prompt: function(text, onSubmit) {
-                const container = document.getElementById('modal-container');
-                container.innerHTML = `
-                    <div class="custom-modal-overlay">
-                        <div class="custom-modal">
-                            <p>${text}</p>
-                            <input type="text" id="modal-input" placeholder="نام شما..." autofocus />
-                            <button class="btn btn-accent" id="modal-submit" style="width: 100%; justify-content: center;">ثبت نام</button>
-                        </div>
-                    </div>
-                `;
-                const submitAction = function() {
-                    const val = document.getElementById('modal-input').value;
-                    container.innerHTML = '';
-                    onSubmit(val);
-                };
-                document.getElementById('modal-submit').onclick = submitAction;
-                document.getElementById('modal-input').onkeydown = function(e) {
-                    if (e.key === 'Enter') submitAction();
-                };
             }
         };
 
         function logout() {
-            CustomUI.confirm('آیا مطمئن هستید که می‌خواهید خارج شوید؟ تمام اطلاعات و آمارهای شما پاک خواهد شد.', function() {
-                localStorage.clear();
-                location.reload();
+            CustomUI.confirm('آیا مطمئن هستید که می‌خواهید خارج شوید؟ تمام اطلاعات و آمارهای این درس پاک خواهد شد و به صفحه اصلی هدایت می‌شوید.', function() {
+                localStorage.removeItem('virology_stats');
+                localStorage.removeItem('virology_bookmarks');
+                window.location.href = 'index.html';
             });
         }
 
         function checkUser() {
-            let username = localStorage.getItem('virology_username');
+            // دریافت اطلاعات نام شخص مستقیما از متغیر گلوبال صفحه اصلی
+            let username = localStorage.getItem('username');
+            
+            // در صورتی که کاربری ذخیره نشده باشد یا مستقیم باز شده باشد
             if (!username) {
-                CustomUI.prompt('خوش آمدید! لطفا نام خود را وارد کنید:', function(inputName) {
-                    username = (inputName && inputName.trim() !== "") ? inputName.trim() : 'دانشجوی پزشکی';
-                    localStorage.setItem('virology_username', username);
-                    document.getElementById('greeting').innerText = `سلام ${username}!`;
-                    initApp();
-                });
-            } else {
-                document.getElementById('greeting').innerText = `سلام ${username}!`;
-                initApp();
+                username = 'کاربر عزیز';
             }
+            
+            document.getElementById('greeting').innerText = `سلام ${username}!`;
+            initApp();
         }
 
         function initApp() {
